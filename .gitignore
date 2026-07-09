@@ -1,0 +1,15 @@
+.DS_Store
+node_modules/
+dist/
+.vercel/
+.env
+.env.*
+*.local
+.sync-key.local
+
+# Over GitHub's 100MB hard limit — kept locally only
+WhatsApp Chat - Darshan E Motorad.zip
+WhatsApp Chat - Jaya Chandra Tata Stryder RSM.zip
+WhatsApp Chat - Mg Mani Cultsport Mani Cultsport.zip
+brands/raleigh/WhatsApp Chat - Mohineesh Kumar Suncross.zip
+brands/emotorad/chat-jayachandra/00000434-Merc Track Model.pdf

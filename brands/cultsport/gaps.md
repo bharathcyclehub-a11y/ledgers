@@ -1,0 +1,32 @@
+# Cultsport Pvt Ltd (formerly Cultgear · Curefit) — Gaps Register
+_BCH ↔ Cultsport · updated 2026-07-07_
+
+**Balance position:** Brand official (Curefit Customer Statement Report) **₹27,03,388** closing as on **25-May-2026** vs BCH detailed line-items (Srinu's "CULTSPORT_ final.xlsx", 236 rows) **₹25,71,988** to 28-Jun-2026 (₹25,88,950 at the same 25-May cut-off) → BCH ~₹1.14L below the brand. NOTE: Srinu's own headline summary box reads ₹54,08,576 — internally broken, do NOT settle against it.
+**Total quantified gap / recoverable:** ₹34,04,124 (₹28,36,588 internal correction + ₹2,97,173 + ₹62,883 + ₹1,13,000 + ₹36,479 + ₹50,000 rejected + ₹8,001 unresolved reconciliation residual; excludes the ₹2,25,000 CN-verify, ₹16,01,590 BCC separate account, and items marked TBD/in-kind)
+
+| # | Gap | Type | Amount (₹) | Status | Evidence (date · source) | Action |
+|---|-----|------|-----------:|--------|--------------------------|--------|
+| 1 | Internal error in Srinu's "CULTSPORT_ final.xlsx": headline summary box ₹54,08,576 vs line-items ₹25,71,988 — box drops ₹27,07,538 of real traceable payments and adds ₹1,29,150 phantom purchases (net ₹28,36,588 overstatement) | documentation-gap | 28,36,588 | open | Srinu's xlsx summary box vs 236 rows re-totalled; 53 bank payments each with unique HDFC/ICICI/Axis ref (01-Jul-2026 working paper) | Fix box to equal rows (₹25,71,988). Do NOT pay/settle against ₹54L — would overpay ~₹27L above brand's own demand |
+| 2 | Reconciliation difference vs brand: BCH rows ₹25,88,950 (at 25-May cut-off) vs Curefit statement ₹27,03,388 | reconciliation-difference | 1,14,438 | verify | Curefit Customer Statement Report 25-May-2026 (₹27,03,388) vs xlsx rows; brand was ₹14,45,318 @28-Apr, ₹11,44,830 @26-Mar | Reconcile line-by-line; gap = CD/CN booked by BCH but not yet passed by brand — pass them, then agree one figure |
+| 3 | CD-Pending carried on brand's 05-May-2025 ledger image | discount-pending | 2,97,173 | verify | Brand ledger image 05-May-2025 (chat) | Verify whether later passed (Jul-25 / 15-Oct-25 / Feb-26 AR memo batches may cover part); credit balance |
+| 4 | Old Due adjustment on same brand image | discount-pending | 62,883 | verify | Brand ledger image 05-May-2025 (chat) | Confirm credited |
+| 5 | GST-difference credit note (7% GST diff) — "exact calc will share" | credit-note-pending | ~1,13,000 | open | WhatsApp Mani, 31-Oct-2025 | Confirm CN issued and passed |
+| 6 | Power/Brave/Throne liquidation pricing correction — CN 73701 | credit-note-pending | 2,25,000 | verify | Mani admitted "flat ₹1,300 incl. tax, our mistake" 19-Dec-2025; CN 73701 issued 30-Dec-2025 | Verify CN reflects agreed flat ₹1,300 incl. tax; BCH also claims extra 16% → net ₹1,096. Confirm final price/amount |
+| 7 | FOC short-fall (₹15,857 + ₹8,499 + ₹12,123 + Karas) | short-credit | ~36,479 | verify | Chat, mid-2024; partly settled in stock (Karas) | Confirm remaining balance credited or replaced |
+| 8 | FOC % dispute — BCH says 13%, brand says 12% | dispute | ~1% of FOC base (TBD) | open | Chat, Oct-2025; unreconciled | Get agreed FOC % in writing; quantify 1% differential on FOC base |
+| 9 | Marketing reimbursement (CRPF event) — no pre-approved designs/docs | dispute | 50,000 | rejected | Chat, Jul-2024 | Lost for lack of documents; drop unless docs surface |
+| 10 | Discount is payment-timing dependent: 8% CD if paid ≤7 days, drops to 4% past 30 days — brand flagged BCH's late payments | dispute | TBD (per late month) | open | JULY scheme circular + brand flag "payments made after 30 days" 14-Nov-2024 | Confirm each "Discount Received @8%" Tally posting is supported by a ≤7-day payment date, else brand can claw 8%→4% |
+| 11 | Entity migration Cultgear → Cultsport / onto Curefit system — opening-balance carry-over not documented | documentation-gap | TBD | verify | Payee changed Cultgear→Cultsport (27-Feb-2026 ₹3L to "CULTSPORT" via ICICI); no chat record of carry-over/GST reconciliation | Get Cultgear-era closing confirmed in writing as the Cultsport opening balance |
+| 12 | Second related account "Bharath Cycle Centre (BCC)" — keep separate | balance-unconfirmed | 16,01,590 | verify | Older Cultsport AR report for BCC (closing ₹16,01,590); chat mentions "bcc and bch updated ledger" | Confirm if BCC is live; keep the two accounts cleanly separated, do not let balances bleed |
+| 13 | Reconciliation anchor — BCH claims account ZERO as on 21-Aug-2024 | balance-unconfirmed | 0 (anchor) | verify | BCH told Mani 25-Feb-2026; he replied only "will check" | Get zero-point confirmed in writing; if agreed, everything pre-21-Aug-2024 drops out |
+| 14 | No signed final ledger ever achieved in ~2 years; Jan-2025 accounts Google Meet (auditor to join) scheduled then abandoned | documentation-gap | TBD | open | Chat; ~2-year history | Complete the meeting; lock a mutually-signed statement |
+| 15 | Replacement/warranty stock — 3 Monstro (2 rims + 1 frame), Cult e-cycle return, damaged frames, foldable missing part | operational-warranty | in-kind | verify | Chat 2024–25 | Confirm each item replaced or credited |
+
+## Notes / still to analyse
+- **Settlement anchor:** defensible working payable ≈ ₹25.7–27.0 lakh, to be finalised AFTER the pending credits (#3–#7) are passed and netted off. The ₹54,08,576 headline is void.
+- **Do not double-claim:** 11 AR credit memos on 15-Oct-2025 (₹2,33,609) and the 07–10-Feb-2026 batch (₹2,61,162) appear to be clean-ups of earlier pending CD/FOC/damage items — tick these off against #3, #4, #7 before re-claiming.
+- Credit notes already in the sheet split into GST CNs ₹34,13,343 (returns/cancelled invoices per GSTR-2B) and commercial/AR memos ₹18,03,240 (CD, FOC-value, scheme, liquidation) — the discount stream is largely captured; open items above are what is STILL to be passed.
+- **Identity note:** "Mani" = "Manish" = Mani Gandan (one person, Cultsport sales mgr, mani.gandan@cultsport.com). Srinu Yenugu = BCH's own accountant who prepared the source sheet — so the ₹54L error (#1) is in BCH's file, not the brand's.
+- Channel conflict (not a ledger gap): parallel sellers (Shree Cycling / Flying Wheels) offloading Cult + Fit-Kit ~50 m from store — raise formally with Nikunj.
+- **Going forward:** every scheme/CD/FOC rate and liquidation price on email BEFORE acting — nearly everything to date has been verbal (the ₹50K marketing claim #9 died for lack of documents).
+- FOC scheme evolved 15% → 4% → ~12%; Aug-2025 norm = 8% CD + 3% FOC + monthly/quarterly schemes — use when quantifying #8/#10.

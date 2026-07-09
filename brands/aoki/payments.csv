@@ -1,0 +1,16 @@
+payment_no,amount,date,txn_id,evidence,matched_to_bank
+1,76020,2025-10-31,2154348902,WhatsApp receipt (AOKI snapshot logs 23-Oct — align via bank),pending
+2,107205,2025-11-24,,AOKI 05-Feb snapshot (payment-date column),pending
+3,100800,2025-12-02,,AOKI 05-Feb snapshot,pending
+4,76020,2025-12-08,,AOKI 05-Feb snapshot,pending
+5,152775,2025-12-13,,AOKI 05-Feb snapshot,pending
+6,200000,2025-12-27,,AOKI 05-Feb snapshot,pending
+7,250000,2025-12-30,2222644549,WhatsApp receipt,pending
+8,300000,2026-01-10,2237385931,WhatsApp receipt,pending
+9,200000,Feb/Mar 2026 TBC,,bracketed by AOKI snapshots 05-Feb (12.63L) and 30-Mar (19.13L),pending
+10,250000,Feb/Mar 2026 TBC,,bracketed by AOKI snapshots 05-Feb and 30-Mar,pending
+11,200000,2026-02-26,2290223742,WhatsApp receipt,pending
+12,300000,2026-03-31,2331456351,WhatsApp receipt (FY-closing),pending
+13,300000,2026-04-11,2345648221,WhatsApp receipt,pending
+14,300000,2026-04-25,2360384424,WhatsApp receipt,pending
+15,200000,2026-05-22,2392600893,WhatsApp receipt,pending

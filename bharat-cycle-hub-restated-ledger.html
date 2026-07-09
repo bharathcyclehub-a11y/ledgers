@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bharat Cycle Hub — Restated Ledger (Invoice-wise Discount System)</title>
+<style>
+  *{box-sizing:border-box;}
+  body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:24px;color:#111;background:#f4f4f4;}
+  .sheet{background:#fff;max-width:1120px;margin:0 auto 26px;padding:22px 26px;box-shadow:0 1px 4px rgba(0,0,0,.15);}
+  h1{text-align:center;margin:0;font-size:22px;letter-spacing:.5px;}
+  .sub{text-align:center;font-size:12px;margin:2px 0;}
+  .bar{background:#111;color:#fff;text-align:center;font-weight:bold;padding:6px;margin-top:14px;letter-spacing:1px;}
+  .meta{display:flex;justify-content:space-between;font-size:13px;border:1px solid #999;border-top:none;padding:6px 8px;}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px;}
+  th,td{border:1px solid #999;padding:5px 7px;}
+  th{background:#e8e8e8;text-align:left;}
+  td.num,th.num{text-align:right;white-space:nowrap;}
+  tfoot td{font-weight:bold;background:#efefef;}
+  tr.disc td{background:#e7f6ec;}
+  tr.pending td{background:#ffe2e2;color:#a40000;font-weight:600;}
+  tr.totalrow td{background:#ffd4d4;color:#a40000;font-weight:bold;}
+  tr.netrow td{background:#dde9ff;font-weight:bold;}
+  h2{font-size:17px;border-bottom:2px solid #111;padding-bottom:4px;margin-top:6px;}
+  .legend{font-size:12.5px;margin:10px 0 0;}
+  .legend span{display:inline-block;padding:2px 8px;margin-right:10px;border-radius:3px;}
+  .lg-red{background:#ffe2e2;color:#a40000;font-weight:600;}
+  .lg-green{background:#e7f6ec;}
+  .red{color:#a40000;font-weight:bold;}
+  .note{font-size:12px;color:#333;line-height:1.55;}
+  .big{font-size:15px;}
+  .sop{background:#f7f9ff;border:1px solid #aac;border-radius:5px;padding:12px 16px;font-size:13px;line-height:1.6;}
+  .pill{display:inline-block;background:#111;color:#fff;border-radius:12px;padding:1px 10px;font-size:11px;}
+  code{background:#eef;padding:1px 5px;border-radius:3px;}
+</style>
+</head>
+<body>
+
+<!-- ============== HEADER / METHOD ============== -->
+<div class="sheet">
+  <h1>LUCIFER BIKES PVT. LTD.</h1>
+  <div class="sub">Shed No 3, Khewat No 331 Khatoni No 344, Near Panipat Rohtak Highway · Rohtak, Haryana 124303</div>
+  <div class="sub">CIN : U35999HR2021PTC095490</div>
+  <div class="bar">BHARAT CYCLE HUB — RESTATED LEDGER (Invoice-wise Discount System)</div>
+  <div class="meta">
+    <div><b>Account : BHARAT CYCLE HUB</b></div>
+    <div>Period 21-06-2025 to 24-06-2026 &nbsp;|&nbsp; Opening Bal. = ₹0.00</div>
+  </div>
+  <p class="note" style="margin-top:12px;">
+    <b>Method = Invoice-wise.</b> Each invoice carries its own discount @ <b>18% on taxable value (invoice ÷ 1.12)</b>, tagged with the bill number.
+    Discounts already issued by Lucifer (DIS vouchers) are <span class="lg-green">green</span>; discounts earned but
+    <b>not yet credited</b> are <span class="lg-red">red (PENDING)</span>. We track two balances:
+    a <b>Confirmed balance</b> that ties exactly to Lucifer's books, and <b>Our true net</b> after pending discounts.
+  </p>
+</div>
+
+<!-- ============== TABLE B: INVOICE-WISE DISCOUNT REGISTER ============== -->
+<div class="sheet">
+  <h2>1 · Invoice-wise Discount Register <span class="pill">the master truth</span></h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Bill No</th><th>Date</th><th class="num">Invoice (Rs.)</th>
+        <th class="num">Taxable (÷1.12)</th><th class="num">Discount @18%</th>
+        <th>Discount Voucher</th><th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="disc"><td>LB/2025-26/0156</td><td>21-06-2025</td><td class="num">29,958</td><td class="num">26,748</td><td class="num">4,815</td><td>DIS-90</td><td>Credited</td></tr>
+      <tr class="disc"><td>LB/2025-26/0175</td><td>30-06-2025</td><td class="num">8,59,456</td><td class="num">7,67,371</td><td class="num">1,38,127</td><td>DIS-90</td><td>Credited (lump 156+175 = 1,42,402)</td></tr>
+      <tr class="disc"><td>LB/2025-26/0208</td><td>17-07-2025</td><td class="num">3,54,381</td><td class="num">3,16,412</td><td class="num">56,954</td><td>DIS-110</td><td>Credited</td></tr>
+      <tr class="disc"><td>LB/2025-26/0237</td><td>07-08-2025</td><td class="num">3,28,161</td><td class="num">2,93,001</td><td class="num">52,740</td><td>DIS-110</td><td>Credited (lump 208+237 = 1,09,694)</td></tr>
+      <tr class="disc"><td>LB/2025-26/0364</td><td>14-10-2025</td><td class="num">11,64,702</td><td class="num">10,39,913</td><td class="num">1,87,184</td><td>DIS 210</td><td>Credited 2,18,113 (incl. ₹150/cycle)</td></tr>
+      <tr class="pending"><td>LB/2025-26/0365</td><td>14-10-2025</td><td class="num">26,539</td><td class="num">23,696</td><td class="num">4,265</td><td>DISC-PEND-0365</td><td>PENDING — missed when 364 was credited</td></tr>
+      <tr class="pending"><td>LB/2025-26/0468</td><td>22-11-2025</td><td class="num">11,340</td><td class="num">10,125</td><td class="num">1,823</td><td>DISC-PEND-0468</td><td>PENDING</td></tr>
+      <tr class="disc"><td>LB/2025-26/0600</td><td>31-12-2025</td><td class="num">4,70,442</td><td class="num">4,20,038</td><td class="num">75,607</td><td>DIS-304</td><td>Credited 72,895 (₹2,712 short of 18%)</td></tr>
+      <tr class="pending"><td>LB/2025-26/0689</td><td>31-01-2026</td><td class="num">1,35,452</td><td class="num">1,20,939</td><td class="num">21,769</td><td>DISC-PEND-0689</td><td>PENDING</td></tr>
+      <tr class="pending"><td>LB/2025-26/0690</td><td>31-01-2026</td><td class="num">88,813</td><td class="num">79,297</td><td class="num">14,274</td><td>DISC-PEND-0690</td><td>PENDING</td></tr>
+      <tr class="pending"><td>LB/2025-26/814</td><td>14-03-2026</td><td class="num">90,824</td><td class="num">81,093</td><td class="num">14,597</td><td>DISC-PEND-814</td><td>PENDING</td></tr>
+      <tr class="pending"><td>LB/2025-26/815</td><td>14-03-2026</td><td class="num">27,823</td><td class="num">24,842</td><td class="num">4,472</td><td>DISC-PEND-815</td><td>PENDING</td></tr>
+      <tr class="pending"><td>LB/2025-26/849</td><td>28-03-2026</td><td class="num">1,48,048</td><td class="num">1,32,186</td><td class="num">23,793</td><td>DISC-PEND-849</td><td>PENDING</td></tr>
+      <tr class="pending"><td>LB/26-27/041</td><td>24-04-2026</td><td class="num">8,59,334</td><td class="num">7,67,263</td><td class="num">1,38,107</td><td>DISC-PEND-041</td><td>PENDING</td></tr>
+      <tr class="pending"><td>LB/26-27/0272</td><td>31-05-2026</td><td class="num">10,24,879</td><td class="num">9,15,071</td><td class="num">1,64,713</td><td>DISC-PEND-0272</td><td>PENDING</td></tr>
+      <tr class="pending"><td>LB/26-27/0281</td><td>04-06-2026</td><td class="num">1,54,334</td><td class="num">1,37,798</td><td class="num">24,804</td><td>DISC-PEND-0281</td><td>PENDING</td></tr>
+    </tbody>
+    <tfoot>
+      <tr><td colspan="4" style="text-align:right">Discount already credited</td><td class="num">5,43,104</td><td colspan="2">DIS-90, 110, 210, 304</td></tr>
+      <tr class="totalrow"><td colspan="4" style="text-align:right">DISCOUNT PENDING (10 invoices)</td><td class="num">4,12,617</td><td colspan="2">to be claimed / credited</td></tr>
+    </tfoot>
+  </table>
+  <div class="legend">
+    <span class="lg-green">Credited by Lucifer</span>
+    <span class="lg-red">Pending — not yet credited</span>
+  </div>
+</div>
+
+<!-- ============== TABLE A: CONFIRMED LEDGER ============== -->
+<div class="sheet">
+  <h2>2 · Confirmed Ledger <span class="pill">ties exactly to Lucifer's books</span></h2>
+  <table>
+    <thead>
+      <tr><th>Date</th><th>Type</th><th>Vch/Bill No</th><th>Account</th>
+      <th class="num">Debit</th><th class="num">Credit</th><th class="num">Balance</th><th>Narration</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>21-06-2025</td><td>Sale</td><td>LB/2025-26/0156</td><td>Sales</td><td class="num">29,958</td><td class="num"></td><td class="num">29,958 Dr</td><td></td></tr>
+      <tr><td>30-06-2025</td><td>Sale</td><td>LB/2025-26/0175</td><td>Sales</td><td class="num">8,59,456</td><td class="num"></td><td class="num">8,89,414 Dr</td><td></td></tr>
+      <tr><td>17-07-2025</td><td>Sale</td><td>LB/2025-26/0208</td><td>Sales</td><td class="num">3,54,381</td><td class="num"></td><td class="num">12,43,795 Dr</td><td></td></tr>
+      <tr><td>31-07-2025</td><td>Rcpt</td><td>395</td><td>HDFC ...722</td><td class="num"></td><td class="num">3,00,000</td><td class="num">9,43,795 Dr</td><td></td></tr>
+      <tr><td>07-08-2025</td><td>Sale</td><td>LB/2025-26/0237</td><td>Sales</td><td class="num">3,28,161</td><td class="num"></td><td class="num">12,71,956 Dr</td><td></td></tr>
+      <tr><td>02-09-2025</td><td>Rcpt</td><td>492</td><td>HDFC ...722</td><td class="num"></td><td class="num">2,00,000</td><td class="num">10,71,956 Dr</td><td></td></tr>
+      <tr><td>17-09-2025</td><td>Rcpt</td><td>539</td><td>HDFC ...722</td><td class="num"></td><td class="num">5,00,000</td><td class="num">5,71,956 Dr</td><td></td></tr>
+      <tr class="disc"><td>29-09-2025</td><td>Jrnl</td><td>DIS-90</td><td>Discount &amp; Rebate</td><td class="num"></td><td class="num">1,42,402</td><td class="num">4,29,554 Dr</td><td>18% on 156 &amp; 175</td></tr>
+      <tr><td>14-10-2025</td><td>Sale</td><td>LB/2025-26/0364</td><td>Sales</td><td class="num">11,64,702</td><td class="num"></td><td class="num">15,94,256 Dr</td><td></td></tr>
+      <tr><td>14-10-2025</td><td>Sale</td><td>LB/2025-26/0365</td><td>Sales</td><td class="num">26,539</td><td class="num"></td><td class="num">16,20,795 Dr</td><td></td></tr>
+      <tr><td>15-10-2025</td><td>Rcpt</td><td>625</td><td>HDFC ...722</td><td class="num"></td><td class="num">3,19,860</td><td class="num">13,00,935 Dr</td><td></td></tr>
+      <tr class="disc"><td>15-10-2025</td><td>Jrnl</td><td>DIS-110</td><td>Discount &amp; Rebate</td><td class="num"></td><td class="num">1,09,694</td><td class="num">11,91,241 Dr</td><td>18% on 208, 237</td></tr>
+      <tr><td>22-11-2025</td><td>Sale</td><td>LB/2025-26/0468</td><td>Sales</td><td class="num">11,340</td><td class="num"></td><td class="num">12,02,581 Dr</td><td></td></tr>
+      <tr><td>17-12-2025</td><td>Rcpt</td><td>979</td><td>HDFC ...722</td><td class="num"></td><td class="num">2,00,000</td><td class="num">10,02,581 Dr</td><td></td></tr>
+      <tr><td>25-12-2025</td><td>Rcpt</td><td>1005</td><td>HDFC ...722</td><td class="num"></td><td class="num">4,00,000</td><td class="num">6,02,581 Dr</td><td></td></tr>
+      <tr><td>29-12-2025</td><td>Rcpt</td><td>1026</td><td>HDFC ...722</td><td class="num"></td><td class="num">3,72,077</td><td class="num">2,30,504 Dr</td><td></td></tr>
+      <tr class="disc"><td>30-12-2025</td><td>Jrnl</td><td>DIS 210</td><td>Discount &amp; Rebate</td><td class="num"></td><td class="num">2,18,113</td><td class="num">12,391 Dr</td><td>18% + ₹150 each on LB 364</td></tr>
+      <tr><td>31-12-2025</td><td>Sale</td><td>LB/2025-26/0600</td><td>Sales</td><td class="num">4,70,442</td><td class="num"></td><td class="num">4,82,833 Dr</td><td></td></tr>
+      <tr><td>31-01-2026</td><td>Sale</td><td>LB/2025-26/0689</td><td>Sales</td><td class="num">1,35,452</td><td class="num"></td><td class="num">6,18,285 Dr</td><td></td></tr>
+      <tr><td>31-01-2026</td><td>Sale</td><td>LB/2025-26/0690</td><td>Sales</td><td class="num">88,813</td><td class="num"></td><td class="num">7,07,098 Dr</td><td></td></tr>
+      <tr><td>17-02-2026</td><td>Rcpt</td><td>1203</td><td>HDFC ...722</td><td class="num"></td><td class="num">3,00,000</td><td class="num">4,07,098 Dr</td><td></td></tr>
+      <tr><td>27-02-2026</td><td>SlRt</td><td>CN-48</td><td>Sales</td><td class="num"></td><td class="num">45,218</td><td class="num">3,61,880 Dr</td><td>Sales return</td></tr>
+      <tr><td>14-03-2026</td><td>Sale</td><td>LB/2025-26/814</td><td>Sales</td><td class="num">90,824</td><td class="num"></td><td class="num">4,52,704 Dr</td><td></td></tr>
+      <tr><td>14-03-2026</td><td>Sale</td><td>LB/2025-26/815</td><td>Sales</td><td class="num">27,823</td><td class="num"></td><td class="num">4,80,527 Dr</td><td></td></tr>
+      <tr><td>20-03-2026</td><td>Rcpt</td><td>1356</td><td>HDFC ...722</td><td class="num"></td><td class="num">1,50,000</td><td class="num">3,30,527 Dr</td><td></td></tr>
+      <tr class="disc"><td>24-03-2026</td><td>Jrnl</td><td>DIS-304</td><td>Discount &amp; Rebate</td><td class="num"></td><td class="num">72,895</td><td class="num">2,57,632 Dr</td><td>LB 600 18%</td></tr>
+      <tr><td>28-03-2026</td><td>Sale</td><td>LB/2025-26/849</td><td>Sales</td><td class="num">1,48,048</td><td class="num"></td><td class="num">4,05,680 Dr</td><td></td></tr>
+      <tr><td>23-04-2026</td><td>Rcpt</td><td>128</td><td>HDFC ...722</td><td class="num"></td><td class="num">3,00,000</td><td class="num">1,05,680 Dr</td><td></td></tr>
+      <tr><td>24-04-2026</td><td>Sale</td><td>LB/26-27/041</td><td>Sales</td><td class="num">8,59,334</td><td class="num"></td><td class="num">9,65,014 Dr</td><td></td></tr>
+      <tr><td>22-05-2026</td><td>Rcpt</td><td>273</td><td>HDFC ...722</td><td class="num"></td><td class="num">4,00,000</td><td class="num">5,65,014 Dr</td><td></td></tr>
+      <tr><td>31-05-2026</td><td>Sale</td><td>LB/26-27/0272</td><td>Sales</td><td class="num">10,24,879</td><td class="num"></td><td class="num">15,89,893 Dr</td><td></td></tr>
+      <tr><td>04-06-2026</td><td>Sale</td><td>LB/26-27/0281</td><td>Sales</td><td class="num">1,54,334</td><td class="num"></td><td class="num">17,44,227 Dr</td><td></td></tr>
+      <tr><td>11-06-2026</td><td>Rcpt</td><td>363</td><td>HDFC ...722</td><td class="num"></td><td class="num">5,00,000</td><td class="num">12,44,227 Dr</td><td></td></tr>
+      <tr><td>13-06-2026</td><td>SlRt</td><td>Cn-10</td><td>Sales</td><td class="num"></td><td class="num">9,974</td><td class="num">12,34,253 Dr</td><td>Sales return</td></tr>
+    </tbody>
+    <tfoot>
+      <tr><td colspan="4" style="text-align:right">Totals</td><td class="num">57,74,486</td><td class="num">45,40,233</td><td class="num">12,34,253 Dr</td><td>Confirmed closing</td></tr>
+    </tfoot>
+  </table>
+</div>
+
+<!-- ============== TABLE C: PENDING DISCOUNT JOURNAL + TRUE NET ============== -->
+<div class="sheet">
+  <h2>3 · Pending Discount Entries to Post (invoice-wise) &amp; Our True Net</h2>
+  <p class="note">These are the entries that complete the truth from our side. Post each as a credit (discount receivable) tagged to its bill number.
+  They are <b>accrued</b> — i.e. earned but awaiting Lucifer's credit note.</p>
+  <table>
+    <thead>
+      <tr><th>Voucher</th><th>Bill No</th><th>Account</th><th class="num">Credit (Disc.)</th><th class="num">Running Net Bal.</th></tr>
+    </thead>
+    <tbody>
+      <tr><td colspan="4" style="text-align:right;font-weight:bold;">Confirmed closing (per Lucifer)</td><td class="num">12,34,253 Dr</td></tr>
+      <tr class="pending"><td>DISC-PEND-0281</td><td>LB/26-27/0281</td><td>Discount &amp; Rebate</td><td class="num">24,804</td><td class="num">12,09,449 Dr</td></tr>
+      <tr class="pending"><td>DISC-PEND-0272</td><td>LB/26-27/0272</td><td>Discount &amp; Rebate</td><td class="num">1,64,713</td><td class="num">10,44,736 Dr</td></tr>
+      <tr class="pending"><td>DISC-PEND-041</td><td>LB/26-27/041</td><td>Discount &amp; Rebate</td><td class="num">1,38,107</td><td class="num">9,06,629 Dr</td></tr>
+      <tr class="pending"><td>DISC-PEND-849</td><td>LB/2025-26/849</td><td>Discount &amp; Rebate</td><td class="num">23,793</td><td class="num">8,82,836 Dr</td></tr>
+      <tr class="pending"><td>DISC-PEND-815</td><td>LB/2025-26/815</td><td>Discount &amp; Rebate</td><td class="num">4,472</td><td class="num">8,78,364 Dr</td></tr>
+      <tr class="pending"><td>DISC-PEND-814</td><td>LB/2025-26/814</td><td>Discount &amp; Rebate</td><td class="num">14,597</td><td class="num">8,63,767 Dr</td></tr>
+      <tr class="pending"><td>DISC-PEND-0690</td><td>LB/2025-26/0690</td><td>Discount &amp; Rebate</td><td class="num">14,274</td><td class="num">8,49,493 Dr</td></tr>
+      <tr class="pending"><td>DISC-PEND-0689</td><td>LB/2025-26/0689</td><td>Discount &amp; Rebate</td><td class="num">21,769</td><td class="num">8,27,724 Dr</td></tr>
+      <tr class="pending"><td>DISC-PEND-0468</td><td>LB/2025-26/0468</td><td>Discount &amp; Rebate</td><td class="num">1,823</td><td class="num">8,25,901 Dr</td></tr>
+      <tr class="pending"><td>DISC-PEND-0365</td><td>LB/2025-26/0365</td><td>Discount &amp; Rebate</td><td class="num">4,265</td><td class="num">8,21,636 Dr</td></tr>
+    </tbody>
+    <tfoot>
+      <tr class="totalrow"><td colspan="3" style="text-align:right">Total pending discount</td><td class="num">4,12,617</td><td class="num"></td></tr>
+      <tr class="netrow"><td colspan="3" style="text-align:right">OUR TRUE NET BALANCE (what we actually owe)</td><td class="num"></td><td class="num">8,21,636 Dr</td></tr>
+    </tfoot>
+  </table>
+  <p class="note big">
+    Confirmed balance <b>₹12,34,253 Dr</b> &nbsp;−&nbsp; pending discount <span class="red">₹4,12,617</span> &nbsp;=&nbsp;
+    <b>true net payable ≈ ₹8,21,636 Dr</b>.
+  </p>
+</div>
+
+<!-- ============== SOP ============== -->
+<div class="sheet">
+  <h2>4 · How to keep this going (your SOP)</h2>
+  <div class="sop">
+    <b>Rule:</b> discount lives on the <u>invoice</u>, never on the payment.<br><br>
+    <b>1. New sale invoice arrives</b> → add a row to the <i>Discount Register</i>: Bill No, Invoice amount, Taxable = Invoice ÷ 1.12 (use the actual taxable from the GST invoice if items aren't all 12% GST), Discount = Taxable × 18%. Mark status <span class="lg-red">PENDING</span>, voucher <code>DISC-PEND-&lt;billno&gt;</code>.<br>
+    <b>2. Payments stay round figures</b> — record them as-is against the running balance. Do <u>not</u> try to attach discount to a payment.<br>
+    <b>3. When Lucifer issues a credit note (DIS-xx)</b> → find that bill's row, change status <span class="lg-red">PENDING</span> → <span class="lg-green">Credited (DIS-xx)</span>, and note any short/excess vs the 18% figure.<br>
+    <b>4. Always report two numbers:</b> <i>Confirmed balance</i> (matches Lucifer) and <i>True net</i> (after pending discounts). The gap = what you're still owed in discounts.<br><br>
+    <b>Open items flagged:</b>
+    <ul style="margin:4px 0;">
+      <li>Bill <b>0365</b> was raised same day as 364 but skipped in DIS 210 — claim ₹4,265.</li>
+      <li>Bill <b>600</b> was credited ₹2,712 short of 18% (got 72,895 vs 75,607) — verify if intentional.</li>
+      <li><b>₹150-per-cycle</b> rebate (seen on bill 364) may also apply to pending bills — if so, pending claim rises by ₹150 × units. Add unit counts to compute.</li>
+      <li>Discount figures use 12% GST (cycles). For any bill with 18%/28% GST items, replace taxable with the invoice's actual taxable value.</li>
+    </ul>
+  </div>
+</div>
+
+</body>
+</html>

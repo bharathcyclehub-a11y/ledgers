@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)file:///C:/Users/567/Downloads/eid_emotorad_fresh.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Eid Al-Adha Mubarak – E Motorad</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Scheherazade+New:wght@400;700&family=Raleway:wght@200;300;400&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body {
+  width: 1200px; height: 675px;
+  overflow: hidden;
+  background: #020b1a;
+}
+
+.scene {
+  position: relative;
+  width: 1200px; height: 675px;
+  background: radial-gradient(ellipse at 50% 0%, #0d2a5e 0%, #030d22 55%, #010810 100%);
+  overflow: hidden;
+}
+
+/* ---- AURORA GLOW ---- */
+.aurora {
+  position: absolute;
+  top: -60px; left: 50%; transform: translateX(-50%);
+  width: 900px; height: 320px;
+  background: radial-gradient(ellipse, rgba(180,130,20,0.18) 0%, rgba(10,60,120,0.12) 50%, transparent 80%);
+  filter: blur(40px);
+  animation: pulse 6s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+/* ---- STARS ---- */
+.stars {
+  position: absolute; inset: 0; z-index: 2;
+}
+.star {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  animation: twinkle var(--dur, 3s) infinite alternate var(--delay, 0s);
+}
+
+/* ---- MOON ---- */
+.moon {
+  position: absolute;
+  top: 38px; right: 160px;
+  width: 72px; height: 72px;
+  background: radial-gradient(circle at 38% 38%, #ffe87a, #c8941a);
+  border-radius: 50%;
+  box-shadow: 0 0 30px 10px rgba(212,175,55,0.45), 0 0 80px 20px rgba(212,175,55,0.15);
+  z-index: 4;
+  animation: moonGlow 4s ease-in-out infinite alternate;
+}
+.moon-crescent {
+  position: absolute;
+  top: 4px; left: 12px;
+  width: 58px; height: 58px;
+  background: #0a1e45;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* ---- GROUND ---- */
+.ground {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 130px;
+  background: linear-gradient(to top, #c8901a 0%, #a87010 40%, #7a5008 70%, transparent 100%);
+  z-index: 5;
+}
+.dune1 {
+  position: absolute;
+  bottom: 118px; left: -40px;
+  width: 500px; height: 100px;
+  background: radial-gradient(ellipse at 50% 100%, #b07818 0%, transparent 70%);
+  z-index: 5;
+}
+.dune2 {
+  position: absolute;
+  bottom: 122px; right: -20px;
+  width: 420px; height: 85px;
+  background: radial-gradient(ellipse at 50% 100%, #9a6a10 0%, transparent 70%);
+  z-index: 5;
+}
+
+/* ---- MOSQUE SILHOUETTE (pure CSS) ---- */
+.mosque {
+  position: absolute;
+  bottom: 118px;
+  left: 60px;
+  z-index: 6;
+  display: flex;
+  align-items: flex-end;
+  gap: 0px;
+}
+
+.minaret {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.minaret-top {
+  width: 10px; height: 30px;
+  background: #c8901a;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+.minaret-crescent {
+  width: 8px; height: 8px;
+  border: 2px solid #f5d060;
+  border-radius: 50%;
+  position: relative;
+  top: -34px;
+  left: -1px;
+  background: transparent;
+}
+.minaret-body {
+  width: 18px;
+  background: linear-gradient(to right, #a07015, #d4a020, #a07015);
+}
+.minaret-base {
+  width: 26px; height: 14px;
+  background: #b8881a;
+}
+
+.dome-group {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+.dome-main {
+  width: 120px; height: 65px;
+  background: linear-gradient(135deg, #c8901a 0%, #f0be30 50%, #a07010 100%);
+  border-radius: 60px 60px 0 0;
+  position: relative;
+}
+.dome-small {
+  width: 55px; height: 38px;
+  background: linear-gradient(135deg, #b07818 0%, #daa828 50%, #906010 100%);
+  border-radius: 30px 30px 0 0;
+}
+.dome-tiny {
+  width: 34px; height: 26px;
+  background: linear-gradient(135deg, #a07015 0%, #c89820 50%, #806008 100%);
+  border-radius: 20px 20px 0 0;
+}
+.mosque-wall {
+  width: 190px; height: 68px;
+  background: linear-gradient(to right, #9a6a10, #c8901a, #b07818);
+  position: relative;
+}
+.arch {
+  position: absolute;
+  bottom: 0;
+  width: 28px; height: 36px;
+  border-radius: 14px 14px 0 0;
+  background: rgba(0,5,20,0.6);
+}
+.arch:nth-child(1){ left: 18px; }
+.arch:nth-child(2){ left: 56px; }
+.arch:nth-child(3){ left: 94px; }
+.arch:nth-child(4){ left: 132px; }
+
+/* Right mini mosque */
+.mosque-right {
+  position: absolute;
+  bottom: 118px;
+  right: 80px;
+  z-index: 6;
+  display: flex;
+  align-items: flex-end;
+  gap: 1px;
+  opacity: 0.7;
+  transform: scaleX(-1);
+}
+
+/* ---- CAMELS ---- */
+.camel-group {
+  position: absolute;
+  bottom: 125px;
+  right: 200px;
+  z-index: 7;
+  display: flex;
+  gap: 18px;
+  align-items: flex-end;
+}
+.camel {
+  position: relative;
+}
+.camel-body {
+  width: 60px; height: 34px;
+  background: #c88c18;
+  border-radius: 40% 50% 30% 30%;
+  position: relative;
+}
+.camel-hump {
+  position: absolute;
+  top: -14px; left: 18px;
+  width: 28px; height: 18px;
+  background: #d4981e;
+  border-radius: 50% 50% 0 0;
+}
+.camel-head {
+  position: absolute;
+  top: -20px; right: -8px;
+  width: 18px; height: 22px;
+  background: #b87e14;
+  border-radius: 40% 40% 30% 30%;
+}
+.camel-neck {
+  position: absolute;
+  top: -8px; right: 4px;
+  width: 10px; height: 16px;
+  background: #c08818;
+  border-radius: 4px;
+}
+.camel-leg {
+  position: absolute;
+  bottom: -18px;
+  width: 7px; height: 20px;
+  background: #b07810;
+  border-radius: 3px;
+}
+.leg1{ left: 8px; }
+.leg2{ left: 20px; }
+.leg3{ left: 34px; }
+.leg4{ left: 46px; }
+
+.camel-sm .camel-body { width: 42px; height: 24px; }
+.camel-sm .camel-hump { width: 20px; height: 13px; top: -10px; left: 12px; }
+.camel-sm .camel-head { width: 13px; height: 16px; top: -14px; }
+.camel-sm .camel-neck { width: 7px; height: 11px; }
+.camel-sm .camel-leg { height: 14px; bottom: -14px; width: 5px; }
+
+/* ---- LANTERNS ---- */
+.lantern-group {
+  position: absolute;
+  top: 0; right: 90px;
+  z-index: 8;
+  display: flex;
+  gap: 28px;
+}
+.lantern {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: sway var(--sw, 4s) ease-in-out infinite alternate;
+  transform-origin: top center;
+}
+.lantern-chain {
+  width: 1px;
+  background: linear-gradient(to bottom, #c8a030, rgba(200,160,48,0.3));
+  margin-bottom: 2px;
+}
+.lantern-body {
+  width: 22px;
+  background: linear-gradient(to bottom, #f0c830 0%, #e08010 50%, #f0c830 100%);
+  border-radius: 4px;
+  position: relative;
+  box-shadow: 0 0 12px 5px rgba(240,180,20,0.5), 0 0 30px 10px rgba(240,160,0,0.2);
+}
+.lantern-cap {
+  width: 28px; height: 8px;
+  background: #c89020;
+  border-radius: 4px 4px 0 0;
+  margin-bottom: -1px;
+}
+.lantern-bot {
+  width: 28px; height: 8px;
+  background: #c89020;
+  border-radius: 0 0 4px 4px;
+  margin-top: -1px;
+}
+.lantern-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px; height: 10px;
+  background: #fff8d0;
+  border-radius: 50%;
+  box-shadow: 0 0 8px 4px rgba(255,240,160,0.8);
+  animation: flicker 1.5s infinite alternate;
+}
+
+/* ---- DIVIDER LINE ---- */
+.line-left, .line-right {
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(212,175,55,0.6), transparent);
+  z-index: 9;
+  animation: expandLine 1.2s 0.6s ease forwards;
+  transform-origin: center;
+  transform: scaleX(0);
+}
+.line-left { left: 30px; width: 280px; top: 47%; }
+.line-right { right: 30px; width: 280px; top: 47%; transform: scaleX(0); }
+
+/* ---- CENTER TEXT ---- */
+.text-block {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  animation: fadeUp 1.1s 0.3s ease both;
+}
+
+.wishes-line {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 200;
+  font-size: 13px;
+  letter-spacing: 7px;
+  color: rgba(212,175,55,0.65);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.eid-word {
+  font-family: 'Playfair Display', serif;
+  font-size: 78px;
+  font-weight: 700;
+  color: #f8da6e;
+  text-shadow: 0 0 40px rgba(220,170,30,0.7), 0 4px 20px rgba(0,0,0,0.8);
+  line-height: 1;
+  display: block;
+  animation: fadeUp 1s 0.1s ease both;
+}
+.al-adha {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 46px;
+  font-weight: 400;
+  color: rgba(255,230,100,0.9);
+  text-shadow: 0 0 25px rgba(200,155,20,0.5);
+  display: block;
+  margin-top: 4px;
+  animation: fadeUp 1s 0.25s ease both;
+}
+.mubarak {
+  font-family: 'Scheherazade New', serif;
+  font-size: 62px;
+  font-weight: 700;
+  color: #ffe87a;
+  text-shadow: 0 0 50px rgba(212,175,55,0.6), 0 3px 15px rgba(0,0,0,0.7);
+  display: block;
+  margin-top: 6px;
+  animation: fadeUp 1s 0.4s ease both;
+}
+
+.ornament {
+  color: rgba(212,175,55,0.7);
+  font-size: 18px;
+  letter-spacing: 12px;
+  margin: 10px 0;
+  display: block;
+  animation: fadeUp 1s 0.6s ease both;
+}
+
+/* ---- LOGO ---- */
+.logo-wrap {
+  position: absolute;
+  top: 22px; left: 32px;
+  z-index: 20;
+  background: rgba(255,255,255,0.97);
+  border-radius: 10px;
+  padding: 10px 20px;
+  box-shadow: 0 0 0 1.5px rgba(212,175,55,0.5), 0 8px 30px rgba(0,0,0,0.6);
+  animation: fadeDown 0.9s ease both;
+}
+.logo-wrap img { height: 50px; display: block; }
+
+.logo-tagline {
+  position: absolute;
+  top: 100px; left: 32px;
+  z-index: 20;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(212,175,55,0.65);
+  text-transform: uppercase;
+  animation: fadeDown 0.9s 0.3s ease both;
+}
+
+/* ---- BOTTOM ---- */
+.footer {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 56px;
+  background: linear-gradient(to top, rgba(2,8,22,0.97) 60%, transparent);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer-text {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: rgba(212,175,55,0.6);
+  text-transform: uppercase;
+}
+
+/* KEYFRAMES */
+@keyframes pulse {
+  from { opacity: 0.6; transform: translateX(-50%) scale(1); }
+  to   { opacity: 1;   transform: translateX(-50%) scale(1.08); }
+}
+@keyframes twinkle {
+  from { opacity: 0.2; transform: scale(0.6); }
+  to   { opacity: 1;   transform: scale(1.4); }
+}
+@keyframes moonGlow {
+  from { box-shadow: 0 0 28px 8px rgba(212,175,55,0.4), 0 0 70px 18px rgba(212,175,55,0.12); }
+  to   { box-shadow: 0 0 40px 16px rgba(212,175,55,0.6), 0 0 100px 30px rgba(212,175,55,0.2); }
+}
+@keyframes sway {
+  from { transform: rotate(-4deg); }
+  to   { transform: rotate(4deg); }
+}
+@keyframes flicker {
+  from { opacity: 0.7; }
+  to   { opacity: 1; }
+}
+@keyframes expandLine {
+  to { transform: scaleX(1); }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+<div class="scene">
+
+  <!-- Aurora glow -->
+  <div class="aurora"></div>
+
+  <!-- Stars -->
+  <div class="stars" id="stars"><div class="star" style="width: 1.54084px; height: 1.54084px; top: 66.6727%; left: 72.6316%; --dur: 3.3s; --delay: -3.4s; opacity: 0.200674;"></div><div class="star" style="width: 0.576893px; height: 0.576893px; top: 11.7827%; left: 91.6892%; --dur: 4.0s; --delay: -2.6s; opacity: 0.350337;"></div><div class="star" style="width: 1.04578px; height: 1.04578px; top: 67.0266%; left: 59.1943%; --dur: 2.8s; --delay: -1.5s; opacity: 0.327335;"></div><div class="star" style="width: 1.99095px; height: 1.99095px; top: 56.3079%; left: 98.3471%; --dur: 4.2s; --delay: -0.6s; opacity: 0.228628;"></div><div class="star" style="width: 2.36942px; height: 2.36942px; top: 1.37153%; left: 19.0992%; --dur: 4.2s; --delay: -1.5s; opacity: 0.31365;"></div><div class="star" style="width: 1.6921px; height: 1.6921px; top: 10.1213%; left: 82.3408%; --dur: 1.9s; --delay: -3.8s; opacity: 0.211625;"></div><div class="star" style="width: 2.47886px; height: 2.47886px; top: 3.23273%; left: 37.2854%; --dur: 2.2s; --delay: -3.4s; opacity: 0.640595;"></div><div class="star" style="width: 2.81481px; height: 2.81481px; top: 26.381%; left: 88.1416%; --dur: 2.1s; --delay: -0.0s; opacity: 0.249838;"></div><div class="star" style="width: 2.47749px; height: 2.47749px; top: 47.7081%; left: 10.6667%; --dur: 3.7s; --delay: -1.0s; opacity: 0.340024;"></div><div class="star" style="width: 1.74319px; height: 1.74319px; top: 37.8736%; left: 87.4451%; --dur: 1.6s; --delay: -0.3s; opacity: 0.734755;"></div><div class="star" style="width: 0.879255px; height: 0.879255px; top: 67.7778%; left: 89.693%; --dur: 3.7s; --delay: -3.0s; opacity: 0.794585;"></div><div class="star" style="width: 0.769483px; height: 0.769483px; top: 43.5847%; left: 11.3386%; --dur: 3.8s; --delay: -3.5s; opacity: 0.799936;"></div><div class="star" style="width: 1.06024px; height: 1.06024px; top: 7.66063%; left: 79.6169%; --dur: 3.7s; --delay: -3.9s; opacity: 0.260175;"></div><div class="star" style="width: 2.69889px; height: 2.69889px; top: 22.0172%; left: 86.3738%; --dur: 3.5s; --delay: -1.0s; opacity: 0.285378;"></div><div class="star" style="width: 0.572673px; height: 0.572673px; top: 1.0388%; left: 46.7755%; --dur: 2.7s; --delay: -0.2s; opacity: 0.299798;"></div><div class="star" style="width: 0.628906px; height: 0.628906px; top: 63.3754%; left: 46.5358%; --dur: 4.2s; --delay: -1.3s; opacity: 0.514209;"></div><div class="star" style="width: 2.41964px; height: 2.41964px; top: 19.7396%; left: 56.9131%; --dur: 1.6s; --delay: -2.9s; opacity: 0.721672;"></div><div class="star" style="width: 2.53904px; height: 2.53904px; top: 47.3622%; left: 0.316308%; --dur: 2.8s; --delay: -0.8s; opacity: 0.38958;"></div><div class="star" style="width: 2.72299px; height: 2.72299px; top: 20.9523%; left: 34.3827%; --dur: 4.2s; --delay: -3.2s; opacity: 0.243723;"></div><div class="star" style="width: 1.52866px; height: 1.52866px; top: 49.342%; left: 22.8221%; --dur: 4.0s; --delay: -3.7s; opacity: 0.685281;"></div><div class="star" style="width: 2.51036px; height: 2.51036px; top: 31.6504%; left: 20.1281%; --dur: 2.3s; --delay: -1.1s; opacity: 0.76353;"></div><div class="star" style="width: 2.48369px; height: 2.48369px; top: 25.7705%; left: 1.95571%; --dur: 1.7s; --delay: -2.3s; opacity: 0.697091;"></div><div class="star" style="width: 2.07729px; height: 2.07729px; top: 37.088%; left: 10.5645%; --dur: 3.4s; --delay: -3.4s; opacity: 0.360527;"></div><div class="star" style="width: 2.39437px; height: 2.39437px; top: 67.4199%; left: 89.6468%; --dur: 3.7s; --delay: -1.6s; opacity: 0.621313;"></div><div class="star" style="width: 2.51804px; height: 2.51804px; top: 8.2915%; left: 35.2816%; --dur: 2.8s; --delay: -2.2s; opacity: 0.343395;"></div><div class="star" style="width: 1.68661px; height: 1.68661px; top: 25.246%; left: 56.0312%; --dur: 2.1s; --delay: -2.0s; opacity: 0.67381;"></div><div class="star" style="width: 0.664064px; height: 0.664064px; top: 3.58609%; left: 32.561%; --dur: 2.5s; --delay: -1.9s; opacity: 0.364618;"></div><div class="star" style="width: 1.74019px; height: 1.74019px; top: 49.6131%; left: 28.3693%; --dur: 4.0s; --delay: -3.6s; opacity: 0.329542;"></div><div class="star" style="width: 1.3501px; height: 1.3501px; top: 38.1538%; left: 97.6575%; --dur: 4.0s; --delay: -1.0s; opacity: 0.69472;"></div><div class="star" style="width: 0.703173px; height: 0.703173px; top: 14.8197%; left: 88.8984%; --dur: 2.5s; --delay: -1.1s; opacity: 0.443605;"></div><div class="star" style="width: 1.11204px; height: 1.11204px; top: 21.1065%; left: 16.2641%; --dur: 3.0s; --delay: -2.7s; opacity: 0.771852;"></div><div class="star" style="width: 1.97609px; height: 1.97609px; top: 39.2763%; left: 51.8463%; --dur: 1.8s; --delay: -1.9s; opacity: 0.75136;"></div><div class="star" style="width: 0.858275px; height: 0.858275px; top: 53.2704%; left: 12.2609%; --dur: 3.3s; --delay: -3.9s; opacity: 0.498453;"></div><div class="star" style="width: 2.76241px; height: 2.76241px; top: 41.4947%; left: 0.00307933%; --dur: 2.8s; --delay: -2.8s; opacity: 0.481584;"></div><div class="star" style="width: 1.83157px; height: 1.83157px; top: 39.5286%; left: 60.55%; --dur: 4.1s; --delay: -1.1s; opacity: 0.757286;"></div><div class="star" style="width: 2.56703px; height: 2.56703px; top: 9.71345%; left: 59.2786%; --dur: 1.6s; --delay: -3.6s; opacity: 0.575998;"></div><div class="star" style="width: 1.08692px; height: 1.08692px; top: 25.5447%; left: 6.10911%; --dur: 3.5s; --delay: -0.1s; opacity: 0.552804;"></div><div class="star" style="width: 1.04301px; height: 1.04301px; top: 35.6533%; left: 24.9491%; --dur: 3.3s; --delay: -2.8s; opacity: 0.239307;"></div><div class="star" style="width: 1.42543px; height: 1.42543px; top: 52.9719%; left: 33.0426%; --dur: 1.9s; --delay: -0.3s; opacity: 0.514966;"></div><div class="star" style="width: 0.7056px; height: 0.7056px; top: 47.5903%; left: 62.6417%; --dur: 2.8s; --delay: -0.4s; opacity: 0.299347;"></div><div class="star" style="width: 2.10677px; height: 2.10677px; top: 41.0131%; left: 30.0935%; --dur: 4.4s; --delay: -0.8s; opacity: 0.381626;"></div><div class="star" style="width: 1.20382px; height: 1.20382px; top: 13.2798%; left: 75.1742%; --dur: 1.7s; --delay: -2.4s; opacity: 0.612149;"></div><div class="star" style="width: 0.698782px; height: 0.698782px; top: 6.47114%; left: 15.297%; --dur: 3.5s; --delay: -2.4s; opacity: 0.471806;"></div><div class="star" style="width: 2.61121px; height: 2.61121px; top: 40.6319%; left: 53.7924%; --dur: 2.5s; --delay: -1.7s; opacity: 0.32472;"></div><div class="star" style="width: 1.85164px; height: 1.85164px; top: 51.0736%; left: 66.7085%; --dur: 2.4s; --delay: -2.6s; opacity: 0.375324;"></div><div class="star" style="width: 1.02237px; height: 1.02237px; top: 61.1686%; left: 91.899%; --dur: 2.0s; --delay: -2.2s; opacity: 0.485347;"></div><div class="star" style="width: 0.64526px; height: 0.64526px; top: 0.384358%; left: 43.2333%; --dur: 2.4s; --delay: -1.4s; opacity: 0.663475;"></div><div class="star" style="width: 2.66501px; height: 2.66501px; top: 40.1988%; left: 64.9708%; --dur: 2.0s; --delay: -1.1s; opacity: 0.774095;"></div><div class="star" style="width: 2.81217px; height: 2.81217px; top: 25.0434%; left: 36.9426%; --dur: 3.1s; --delay: -3.0s; opacity: 0.588595;"></div><div class="star" style="width: 1.54547px; height: 1.54547px; top: 7.04929%; left: 2.10787%; --dur: 2.1s; --delay: -2.0s; opacity: 0.650868;"></div><div class="star" style="width: 1.78773px; height: 1.78773px; top: 11.8315%; left: 62.1719%; --dur: 2.2s; --delay: -2.8s; opacity: 0.452734;"></div><div class="star" style="width: 0.895497px; height: 0.895497px; top: 35.5664%; left: 57.6516%; --dur: 3.7s; --delay: -0.2s; opacity: 0.491763;"></div><div class="star" style="width: 2.40978px; height: 2.40978px; top: 53.6728%; left: 14.585%; --dur: 2.7s; --delay: -2.7s; opacity: 0.725693;"></div><div class="star" style="width: 1.42238px; height: 1.42238px; top: 39.2682%; left: 25.4664%; --dur: 3.6s; --delay: -1.0s; opacity: 0.249359;"></div><div class="star" style="width: 2.09647px; height: 2.09647px; top: 48.0782%; left: 84.2272%; --dur: 4.0s; --delay: -2.9s; opacity: 0.758206;"></div><div class="star" style="width: 2.88286px; height: 2.88286px; top: 42.1539%; left: 81.8189%; --dur: 2.7s; --delay: -3.6s; opacity: 0.593265;"></div><div class="star" style="width: 0.989791px; height: 0.989791px; top: 36.3613%; left: 58.4468%; --dur: 1.5s; --delay: -2.3s; opacity: 0.36085;"></div><div class="star" style="width: 2.36862px; height: 2.36862px; top: 20.3667%; left: 75.11%; --dur: 2.5s; --delay: -1.5s; opacity: 0.604655;"></div><div class="star" style="width: 1.6625px; height: 1.6625px; top: 23.5074%; left: 26.8554%; --dur: 3.4s; --delay: -0.1s; opacity: 0.729204;"></div><div class="star" style="width: 2.04346px; height: 2.04346px; top: 56.1946%; left: 2.18937%; --dur: 3.4s; --delay: -1.8s; opacity: 0.721074;"></div><div class="star" style="width: 1.39195px; height: 1.39195px; top: 47.5534%; left: 81.89%; --dur: 2.3s; --delay: -1.8s; opacity: 0.614747;"></div><div class="star" style="width: 1.60235px; height: 1.60235px; top: 48.2552%; left: 20.1903%; --dur: 2.5s; --delay: -1.7s; opacity: 0.509291;"></div><div class="star" style="width: 1.45184px; height: 1.45184px; top: 34.0824%; left: 6.78608%; --dur: 3.8s; --delay: -2.3s; opacity: 0.735721;"></div><div class="star" style="width: 0.648618px; height: 0.648618px; top: 8.89878%; left: 83.5702%; --dur: 2.6s; --delay: -1.9s; opacity: 0.327256;"></div><div class="star" style="width: 1.99218px; height: 1.99218px; top: 20.6207%; left: 73.6442%; --dur: 2.9s; --delay: -1.7s; opacity: 0.243659;"></div><div class="star" style="width: 1.97566px; height: 1.97566px; top: 66.3807%; left: 78.3827%; --dur: 3.3s; --delay: -0.7s; opacity: 0.435962;"></div><div class="star" style="width: 1.27791px; height: 1.27791px; top: 34.01%; left: 65.8162%; --dur: 2.2s; --delay: -1.4s; opacity: 0.759202;"></div><div class="star" style="width: 1.16481px; height: 1.16481px; top: 48.328%; left: 12.6735%; --dur: 3.1s; --delay: -1.0s; opacity: 0.649155;"></div><div class="star" style="width: 2.46565px; height: 2.46565px; top: 56.4363%; left: 99.9119%; --dur: 3.7s; --delay: -3.1s; opacity: 0.250405;"></div><div class="star" style="width: 2.01566px; height: 2.01566px; top: 3.7623%; left: 32.4156%; --dur: 2.7s; --delay: -2.6s; opacity: 0.76045;"></div><div class="star" style="width: 1.74038px; height: 1.74038px; top: 63.4579%; left: 81.8997%; --dur: 3.0s; --delay: -1.2s; opacity: 0.395682;"></div><div class="star" style="width: 2.67364px; height: 2.67364px; top: 44.9853%; left: 90.5123%; --dur: 3.5s; --delay: -0.2s; opacity: 0.203611;"></div><div class="star" style="width: 1.79595px; height: 1.79595px; top: 33.773%; left: 54.715%; --dur: 4.4s; --delay: -1.7s; opacity: 0.796987;"></div><div class="star" style="width: 2.63137px; height: 2.63137px; top: 40.3136%; left: 53.5082%; --dur: 2.2s; --delay: -1.3s; opacity: 0.534199;"></div><div class="star" style="width: 1.38654px; height: 1.38654px; top: 12.0947%; left: 92.9962%; --dur: 2.2s; --delay: -2.1s; opacity: 0.22136;"></div><div class="star" style="width: 1.39824px; height: 1.39824px; top: 10.343%; left: 63.6166%; --dur: 3.3s; --delay: -3.3s; opacity: 0.53385;"></div><div class="star" style="width: 1.70314px; height: 1.70314px; top: 10.6822%; left: 49.7878%; --dur: 3.3s; --delay: -0.1s; opacity: 0.573796;"></div><div class="star" style="width: 2.21967px; height: 2.21967px; top: 15.9933%; left: 11.4803%; --dur: 2.5s; --delay: -2.7s; opacity: 0.702617;"></div><div class="star" style="width: 1.59843px; height: 1.59843px; top: 62.9446%; left: 13.4637%; --dur: 2.9s; --delay: -0.7s; opacity: 0.260112;"></div><div class="star" style="width: 1.43848px; height: 1.43848px; top: 24.4774%; left: 17.2014%; --dur: 2.7s; --delay: -0.7s; opacity: 0.673066;"></div><div class="star" style="width: 1.12939px; height: 1.12939px; top: 22.5543%; left: 35.6826%; --dur: 2.6s; --delay: -2.9s; opacity: 0.36892;"></div><div class="star" style="width: 2.90233px; height: 2.90233px; top: 60.0679%; left: 33.5756%; --dur: 2.3s; --delay: -3.6s; opacity: 0.397424;"></div><div class="star" style="width: 0.58553px; height: 0.58553px; top: 11.561%; left: 38.7684%; --dur: 3.0s; --delay: -1.0s; opacity: 0.335746;"></div><div class="star" style="width: 1.73596px; height: 1.73596px; top: 57.4508%; left: 6.51765%; --dur: 2.6s; --delay: -3.2s; opacity: 0.37251;"></div><div class="star" style="width: 0.654741px; height: 0.654741px; top: 1.44762%; left: 57.7243%; --dur: 2.6s; --delay: -1.3s; opacity: 0.637901;"></div><div class="star" style="width: 1.48022px; height: 1.48022px; top: 9.552%; left: 9.725%; --dur: 1.9s; --delay: -2.5s; opacity: 0.283077;"></div><div class="star" style="width: 0.74467px; height: 0.74467px; top: 25.5397%; left: 12.4224%; --dur: 3.6s; --delay: -0.5s; opacity: 0.41192;"></div><div class="star" style="width: 1.35117px; height: 1.35117px; top: 55.4799%; left: 50.3446%; --dur: 2.3s; --delay: -2.0s; opacity: 0.283408;"></div><div class="star" style="width: 2.01346px; height: 2.01346px; top: 2.02682%; left: 79.3528%; --dur: 1.6s; --delay: -0.7s; opacity: 0.301416;"></div><div class="star" style="width: 1.17865px; height: 1.17865px; top: 37.8951%; left: 32.6579%; --dur: 3.5s; --delay: -2.0s; opacity: 0.40843;"></div><div class="star" style="width: 1.19728px; height: 1.19728px; top: 61.0023%; left: 41.2226%; --dur: 3.0s; --delay: -0.4s; opacity: 0.482352;"></div><div class="star" style="width: 1.90109px; height: 1.90109px; top: 15.9348%; left: 5.21038%; --dur: 3.9s; --delay: -1.2s; opacity: 0.274465;"></div><div class="star" style="width: 0.558688px; height: 0.558688px; top: 35.7198%; left: 34.5068%; --dur: 1.6s; --delay: -3.5s; opacity: 0.567905;"></div><div class="star" style="width: 2.18986px; height: 2.18986px; top: 42.144%; left: 14.538%; --dur: 4.2s; --delay: -2.7s; opacity: 0.761731;"></div><div class="star" style="width: 2.37041px; height: 2.37041px; top: 7.21938%; left: 52.6105%; --dur: 2.1s; --delay: -2.7s; opacity: 0.327415;"></div><div class="star" style="width: 1.1382px; height: 1.1382px; top: 63.8327%; left: 43.3039%; --dur: 1.6s; --delay: -1.6s; opacity: 0.689642;"></div><div class="star" style="width: 0.927291px; height: 0.927291px; top: 23.4688%; left: 98.7945%; --dur: 4.4s; --delay: -0.2s; opacity: 0.76144;"></div><div class="star" style="width: 0.995505px; height: 0.995505px; top: 29.6661%; left: 44.0425%; --dur: 4.3s; --delay: -3.7s; opacity: 0.571301;"></div><div class="star" style="width: 1.17801px; height: 1.17801px; top: 1.29664%; left: 83.1547%; --dur: 2.0s; --delay: -1.7s; opacity: 0.633999;"></div><div class="star" style="width: 2.74255px; height: 2.74255px; top: 68.179%; left: 41.012%; --dur: 4.5s; --delay: -1.5s; opacity: 0.63994;"></div><div class="star" style="width: 1.38412px; height: 1.38412px; top: 0.99305%; left: 84.4059%; --dur: 3.7s; --delay: -2.8s; opacity: 0.691311;"></div><div class="star" style="width: 0.570909px; height: 0.570909px; top: 0.416934%; left: 1.27105%; --dur: 2.3s; --delay: -0.5s; opacity: 0.654962;"></div><div class="star" style="width: 2.51341px; height: 2.51341px; top: 27.4871%; left: 90.1295%; --dur: 2.5s; --delay: -0.5s; opacity: 0.481086;"></div><div class="star" style="width: 2.36745px; height: 2.36745px; top: 9.56261%; left: 83.5925%; --dur: 3.8s; --delay: -2.9s; opacity: 0.767574;"></div><div class="star" style="width: 2.77823px; height: 2.77823px; top: 20.266%; left: 13.071%; --dur: 2.3s; --delay: -3.6s; opacity: 0.280027;"></div><div class="star" style="width: 2.26849px; height: 2.26849px; top: 32.2515%; left: 70.8582%; --dur: 1.6s; --delay: -1.5s; opacity: 0.528884;"></div><div class="star" style="width: 1.55427px; height: 1.55427px; top: 30.69%; left: 21.0978%; --dur: 1.6s; --delay: -2.8s; opacity: 0.477605;"></div><div class="star" style="width: 0.802973px; height: 0.802973px; top: 47.7371%; left: 54.5152%; --dur: 1.7s; --delay: -3.4s; opacity: 0.796688;"></div><div class="star" style="width: 1.58315px; height: 1.58315px; top: 36.2273%; left: 94.7002%; --dur: 2.1s; --delay: -1.3s; opacity: 0.275691;"></div><div class="star" style="width: 0.531821px; height: 0.531821px; top: 33.2045%; left: 85.3744%; --dur: 3.8s; --delay: -3.1s; opacity: 0.48921;"></div><div class="star" style="width: 2.96627px; height: 2.96627px; top: 46.583%; left: 72.5709%; --dur: 1.5s; --delay: -0.6s; opacity: 0.477177;"></div><div class="star" style="width: 1.36096px; height: 1.36096px; top: 8.485%; left: 28.2914%; --dur: 2.0s; --delay: -0.0s; opacity: 0.439431;"></div><div class="star" style="width: 2.73229px; height: 2.73229px; top: 45.2008%; left: 33.0328%; --dur: 2.7s; --delay: -1.2s; opacity: 0.713061;"></div><div class="star" style="width: 1.3818px; height: 1.3818px; top: 16.1531%; left: 98.3472%; --dur: 2.0s; --delay: -3.6s; opacity: 0.267158;"></div><div class="star" style="width: 2.78783px; height: 2.78783px; top: 49.5931%; left: 98.7604%; --dur: 3.1s; --delay: -3.9s; opacity: 0.50982;"></div><div class="star" style="width: 2.57334px; height: 2.57334px; top: 29.6416%; left: 54.6697%; --dur: 2.2s; --delay: -3.0s; opacity: 0.308273;"></div><div class="star" style="width: 0.526404px; height: 0.526404px; top: 34.617%; left: 67.2321%; --dur: 1.8s; --delay: -2.0s; opacity: 0.664963;"></div><div class="star" style="width: 1.52835px; height: 1.52835px; top: 65.851%; left: 66.125%; --dur: 2.1s; --delay: -1.8s; opacity: 0.711259;"></div><div class="star" style="width: 1.3524px; height: 1.3524px; top: 42.7973%; left: 67.5742%; --dur: 3.9s; --delay: -1.1s; opacity: 0.70496;"></div><div class="star" style="width: 0.729261px; height: 0.729261px; top: 23.271%; left: 86.7937%; --dur: 3.6s; --delay: -3.3s; opacity: 0.582071;"></div></div>
+
+  <!-- Moon -->
+  <div class="moon">
+    <div class="moon-crescent"></div>
+  </div>
+
+  <!-- Lanterns -->
+  <div class="lantern-group">
+    <div class="lantern" style="--sw:3.8s">
+      <div class="lantern-chain" style="height:55px"></div>
+      <div class="lantern-cap"></div>
+      <div class="lantern-body" style="height:48px">
+        <div class="lantern-glow"></div>
+      </div>
+      <div class="lantern-bot"></div>
+    </div>
+    <div class="lantern" style="--sw:4.5s">
+      <div class="lantern-chain" style="height:90px"></div>
+      <div class="lantern-cap"></div>
+      <div class="lantern-body" style="height:60px">
+        <div class="lantern-glow"></div>
+      </div>
+      <div class="lantern-bot"></div>
+    </div>
+    <div class="lantern" style="--sw:3.2s">
+      <div class="lantern-chain" style="height:68px"></div>
+      <div class="lantern-cap"></div>
+      <div class="lantern-body" style="height:40px">
+        <div class="lantern-glow"></div>
+      </div>
+      <div class="lantern-bot"></div>
+    </div>
+  </div>
+
+  <!-- Left Mosque -->
+  <div class="mosque">
+    <div class="minaret">
+      <div class="minaret-top"></div>
+      <div class="minaret-crescent"></div>
+      <div class="minaret-body" style="height:80px"></div>
+      <div class="minaret-base"></div>
+    </div>
+    <div class="dome-group">
+      <div class="dome-tiny"></div>
+      <div class="dome-small"></div>
+      <div class="dome-main"></div>
+      <div class="dome-small"></div>
+      <div class="dome-tiny"></div>
+    </div>
+    <div class="mosque-wall">
+      <div class="arch"></div>
+      <div class="arch"></div>
+      <div class="arch"></div>
+      <div class="arch"></div>
+    </div>
+    <div class="minaret">
+      <div class="minaret-top"></div>
+      <div class="minaret-crescent"></div>
+      <div class="minaret-body" style="height:90px"></div>
+      <div class="minaret-base"></div>
+    </div>
+  </div>
+
+  <!-- Right smaller mosque -->
+  <div class="mosque-right">
+    <div class="minaret">
+      <div class="minaret-top"></div>
+      <div class="minaret-body" style="height:55px; width:12px"></div>
+      <div class="minaret-base" style="width:18px"></div>
+    </div>
+    <div class="dome-group">
+      <div class="dome-tiny"></div>
+      <div class="dome-small"></div>
+      <div class="dome-tiny"></div>
+    </div>
+    <div class="mosque-wall" style="width:100px; height:45px">
+      <div class="arch" style="left:12px"></div>
+      <div class="arch" style="left:46px"></div>
+      <div class="arch" style="left:68px"></div>
+    </div>
+    <div class="minaret">
+      <div class="minaret-top"></div>
+      <div class="minaret-body" style="height:65px; width:12px"></div>
+      <div class="minaret-base" style="width:18px"></div>
+    </div>
+  </div>
+
+  <!-- Desert ground -->
+  <div class="dune1"></div>
+  <div class="dune2"></div>
+  <div class="ground"></div>
+
+  <!-- Camels -->
+  <div class="camel-group">
+    <div class="camel">
+      <div class="camel-body">
+        <div class="camel-hump"></div>
+        <div class="camel-neck"></div>
+        <div class="camel-head"></div>
+        <div class="camel-leg leg1"></div>
+        <div class="camel-leg leg2"></div>
+        <div class="camel-leg leg3"></div>
+        <div class="camel-leg leg4"></div>
+      </div>
+    </div>
+    <div class="camel camel-sm">
+      <div class="camel-body">
+        <div class="camel-hump"></div>
+        <div class="camel-neck"></div>
+        <div class="camel-head"></div>
+        <div class="camel-leg leg1"></div>
+        <div class="camel-leg leg2"></div>
+        <div class="camel-leg leg3"></div>
+        <div class="camel-leg leg4"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Divider lines -->
+  <div class="line-left"></div>
+  <div class="line-right"></div>
+
+  <!-- Central text -->
+  <div class="text-block">
+    <span class="wishes-line">Wishing You &amp; Your Family</span>
+    <span class="ornament">✦ &nbsp; ✦ &nbsp; ✦</span>
+    <span class="eid-word">Eid Al-Adha</span>
+    <span class="al-adha">— Mubarak —</span>
+    <span class="ornament">✦ &nbsp; ✦ &nbsp; ✦</span>
+  </div>
+
+  <!-- Logo -->
+  <div class="logo-wrap">
+    <img src="data:image/jpeg;base64,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" alt="E Motorad">
+  </div>
+  <div class="logo-tagline">Premium E-Cycles</div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span class="footer-text">From the E Motorad Family &nbsp;·&nbsp; Ride Forward, Celebrate Together</span>
+  </div>
+</div>
+
+<script>
+// Generate random stars
+const container = document.getElementById('stars');
+const count = 120;
+for(let i=0;i<count;i++){
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random()*2.5+0.5;
+  s.style.cssText = `
+    width:${size}px; height:${size}px;
+    top:${Math.random()*70}%;
+    left:${Math.random()*100}%;
+    --dur:${(Math.random()*3+1.5).toFixed(1)}s;
+    --delay:-${(Math.random()*4).toFixed(1)}s;
+    opacity:${Math.random()*0.6+0.2};
+  `;
+  container.appendChild(s);
+}
+</script>
+
+</body></html>

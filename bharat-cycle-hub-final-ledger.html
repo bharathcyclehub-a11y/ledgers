@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bharat Cycle Hub — Final Ledger & Pending Discounts</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 24px; color: #111; background:#f4f4f4; }
+  .sheet { background:#fff; max-width: 1080px; margin: 0 auto 28px; padding: 22px 26px; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+  h1 { text-align:center; margin:0; font-size: 22px; letter-spacing:.5px; }
+  .sub { text-align:center; font-size: 12px; margin: 2px 0; }
+  .bar { background:#111; color:#fff; text-align:center; font-weight:bold; padding:6px; margin-top:14px; letter-spacing:1px; }
+  .meta { display:flex; justify-content:space-between; font-size:13px; border:1px solid #999; border-top:none; padding:6px 8px; }
+  table { width:100%; border-collapse: collapse; font-size: 12.5px; }
+  th, td { border:1px solid #999; padding:5px 7px; }
+  th { background:#e8e8e8; text-align:left; }
+  td.num, th.num { text-align:right; white-space:nowrap; }
+  tfoot td { font-weight:bold; background:#efefef; }
+  /* discounted (already credited) */
+  tr.disc td { background:#e7f6ec; }
+  /* pending discount — red highlight */
+  tr.pending td { background:#ffe2e2; color:#a40000; font-weight:600; }
+  .legend { font-size:12.5px; margin:10px 0 0; }
+  .legend span { display:inline-block; padding:2px 8px; margin-right:10px; border-radius:3px; }
+  .lg-red { background:#ffe2e2; color:#a40000; font-weight:600; }
+  .lg-green { background:#e7f6ec; }
+  h2 { font-size:17px; border-bottom:2px solid #111; padding-bottom:4px; margin-top:8px; }
+  .red { color:#a40000; font-weight:bold; }
+  .note { font-size:12px; color:#444; line-height:1.5; }
+  .big { font-size:15px; }
+  tr.totalrow td { background:#ffd4d4; color:#a40000; font-weight:bold; }
+</style>
+</head>
+<body>
+
+<!-- ===================== FULL LEDGER ===================== -->
+<div class="sheet">
+  <h1>LUCIFER BIKES PVT. LTD.</h1>
+  <div class="sub">Shed No 3, Khewat No 331 Khatoni No 344, Near Panipat Rohtak Highway</div>
+  <div class="sub">Vpo-kahni 7 1/2 Biswa 77 Rohtak, Haryana 124303</div>
+  <div class="sub">CIN : U35999HR2021PTC095490</div>
+  <div class="bar">Account Ledger</div>
+  <div class="meta">
+    <div><b>Account : BHARAT CYCLE HUB</b></div>
+    <div>From 21-6-2025 to 24-6-2026 &nbsp;|&nbsp; Opening Bal. = Rs. 0.00</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th><th>Type</th><th>Vch/Bill No</th><th>Account</th>
+        <th class="num">Debit (Rs.)</th><th class="num">Credit (Rs.)</th>
+        <th class="num">Balance (Rs.)</th><th>Short Narration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>21-06-2025</td><td>Sale</td><td>LB/2025-26/0156</td><td>Sales</td><td class="num">29,958.00</td><td class="num"></td><td class="num">29,958.00 Dr</td><td>Disc credited (DIS-90)</td></tr>
+      <tr><td>30-06-2025</td><td>Sale</td><td>LB/2025-26/0175</td><td>Sales</td><td class="num">8,59,456.00</td><td class="num"></td><td class="num">8,89,414.00 Dr</td><td>Disc credited (DIS-90)</td></tr>
+      <tr><td>17-07-2025</td><td>Sale</td><td>LB/2025-26/0208</td><td>Sales</td><td class="num">3,54,381.00</td><td class="num"></td><td class="num">12,43,795.00 Dr</td><td>Disc credited (DIS-110)</td></tr>
+      <tr><td>31-07-2025</td><td>Rcpt</td><td>395</td><td>HDFC Bank A/C 59257777777722</td><td class="num"></td><td class="num">3,00,000.00</td><td class="num">9,43,795.00 Dr</td><td></td></tr>
+      <tr><td>07-08-2025</td><td>Sale</td><td>LB/2025-26/0237</td><td>Sales</td><td class="num">3,28,161.00</td><td class="num"></td><td class="num">12,71,956.00 Dr</td><td>Disc credited (DIS-110)</td></tr>
+      <tr><td>02-09-2025</td><td>Rcpt</td><td>492</td><td>HDFC Bank A/C 59257777777722</td><td class="num"></td><td class="num">2,00,000.00</td><td class="num">10,71,956.00 Dr</td><td></td></tr>
+      <tr><td>17-09-2025</td><td>Rcpt</td><td>539</td><td>HDFC Bank A/C 59257777777722</td><td class="num"></td><td class="num">5,00,000.00</td><td class="num">5,71,956.00 Dr</td><td></td></tr>
+      <tr class="disc"><td>29-09-2025</td><td>Jrnl</td><td>DIS-90</td><td>Discount &amp; Rebate</td><td class="num"></td><td class="num">1,42,402.00</td><td class="num">4,29,554.00 Dr</td><td>18 % discount on 156 &amp; 175</td></tr>
+      <tr><td>14-10-2025</td><td>Sale</td><td>LB/2025-26/0364</td><td>Sales</td><td class="num">11,64,702.00</td><td class="num"></td><td class="num">15,94,256.00 Dr</td><td>Disc credited (DIS 210)</td></tr>
+      <tr class="pending"><td>14-10-2025</td><td>Sale</td><td>LB/2025-26/0365</td><td>Sales</td><td class="num">26,539.00</td><td class="num"></td><td class="num">16,20,795.00 Dr</td><td>DISCOUNT PENDING</td></tr>
+      <tr><td>15-10-2025</td><td>Rcpt</td><td>625</td><td>HDFC Bank A/C 59257777777722</td><td class="num"></td><td class="num">3,19,860.00</td><td class="num">13,00,935.00 Dr</td><td></td></tr>
+      <tr class="disc"><td>15-10-2025</td><td>Jrnl</td><td>DIS-110</td><td>Discount &amp; Rebate</td><td class="num"></td><td class="num">1,09,694.00</td><td class="num">11,91,241.00 Dr</td><td>18 % DIS ON IB 208, LB 237</td></tr>
+      <tr class="pending"><td>22-11-2025</td><td>Sale</td><td>LB/2025-26/0468</td><td>Sales</td><td class="num">11,340.00</td><td class="num"></td><td class="num">12,02,581.00 Dr</td><td>DISCOUNT PENDING</td></tr>
+      <tr><td>17-12-2025</td><td>Rcpt</td><td>979</td><td>HDFC Bank A/C 59257777777722</td><td class="num"></td><td class="num">2,00,000.00</td><td class="num">10,02,581.00 Dr</td><td></td></tr>
+      <tr><td>25-12-2025</td><td>Rcpt</td><td>1005</td><td>HDFC Bank A/C 59257777777722</td><td class="num"></td><td class="num">4,00,000.00</td><td class="num">6,02,581.00 Dr</td><td></td></tr>
+      <tr><td>29-12-2025</td><td>Rcpt</td><td>1026</td><td>HDFC Bank A/C 59257777777722</td><td class="num"></td><td class="num">3,72,077.00</td><td class="num">2,30,504.00 Dr</td><td></td></tr>
+      <tr class="disc"><td>30-12-2025</td><td>Jrnl</td><td>DIS 210</td><td>Discount &amp; Rebate</td><td class="num"></td><td class="num">2,18,113.00</td><td class="num">12,391.00 Dr</td><td>DIS 18% + 150 EACH ON LB 364</td></tr>
+      <tr class="disc"><td>31-12-2025</td><td>Sale</td><td>LB/2025-26/0600</td><td>Sales</td><td class="num">4,70,442.00</td><td class="num"></td><td class="num">4,82,833.00 Dr</td><td>Disc credited (DIS-304)</td></tr>
+      <tr class="pending"><td>31-01-2026</td><td>Sale</td><td>LB/2025-26/0689</td><td>Sales</td><td class="num">1,35,452.00</td><td class="num"></td><td class="num">6,18,285.00 Dr</td><td>DISCOUNT PENDING</td></tr>
+      <tr class="pending"><td>31-01-2026</td><td>Sale</td><td>LB/2025-26/0690</td><td>Sales</td><td class="num">88,813.00</td><td class="num"></td><td class="num">7,07,098.00 Dr</td><td>DISCOUNT PENDING</td></tr>
+      <tr><td>17-02-2026</td><td>Rcpt</td><td>1203</td><td>HDFC Bank A/C 59257777777722</td><td class="num"></td><td class="num">3,00,000.00</td><td class="num">4,07,098.00 Dr</td><td>0000604816429002</td></tr>
+      <tr><td>27-02-2026</td><td>SlRt</td><td>CN-48</td><td>Sales</td><td class="num"></td><td class="num">45,218.00</td><td class="num">3,61,880.00 Dr</td><td>Sales return</td></tr>
+      <tr class="pending"><td>14-03-2026</td><td>Sale</td><td>LB/2025-26/814</td><td>Sales</td><td class="num">90,824.00</td><td class="num"></td><td class="num">4,52,704.00 Dr</td><td>DISCOUNT PENDING</td></tr>
+      <tr class="pending"><td>14-03-2026</td><td>Sale</td><td>LB/2025-26/815</td><td>Sales</td><td class="num">27,823.00</td><td class="num"></td><td class="num">4,80,527.00 Dr</td><td>DISCOUNT PENDING</td></tr>
+      <tr><td>20-03-2026</td><td>Rcpt</td><td>1356</td><td>HDFC Bank A/C 59257777777722</td><td class="num"></td><td class="num">1,50,000.00</td><td class="num">3,30,527.00 Dr</td><td>0000607917459817</td></tr>
+      <tr class="disc"><td>24-03-2026</td><td>Jrnl</td><td>DIS-304</td><td>Discount &amp; Rebate</td><td class="num"></td><td class="num">72,895.00</td><td class="num">2,57,632.00 Dr</td><td>LB 600 18 %</td></tr>
+      <tr class="pending"><td>28-03-2026</td><td>Sale</td><td>LB/2025-26/849</td><td>Sales</td><td class="num">1,48,048.00</td><td class="num"></td><td class="num">4,05,680.00 Dr</td><td>DISCOUNT PENDING</td></tr>
+      <tr><td>23-04-2026</td><td>Rcpt</td><td>128</td><td>HDFC Bank A/C 59257777777722</td><td class="num"></td><td class="num">3,00,000.00</td><td class="num">1,05,680.00 Dr</td><td>0000611320525703</td></tr>
+      <tr class="pending"><td>24-04-2026</td><td>Sale</td><td>LB/26-27/041</td><td>Sales</td><td class="num">8,59,334.00</td><td class="num"></td><td class="num">9,65,014.00 Dr</td><td>DISCOUNT PENDING</td></tr>
+      <tr><td>22-05-2026</td><td>Rcpt</td><td>273</td><td>HDFC Bank A/C 59257777777722</td><td class="num"></td><td class="num">4,00,000.00</td><td class="num">5,65,014.00 Dr</td><td>0000614220315014</td></tr>
+      <tr class="pending"><td>31-05-2026</td><td>Sale</td><td>LB/26-27/0272</td><td>Sales</td><td class="num">10,24,879.00</td><td class="num"></td><td class="num">15,89,893.00 Dr</td><td>DISCOUNT PENDING</td></tr>
+      <tr class="pending"><td>04-06-2026</td><td>Sale</td><td>LB/26-27/0281</td><td>Sales</td><td class="num">1,54,334.00</td><td class="num"></td><td class="num">17,44,227.00 Dr</td><td>DISCOUNT PENDING</td></tr>
+      <tr><td>11-06-2026</td><td>Rcpt</td><td>363</td><td>HDFC Bank A/C 59257777777722</td><td class="num"></td><td class="num">5,00,000.00</td><td class="num">12,44,227.00 Dr</td><td>0000616220748924</td></tr>
+      <tr><td>13-06-2026</td><td>SlRt</td><td>Cn-10</td><td>Sales</td><td class="num"></td><td class="num">9,974.00</td><td class="num">12,34,253.00 Dr</td><td>Sales return</td></tr>
+    </tbody>
+    <tfoot>
+      <tr><td colspan="4" style="text-align:right">Total</td><td class="num">57,74,486.00</td><td class="num">45,40,233.00</td><td class="num">Closing Bal. = 12,34,253.00 Dr</td><td></td></tr>
+    </tfoot>
+  </table>
+
+  <div class="legend">
+    <span class="lg-green">Green = discount already credited</span>
+    <span class="lg-red">Red = discount PENDING (not yet credited)</span>
+  </div>
+</div>
+
+<!-- ===================== PENDING DISCOUNT ANALYSIS ===================== -->
+<div class="sheet">
+  <h2>Reverse Calculation — Pending Discounts (recent bill → oldest)</h2>
+  <p class="note">
+    Effective discount rate derived from credited entries: <b>18% on taxable value @ 12% GST = 16.0714% of invoice total.</b><br>
+    Cross-check: DIS-110 covered bills 208+237 = ₹6,82,542 → 6,82,542 ÷ 1.12 × 18% = <b>₹1,09,694</b>, which matches the credited amount exactly.
+  </p>
+  <table>
+    <thead>
+      <tr>
+        <th>Bill No</th><th>Date</th><th class="num">Invoice (Rs.)</th>
+        <th class="num">Est. Pending Discount @16.07%</th><th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="pending"><td>LB/26-27/0281</td><td>04-06-2026</td><td class="num">1,54,334.00</td><td class="num">24,804</td><td>Not credited</td></tr>
+      <tr class="pending"><td>LB/26-27/0272</td><td>31-05-2026</td><td class="num">10,24,879.00</td><td class="num">1,64,713</td><td>Not credited</td></tr>
+      <tr class="pending"><td>LB/26-27/041</td><td>24-04-2026</td><td class="num">8,59,334.00</td><td class="num">1,38,108</td><td>Not credited</td></tr>
+      <tr class="pending"><td>LB/2025-26/849</td><td>28-03-2026</td><td class="num">1,48,048.00</td><td class="num">23,793</td><td>Not credited</td></tr>
+      <tr class="pending"><td>LB/2025-26/815</td><td>14-03-2026</td><td class="num">27,823.00</td><td class="num">4,472</td><td>Not credited</td></tr>
+      <tr class="pending"><td>LB/2025-26/814</td><td>14-03-2026</td><td class="num">90,824.00</td><td class="num">14,597</td><td>Not credited</td></tr>
+      <tr class="pending"><td>LB/2025-26/0690</td><td>31-01-2026</td><td class="num">88,813.00</td><td class="num">14,274</td><td>Not credited</td></tr>
+      <tr class="pending"><td>LB/2025-26/0689</td><td>31-01-2026</td><td class="num">1,35,452.00</td><td class="num">21,770</td><td>Not credited</td></tr>
+      <tr class="pending"><td>LB/2025-26/0468</td><td>22-11-2025</td><td class="num">11,340.00</td><td class="num">1,823</td><td>Not credited</td></tr>
+      <tr class="pending"><td>LB/2025-26/0365</td><td>14-10-2025</td><td class="num">26,539.00</td><td class="num">4,265</td><td>Not credited (note: 364 got DIS 210, 365 missed)</td></tr>
+      <tr class="totalrow"><td colspan="2">TOTAL PENDING</td><td class="num">25,67,386.00</td><td class="num">4,12,619</td><td>Discount due to Bharat Cycle Hub</td></tr>
+    </tbody>
+  </table>
+
+  <p class="note big">
+    <span class="red">Estimated discount pending / not yet credited ≈ ₹4,12,619</span>
+    (on ₹25,67,386 of un-discounted sales).<br>
+    If credited, the closing balance would fall from <b>₹12,34,253 Dr</b> to about <b>₹8,21,634 Dr</b>.
+  </p>
+
+  <p class="note">
+    <b>Notes &amp; caveats:</b><br>
+    1. Bills already discounted (excluded above): 156 &amp; 175 (DIS-90), 208 &amp; 237 (DIS-110), 364 (DIS 210), 600 (DIS-304).<br>
+    2. The 16.07% rate assumes a uniform 12% GST. Bills with mixed GST rates will differ slightly — DIS-304 on bill 600 came to ~15.5%, so treat these as close estimates, not exact figures. Confirm against each invoice's taxable value.<br>
+    3. DIS 210 also added <b>₹150 per cycle</b> on top of 18%. If that per-unit rebate applies to the pending bills too, the actual pending amount will be <b>higher</b> by ₹150 × (number of cycles) — not quantifiable here without unit counts.<br>
+    4. CN-48 and Cn-10 are sales returns, not discounts, so they are excluded from the discount calculation.
+  </p>
+</div>
+
+</body>
+</html>

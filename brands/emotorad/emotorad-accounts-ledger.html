@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMotorad — Accounts Ledger (Hub + Centre) · Bharath Cycle Hub</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background:#fff; color:#111; margin:0; font-size:13.5px; line-height:1.45; }
+  .page { max-width: 1150px; margin: 0 auto; padding: 36px 28px 70px; }
+  .head { text-align:center; margin-bottom: 6px; }
+  .head .co { font-size:18px; font-weight:700; letter-spacing:.02em; }
+  .head .sub { font-size:12.5px; color:#333; }
+  .head .dealer { font-size:15px; font-weight:700; margin-top:10px; }
+  .head .acct { font-size:13px; margin-top:2px; }
+  .head .period { font-size:12.5px; margin-top:2px; }
+  .head .src { font-size:11.5px; color:#666; margin-top:4px; font-style:italic; }
+  .rule { border-top:1.5px solid #111; margin:14px 0 0; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:12px; margin:22px 0 8px; }
+  .card { border:1px solid #ddd; border-radius:9px; padding:13px 15px; }
+  .card .l { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:#777; }
+  .card .v { font-size:20px; font-weight:700; margin-top:3px; }
+  .card .n { font-size:11.5px; color:#777; margin-top:3px; }
+  .card.due .v { color:#8a1f1f; } .card.net .v { color:#0a6b41; } .card.gap .v { color:#92600a; }
+  table { width:100%; border-collapse:collapse; }
+  table.ledger th { border-bottom:1.5px solid #111; border-top:1px solid #111; padding:7px 8px; font-size:12px; text-transform:uppercase; letter-spacing:.03em; text-align:left; }
+  table.ledger td { padding:6px 8px; border-bottom:1px solid #e7e7e7; vertical-align:top; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  td.date { white-space:nowrap; } td.part { font-weight:600; }
+  td.narr { color:#444; }
+  tr.pay td { background:#f2f9f4; } tr.disc td { background:#eef5fc; } tr.flag td { background:#fdf3df; } tr.rev td { background:#fdecea; }
+  tr.totals td { border-top:1.5px solid #111; border-bottom:1px solid #111; font-weight:700; }
+  tr.closing td { font-weight:700; font-size:14px; border-bottom:3px double #111; background:#f7f7f7; }
+  .dr { color:#8a1f1f; } .cr { color:#0a6b41; }
+  h2 { font-size:16px; margin:36px 0 8px; text-transform:uppercase; letter-spacing:.04em; border-bottom:1.5px solid #111; padding-bottom:4px; }
+  h3 { font-size:13.5px; margin:20px 0 6px; color:#222; }
+  .note { font-size:12.5px; color:#444; margin:6px 0 12px; max-width:980px; }
+  .ok { color:#0a6b41; font-weight:600; } .warn { color:#8a1f1f; font-weight:600; }
+  .calcbox { border:1.5px solid #111; max-width:720px; }
+  .calcbox .r { display:flex; justify-content:space-between; padding:8px 14px; border-bottom:1px solid #e7e7e7; gap:20px; }
+  .calcbox .r:last-child { border-bottom:none; }
+  .calcbox .r small { display:block; color:#666; font-weight:400; }
+  .calcbox .amt { font-variant-numeric:tabular-nums; font-weight:600; white-space:nowrap; }
+  .calcbox .total { background:#fdecea; font-weight:700; font-size:15px; border-top:1.5px solid #111; }
+  .calcbox .sub { background:#f7f7f7; font-weight:700; }
+  .calcbox .tbd .amt { color:#92600a; }
+  .callout { border-left:4px solid #92600a; background:#fdf3df; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; max-width:980px; }
+  .callout.red { border-left-color:#b3261e; background:#fdecea; }
+  .callout.green { border-left-color:#0a6b41; background:#f2f9f4; }
+  .callout strong { display:block; margin-bottom:2px; }
+  .foot { margin-top:30px; font-size:11.5px; color:#666; border-top:1px solid #ccc; padding-top:10px; }
+  .twocol { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media(max-width:820px){ .twocol{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="head">
+  <div class="co">EMOTORAD — INKODOP TECHNOLOGIES PVT LTD</div>
+  <div class="sub">At Post Jambe, Taluka Mulshi, Pune 411033 · Payments to Inkodop escrow, ICICI A/c …5312</div>
+  <div class="dealer">BHARATH CYCLE HUB &amp; BHARATH CYCLE CENTRE — YELAHANKA, BENGALURU</div>
+  <div class="acct">Consolidated Accounts Ledger &amp; Net-Payable Reconciliation — TWO FOLIOS</div>
+  <div class="period">History: 01-Apr-2023 → 17-Jun-2026 · BCC franchise code 121 · BCH franchise code 666</div>
+  <div class="src">Built from EM Statements of Account (PDF), the franchise-121 ERP export (xls, to Jul-2025), the Tally consolidated ledger (FY23–25), the EM&nbsp;BIZ app outstanding screen, and payment receipts. Figures mirror EM's own documents.</div>
+</div>
+<div class="rule"></div>
+
+<div class="callout red">
+  <strong>⚠️ Read this first — why there are TWO ledgers and why neither alone is "true"</strong>
+  EMotorad bills BCH under two separate folios: <b>Bharath Cycle Centre (BCC, code 121)</b> — the original account since FY2022-23 — and <b>Bharath Cycle Hub (BCH, code 666)</b>, opened Sept-2024.
+  From Sept-2024, <b>EM posted new sales invoices into the Hub folio but applied most payments &amp; credit notes into the Centre folio.</b> Result: by Dec-2024 BCC swung to <b>−₹25 L (credit/advance)</b> while BCH ballooned to <b>₹1.03 Cr Dr</b>. Then in Jan-2025, ₹31 L of invoices were dumped back onto BCC, swinging it positive again. <b>This shuffling is the single biggest source of the "years of miscalculation."</b> The only correct figure is the two folios <b>combined</b>.
+</div>
+
+<div class="cards">
+  <div class="card due"><div class="l">BCH (Hub) — last formal SOA</div><div class="v">₹1,03,38,282</div><div class="n">Dr · 06-Jan-2025</div></div>
+  <div class="card net"><div class="l">BCC (Centre) — settled</div><div class="v">₹3,48,346</div><div class="n">Dr · confirmed by RSM 15-Apr-2026 · dormant</div></div>
+  <div class="card gap"><div class="l">EM&nbsp;BIZ app outstanding</div><div class="v">₹70.1 L</div><div class="n">12-May-2026 · all &lt;60 days</div></div>
+  <div class="card net"><div class="l">Paid since (3-Jun-26)</div><div class="v">₹38 L</div><div class="n">₹18L + ₹20L to escrow</div></div>
+  <div class="card gap"><div class="l">Est. current gross payable</div><div class="v">≈ ₹35–40 L</div><div class="n">before pending CN offsets</div></div>
+</div>
+
+<!-- ============ BCC LEDGER ============ -->
+<h2>Ledger 1 · Bharath Cycle Centre (BCC) — franchise 121</h2>
+<p class="note">The original account. EM's franchise-121 ERP export runs <b>01-Apr-2024 → 29-Jul-2025</b> (opening ₹23,60,279.91 Dr carried from FY23-24). After Jul-2025 the account is dormant — all activity moved to the Hub. RSM Jayachandra confirmed the closing on 15-Apr-2026: <b>"Bharath Cycle Center account, please clear it — ₹3,48,345.92."</b></p>
+
+<h3>Monthly movement (Dr = invoices billed · Cr = payments + credit notes)</h3>
+<table class="ledger">
+<thead><tr><th class="date">Month</th><th class="num">Debit (invoices)</th><th class="num">Credit (pay + CN)</th><th class="num">Running balance Dr−Cr</th></tr></thead>
+<tbody>
+<tr><td class="date">Opening 01-Apr-2024</td><td class="num">—</td><td class="num">—</td><td class="num">₹23,60,280</td></tr>
+<tr><td class="date">Apr-2024</td><td class="num">10,07,181</td><td class="num cr">20,12,690</td><td class="num">13,54,771</td></tr>
+<tr><td class="date">May-2024</td><td class="num">31,25,519</td><td class="num cr">22,68,574</td><td class="num">22,11,716</td></tr>
+<tr><td class="date">Jun-2024</td><td class="num">17,06,464</td><td class="num cr">17,64,298</td><td class="num">21,53,882</td></tr>
+<tr><td class="date">Jul-2024</td><td class="num">28,78,421</td><td class="num cr">21,46,621</td><td class="num">28,85,682</td></tr>
+<tr><td class="date">Aug-2024</td><td class="num">15,52,073</td><td class="num cr">16,25,979</td><td class="num">28,11,776</td></tr>
+<tr><td class="date">Sep-2024</td><td class="num">9,94,523</td><td class="num cr">21,14,850</td><td class="num">16,91,449</td></tr>
+<tr class="pay"><td class="date">Oct-2024</td><td class="num">3,27,759</td><td class="num cr">28,32,399</td><td class="num cr">−8,13,191</td></tr>
+<tr class="pay"><td class="date">Nov-2024</td><td class="num">5,10,267</td><td class="num cr">13,25,996</td><td class="num cr">−16,28,920</td></tr>
+<tr class="pay"><td class="date">Dec-2024</td><td class="num">1,51,137</td><td class="num cr">10,41,006</td><td class="num cr">−25,18,789</td></tr>
+<tr class="flag"><td class="date">Jan-2025 ⚠️</td><td class="num">31,05,636</td><td class="num cr">2,09,630</td><td class="num">3,77,217</td></tr>
+<tr><td class="date">Feb-2025</td><td class="num">1,82,358</td><td class="num cr">2</td><td class="num">5,59,573</td></tr>
+<tr><td class="date">Mar-2025</td><td class="num">73,224</td><td class="num cr">77,533</td><td class="num">5,55,264</td></tr>
+<tr><td class="date">Apr-2025</td><td class="num">2,371</td><td class="num cr">1</td><td class="num">5,57,634</td></tr>
+<tr><td class="date">May-2025</td><td class="num">—</td><td class="num cr">8,170</td><td class="num">5,49,464</td></tr>
+<tr class="pay"><td class="date">Jul-2025</td><td class="num">—</td><td class="num cr">2,01,118</td><td class="num">3,48,346</td></tr>
+<tr class="totals"><td>Grand total (excl. opening)</td><td class="num">1,56,16,933</td><td class="num">1,77,08,867*</td><td class="num"></td></tr>
+<tr class="closing"><td>CLOSING BALANCE (last activity 29-Jul-2025)</td><td class="num" colspan="2"></td><td class="num dr">₹3,48,345.92 Dr</td></tr>
+</tbody>
+</table>
+<p class="note">* Total credits to BCC over the period: <b>₹1.01 Cr payments (22 receipts)</b> + <b>₹74.04 L credit notes</b> (189 journal CNs + 20 sales CNs — mostly online-price-protection at ~₹50-65k each) + write-offs. The <span class="warn">Jan-2025 ⚠️ row</span> is the folio-shuffle: ₹31 L of invoices posted in one month, reversing the −₹25 L credit position. <b>Action: confirm the ₹3,48,345.92 is paid/closed and that none of the ₹74 L of CNs were duplicated against the Hub folio.</b></p>
+
+<!-- ============ BCH LEDGER ============ -->
+<h2>Ledger 2 · Bharath Cycle Hub (BCH) — franchise 666</h2>
+<p class="note">Opened with first invoice <b>12-Sep-2024</b> (opening ₹0). EM's formal Statement of Account runs to <b>06-Jan-2025</b>. Because invoices went here while payments went to BCC, the Hub accumulated fast.</p>
+
+<table class="ledger">
+<thead><tr><th class="date">Date</th><th>Entry</th><th class="num">Debit</th><th class="num">Credit</th><th class="num">Balance Dr</th></tr></thead>
+<tbody>
+<tr><td class="date">12-Sep-2024</td><td class="narr">Opening + first sales invoices begin</td><td class="num">—</td><td class="num">—</td><td class="num">0</td></tr>
+<tr><td class="date">Sep–Oct-2024</td><td class="narr">86 sales invoices accumulate (Sep-24→Jan-25)</td><td class="num">…</td><td class="num">—</td><td class="num">~50,00,000</td></tr>
+<tr class="pay"><td class="date">07-Nov-2024</td><td class="narr">Payment Entry</td><td class="num">—</td><td class="num cr">10,00,000</td><td class="num">75,17,239</td></tr>
+<tr class="pay"><td class="date">11-Nov-2024</td><td class="narr">Payment Entry</td><td class="num">—</td><td class="num cr">9,00,000</td><td class="num">70,95,729</td></tr>
+<tr class="pay"><td class="date">09-Dec-2024</td><td class="narr">Payment Entry</td><td class="num">—</td><td class="num cr">9,00,000</td><td class="num">83,85,078</td></tr>
+<tr class="pay"><td class="date">01-Jan-2025</td><td class="narr">Payment Entry</td><td class="num">—</td><td class="num cr">10,00,000</td><td class="num">1,13,42,500</td></tr>
+<tr class="pay"><td class="date">04-Jan-2025</td><td class="narr">Payment Entry + adj ₹4,218</td><td class="num">—</td><td class="num cr">10,04,218</td><td class="num">1,03,38,282</td></tr>
+<tr class="totals"><td colspan="2">Totals (1-Apr-2024 → 6-Jan-2025)</td><td class="num">1,53,40,500</td><td class="num">50,02,218</td><td class="num"></td></tr>
+<tr class="closing"><td colspan="2">CLOSING BALANCE (06-Jan-2025, formal SOA)</td><td class="num" colspan="2"></td><td class="num dr">₹1,03,38,282 Dr</td></tr>
+</tbody>
+</table>
+<p class="note">Only <b>₹48 L paid</b> against <b>₹1.53 Cr invoiced</b> in this window — because the rest of BCH's payments were sitting in the BCC folio. No formal Hub SOA after 6-Jan-2025 is in the files.</p>
+
+<h3>Roll-forward Jan-2025 → Jun-2026 (from chat milestones + EM&nbsp;BIZ app — to be confirmed against a fresh SOA)</h3>
+<table class="ledger">
+<thead><tr><th class="date">Date</th><th>Event</th><th class="num">Amount</th><th class="num">Indicative balance</th></tr></thead>
+<tbody>
+<tr><td class="date">06-Jan-2025</td><td class="narr">BCH formal closing</td><td class="num">—</td><td class="num">₹1,03,38,282 Dr</td></tr>
+<tr><td class="date">Aug-2025</td><td class="narr">Syed in chat: "1.17 cr credit, getting out of hand" (combined)</td><td class="num">—</td><td class="num">~₹1.17 Cr (comb.)</td></tr>
+<tr class="pay"><td class="date">07–09-Feb-2026</td><td class="narr">Payment @4% CD</td><td class="num cr">35,00,000</td><td class="num"></td></tr>
+<tr class="pay"><td class="date">25–31-Mar-2026</td><td class="narr">Payment @4% CD (35L; CN ₹75k+₹30k)</td><td class="num cr">35,00,000</td><td class="num"></td></tr>
+<tr class="pay"><td class="date">29-Apr-2026</td><td class="narr">Payment @3% CD (25L + 10L)</td><td class="num cr">35,00,000</td><td class="num"></td></tr>
+<tr class="flag"><td class="date">12-May-2026</td><td class="narr">EM&nbsp;BIZ app "Overall Outstanding": ₹65.1L (0-30d) + ₹5L (31-60d), nothing older</td><td class="num">—</td><td class="num">₹70,10,000</td></tr>
+<tr class="pay"><td class="date">03-Jun-2026</td><td class="narr">Payment to escrow (₹18L + ₹20L); CN ₹80k = 2% of 40L</td><td class="num cr">38,00,000</td><td class="num"></td></tr>
+<tr><td class="date">May–Jun-2026</td><td class="narr">New invoices (Bharat 1-8, Emotorad inv., Viper/Doodle orders)</td><td class="num">(+ new Dr)</td><td class="num"></td></tr>
+<tr class="closing"><td colspan="2">EST. CURRENT BCH (mid-Jun-2026) — VERIFY</td><td class="num" colspan="2"></td><td class="num dr">≈ ₹32 L + June invoices</td></tr>
+</tbody>
+</table>
+
+<!-- ============ COMBINED ============ -->
+<h2>Combined net-payable to EMotorad</h2>
+<div class="calcbox">
+  <div class="r"><div>BCH (Hub) — estimated current<small>app ₹70.1L (12-May) − ₹38L paid (3-Jun) + June invoices</small></div><div class="amt tbd">≈ ₹32–40 L</div></div>
+  <div class="r"><div>BCC (Centre) — confirmed, dormant<small>RSM-confirmed 15-Apr-2026</small></div><div class="amt">₹3,48,346</div></div>
+  <div class="r sub"><div>= GROSS PAYABLE (gross of credits)</div><div class="amt tbd">≈ ₹35–43 L</div></div>
+  <div class="r"><div>less: Trex-Pro discount CN (unreconciled)<small>₹4,500/₹4,000 per bike + ₹5K delta — largest open CN</small></div><div class="amt tbd">(TBD)</div></div>
+  <div class="r"><div>less: Sravan manpower support CN<small>₹25,000 × 6 months</small></div><div class="amt">(1,50,000)</div></div>
+  <div class="r"><div>less: Thailand-trip CN + 50% ticket<small>approved 6-Apr-26, finance to process</small></div><div class="amt tbd">(TBD)</div></div>
+  <div class="r"><div>less: CD shortfalls / JFM / online-CN<small>₹35k Mar-CD gap; JFM 250u; festive per-unit CN</small></div><div class="amt tbd">(TBD)</div></div>
+  <div class="r"><div>less: BCH-raised debit notes (Oct-2023)<small>lil-e box, emx demo, godown stock, centre display</small></div><div class="amt tbd">(TBD)</div></div>
+  <div class="r total"><div>NET PAYABLE TO EMOTORAD</div><div class="amt tbd">GROSS ≈ ₹35–43 L<br>− pending CNs (to finalise)</div></div>
+</div>
+
+<div class="callout green">
+  <strong>Good news in the numbers</strong>
+  As of 12-May-2026 the EM&nbsp;BIZ app showed <b>nothing beyond 60 days</b> — the dangerous 90/120+ buckets are ₹0. The years of overdue (the ₹77L–₹1.17 Cr era of 2024-25) have been cleared down. What remains is a modest, current balance — and against it sit several <b>unredeemed credit notes that EM still owes you</b>, which will reduce it further.
+</div>
+
+<div class="callout">
+  <strong>To convert "≈" into an exact final figure, obtain two documents:</strong>
+  1. From EMotorad — a <b>current Statement of Account for BOTH folios</b> (BCC code 121 + BCH code 666) as of today, signed.
+  2. From BCH — your <b>CREDIT NOTES.xlsx</b> + bank statement, so every 2026 payment and every promised CN is matched line-by-line.
+  Then the four "(TBD)" lines above resolve and the net payable is exact. Reference files already in hand: <b>00004683/00004684</b> (formal SOAs), <b>BLR.xls</b> (BCC to Jul-2025), <b>ErpSummary 22/23</b> (Dec-2025), <b>MH Consolidated.xls</b> (FY23-25 Tally).
+</div>
+
+<div class="foot">
+  Bharath Cycle Hub × EMotorad · consolidated accounts ledger · compiled 17-Jun-2026 from EM's own statements, ERP exports, the EM&nbsp;BIZ app and payment receipts contained in the WhatsApp exports of Darshan P, Sandeep Sir and Jayachandra V.
+  Figures to 06-Jan-2025 are from EM's formal Statements of Account; the BCC closing is from EM's franchise-121 export (to Jul-2025) and RSM confirmation (Apr-2026); 2025-26 roll-forward uses chat milestones and the EM&nbsp;BIZ app pending a fresh SOA. Companion: emotorad-relationship-report.md · findings.md · service-issues.md · credit-notes-and-discounts.md.
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CULTSPORT / CULTGEAR — Reconciliation &amp; Ledger · Bharath Cycle Hub</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background:#fff; color:#111; margin:0; font-size:13.5px; line-height:1.45; }
+  .page { max-width: 1180px; margin: 0 auto; padding: 36px 28px 70px; }
+  .head { text-align:center; margin-bottom: 6px; }
+  .head .co { font-size:18px; font-weight:700; }
+  .head .sub { font-size:12.5px; color:#333; }
+  .head .dealer { font-size:15px; font-weight:700; margin-top:10px; }
+  .head .acct { font-size:13px; margin-top:2px; }
+  .head .src { font-size:11.5px; color:#666; margin-top:4px; font-style:italic; }
+  .rule { border-top:1.5px solid #111; margin:14px 0 0; }
+  h2 { font-size:15px; margin:32px 0 8px; text-transform:uppercase; letter-spacing:.04em; border-bottom:1.5px solid #111; padding-bottom:4px; }
+  h3 { font-size:13.5px; margin:18px 0 6px; }
+  .note { font-size:12.5px; color:#444; margin:6px 0 12px; }
+  table { width:100%; border-collapse:collapse; margin-top:4px; }
+  th { border-bottom:1.5px solid #111; padding:7px 8px; font-size:11.5px; text-transform:uppercase; letter-spacing:.02em; text-align:left; }
+  td { padding:6px 8px; border-bottom:1px solid #e4e4e4; vertical-align:top; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .dr { color:#8a1f1f; } .cr { color:#0a6b41; }
+  tr.tot td { border-top:1.5px solid #111; font-weight:700; }
+  /* gap hero */
+  .gap { display:flex; gap:14px; flex-wrap:wrap; margin:14px 0; }
+  .card { flex:1; min-width:230px; border:1.5px solid #111; border-radius:6px; padding:14px 16px; }
+  .card .lbl { font-size:11.5px; text-transform:uppercase; letter-spacing:.03em; color:#555; }
+  .card .big { font-size:24px; font-weight:800; margin:6px 0 2px; font-variant-numeric:tabular-nums; }
+  .card .sm { font-size:11.5px; color:#666; }
+  .card.brand { background:#eef4ff; border-color:#1f4f8a; }
+  .card.rows  { background:#f2f9f4; border-color:#0a6b41; }
+  .card.bad   { background:#fdeaea; border-color:#a40000; }
+  .card.bad .big { color:#a40000; }
+  .redbox { border:1.5px solid #a40000; background:#fdeaea; border-radius:6px; padding:14px 16px; margin:14px 0; }
+  .redbox b { color:#a40000; }
+  .flag td:first-child { color:#a40000; font-weight:600; }
+  tr.disc td { background:#f2f9f4; }
+  .pill { display:inline-block; font-size:10.5px; padding:1px 7px; border-radius:10px; color:#fff; vertical-align:middle; }
+  .p-open { background:#a40000; } .p-chk { background:#b8860b; } .p-done { background:#0a6b41; }
+  .calc { border:1.5px solid #111; max-width:560px; }
+  .calc .r { display:flex; justify-content:space-between; padding:7px 14px; border-bottom:1px solid #e4e4e4; }
+  .calc .r:last-child { border-bottom:none; }
+  .calc .amt { font-variant-numeric:tabular-nums; font-weight:600; }
+  .calc .t { background:#fdeaea; font-weight:800; font-size:15px; border-top:1.5px solid #111; }
+  .foot { margin-top:30px; font-size:11.5px; color:#666; border-top:1px solid #ccc; padding-top:10px; }
+  ul.tight { margin:6px 0; padding-left:20px; } ul.tight li { margin:3px 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="head">
+  <div class="co">CULTSPORT PRIVATE LIMITED &nbsp;·&nbsp; <span style="font-weight:400">(formerly CULTGEAR PVT LTD · a Curefit company)</span></div>
+  <div class="sub">Sales: Mani Gandan, Mgr · mani.gandan@cultsport.com &nbsp;|&nbsp; Commercial: Kishore Ramu · Escalation: Nikunj (vertical head), Ajitesh Banerjee (curefit.com)</div>
+  <div class="dealer">BHARATH CYCLE HUB — YELAHANKA, BENGALURU</div>
+  <div class="acct">Reconciliation of "CULTSPORT_ final.xlsx" (prepared by Srinu Yenugu, BCH accountant) against the brand's official ledger</div>
+  <div class="src">Sources: CULTSPORT_ final.xlsx (GSTR-2B + Cultsport AR memos + bank) · Curefit Customer Statement Reports (brand, to 26-Mar / 28-Apr / 25-May-2026) · BCH Tally CULTGEAR ledger PDFs · WhatsApp "Mg Mani Cultsport" full export (10-Mar-2023 → 12-Jun-2026) · JULY scheme circular</div>
+  <div class="rule"></div>
+</div>
+
+<!-- ============ THE GAP (HERO) ============ -->
+<h2>The gap — three versions of the same account</h2>
+<div class="gap">
+  <div class="card brand">
+    <div class="lbl">Brand's official ledger</div>
+    <div class="big">₹27,03,388</div>
+    <div class="sm">Curefit Customer Statement Report, closing as on <b>25-May-2026</b> (the latest figure Cultsport has sent). Was ₹14,45,318 on 28-Apr and ₹11,44,830 on 26-Mar — the jump is the big early-May billing.</div>
+  </div>
+  <div class="card rows">
+    <div class="lbl">Srinu's xlsx — line items</div>
+    <div class="big">₹25,71,988</div>
+    <div class="sm">What the 236 transaction rows actually add up to (to 28-Jun-2026). At the same 25-May cut-off it is ₹25,88,950 — i.e. <b>₹1,14,438 below the brand</b>.</div>
+  </div>
+  <div class="card bad">
+    <div class="lbl">Srinu's xlsx — summary box</div>
+    <div class="big">₹54,08,576</div>
+    <div class="sm">The headline figure at the top of the sheet. It does <b>not</b> match the rows beneath it, and is <b>₹27 lakh above the brand's own demand.</b></div>
+  </div>
+</div>
+
+<div class="redbox">
+  <b>Bottom line:</b> Srinu's <b>detailed</b> ledger broadly reconciles with Cultsport's official ledger — they are within about <b>₹1.1–1.3 lakh</b> of each other (your version slightly lower, which is the CD/credit-notes you have booked but the brand has not yet passed). <b>But the ₹54,08,576 headline on his sheet is wrong by ₹28,36,588</b> and would have you pay Cultsport roughly <b>₹27 lakh more than they are even asking for.</b> Do not settle against ₹54L. The defensible payable is ≈ <b>₹25.7–27.0 lakh</b>, to be finalised after the pending credits below are passed.
+</div>
+
+<!-- ============ WHY THE HEADLINE IS WRONG ============ -->
+<h2>Why Srinu's ₹54L headline is broken</h2>
+<p class="note">The summary box (rows 5–6 of the sheet) was hard-typed and never updated to match the transaction rows it sits on. Re-totalling the rows:</p>
+<table>
+  <thead><tr><th>Component</th><th class="num">Summary box claims</th><th class="num">Rows actually total</th><th class="num">Error in the box</th></tr></thead>
+  <tbody>
+    <tr><td>Purchases</td><td class="num">2,70,15,525</td><td class="num">2,68,86,375</td><td class="num">+1,29,150</td></tr>
+    <tr><td>Credit notes</td><td class="num">−52,16,684</td><td class="num">−52,16,584</td><td class="num">−100</td></tr>
+    <tr><td>Debit notes</td><td class="num">+1,79,418</td><td class="num">+1,79,418</td><td class="num">0</td></tr>
+    <tr class="flag"><td>Payments</td><td class="num">−1,65,69,684</td><td class="num">−1,92,77,222</td><td class="num">+27,07,538</td></tr>
+    <tr class="tot"><td>Closing payable</td><td class="num">54,08,576</td><td class="num">25,71,988</td><td class="num">28,36,588</td></tr>
+  </tbody>
+</table>
+<p class="note">The big one: the box counts only <b>₹1,65,69,684</b> of payments, but the sheet lists <b>₹1,92,77,222</b> across <b>53 payments — every one with a unique HDFC/ICICI/Axis transaction reference and no duplicates</b>. So ₹27,07,538 of genuine, traceable payments were dropped from the headline. (A further ₹1,29,150 of phantom purchases were added.) The rows are the source of truth; the box is stale.</p>
+
+<!-- ============ LEDGER SUMMARY ============ -->
+<h2>The account in one view (per Srinu's line items)</h2>
+<table>
+  <thead><tr><th>Calendar year</th><th class="num">Purchases</th><th class="num">Debit notes</th><th class="num">Credit notes</th><th class="num">Payments</th></tr></thead>
+  <tbody>
+    <tr><td>2023</td><td class="num">70,07,051</td><td class="num">1,64,806</td><td class="num">14,34,419</td><td class="num">40,04,949</td></tr>
+    <tr><td>2024</td><td class="num">47,43,796</td><td class="num">—</td><td class="num">5,70,727</td><td class="num">40,72,273</td></tr>
+    <tr><td>2025</td><td class="num">97,08,321</td><td class="num">14,612</td><td class="num">18,46,206</td><td class="num">64,00,000</td></tr>
+    <tr><td>2026 (to Jun)</td><td class="num">54,27,207</td><td class="num">—</td><td class="num">13,65,232</td><td class="num">48,00,000</td></tr>
+    <tr class="tot"><td>Total</td><td class="num">2,68,86,375</td><td class="num">1,79,418</td><td class="num">52,16,584</td><td class="num">1,92,77,222</td></tr>
+  </tbody>
+</table>
+<div class="calc" style="margin-top:12px">
+  <div class="r"><div>Purchases + Debit notes</div><div class="amt">₹2,70,65,793</div></div>
+  <div class="r"><div>Less: Credit notes (GST ₹34.13L + commercial/AR ₹18.03L)</div><div class="amt">− ₹52,16,584</div></div>
+  <div class="r"><div>Less: Payments (53 bank transfers)</div><div class="amt">− ₹1,92,77,222</div></div>
+  <div class="r t"><div>Closing payable (defensible)</div><div class="amt">₹25,71,988</div></div>
+</div>
+<p class="note">Credit notes already in the sheet fall in two streams: <b>GST credit notes ₹34,13,343</b> (returns &amp; cancelled invoices, per GSTR-2B) and <b>commercial / AR credit memos ₹18,03,240</b> (the CD, FOC-value, scheme and liquidation discounts). The discount stream is therefore <i>largely</i> captured already — the open items below are what is <b>still</b> to be passed.</p>
+
+<!-- ============ DISCOUNT SCHEME ============ -->
+<h2>How the Cultsport discount actually works</h2>
+<p class="note">Two layers, both on <b>BDP (Billing Dealer Price, ex-GST)</b> — confirmed by the JULY scheme circular and the chat. Eligibility is <b>payment-timing dependent</b>, which is the brand's main lever against you.</p>
+<table>
+  <thead><tr><th>Layer</th><th>Rate</th><th>Condition</th></tr></thead>
+  <tbody>
+    <tr><td>Cash Discount (CD)</td><td>8% (BDP &gt; ₹1L) / 6% (BDP &gt; ₹50K)</td><td>if paid within <b>7 days</b> of delivery</td></tr>
+    <tr><td>Cash Discount (CD)</td><td>4% (BDP &gt; ₹1L) / 3% (BDP &gt; ₹50K)</td><td>if paid within <b>30 days</b> of delivery</td></tr>
+    <tr><td>Cash Discount — HRX Duke</td><td>2% / 1%</td><td>BDP &gt; ₹50K, within 7 / 30 days</td></tr>
+    <tr><td>FOC (free-of-cost stock)</td><td>15% → 4% → ~12% over time</td><td>value-based; outstanding cleared in 30 days. Aug-2025 norm = <b>8% CD + 3% FOC + monthly/quarterly schemes</b></td></tr>
+    <tr><td>New-dealer first bill</td><td>8%</td><td>if paid in advance</td></tr>
+  </tbody>
+</table>
+<p class="note"><b>Watch-out:</b> on 14-Nov-2024 the brand explicitly flagged "payments have been made after 30 days." If a bill was paid late, your CD entitlement drops from 8%→4% (or 6%→3%). Several of your "Discount Received @8%" Tally postings assume the top slab — <b>confirm each month's payment date supports 8%, or the brand can claw the difference.</b></p>
+
+<!-- ============ PENDING / RECOVERABLE ============ -->
+<h2>Pending credits &amp; claims to chase (recoverable money)</h2>
+<table>
+  <thead><tr><th>Item</th><th class="num">Amount</th><th>Raised</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr class="flag"><td>CD-Pending (carried on brand's 05-May-2025 ledger image)</td><td class="num">₹2,97,173</td><td>05-May-2025</td><td><span class="pill p-chk">VERIFY</span> whether later passed (Jul-25 / Oct-25 / Feb-26 AR memo batches may cover part)</td></tr>
+    <tr class="flag"><td>Old Due adjustment (same image)</td><td class="num">₹62,883</td><td>05-May-2025</td><td><span class="pill p-chk">VERIFY</span> credited</td></tr>
+    <tr class="flag"><td>GST-difference CN (7% GST diff)</td><td class="num">~₹1,13,000</td><td>31-Oct-2025</td><td><span class="pill p-open">OPEN</span> "exact calc will share" — confirm issued</td></tr>
+    <tr class="flag"><td>Power / Brave / Throne liquidation pricing correction</td><td class="num">CN 73701 = ₹2,25,000</td><td>19-Dec-2025</td><td><span class="pill p-chk">VERIFY</span> Mani admitted "flat ₹1,300 incl. tax, our mistake." CN 73701 issued 30-Dec — confirm it reflects the agreed price (you also claim extra 16% → net ₹1,096)</td></tr>
+    <tr class="flag"><td>FOC short-fall — ₹15,857 + ₹8,499 + ₹12,123 (+ Karas)</td><td class="num">~₹36,479</td><td>mid-2024</td><td><span class="pill p-chk">VERIFY</span> partly settled in stock (Karas) — confirm balance</td></tr>
+    <tr class="flag"><td>FOC % dispute (you say 13%, brand says 12%)</td><td class="num">~1% of FOC base</td><td>Oct-2025</td><td><span class="pill p-open">OPEN</span> unreconciled</td></tr>
+    <tr><td>Marketing reimbursement (CRPF event)</td><td class="num">₹50,000</td><td>Jul-2024</td><td><span class="pill p-open">REJECTED</span> — no pre-approved designs/docs; lost</td></tr>
+    <tr class="flag"><td>Replacement stock — 3 Monstro (2 rims + 1 frame), Cult e-cycle return, damaged frames, foldable missing part</td><td class="num">in-kind</td><td>2024–25</td><td><span class="pill p-chk">VERIFY</span> each replaced or credited</td></tr>
+  </tbody>
+</table>
+<p class="note">Several mid-2025 claims do appear to have been settled inside the sheet — note the <b>11 AR credit memos on 15-Oct-2025 (₹2,33,609)</b> and the <b>batch on 07–10-Feb-2026 (₹2,61,162)</b>, which read like clean-ups of earlier pending CD/FOC/damage items. Tick these off before re-claiming, so nothing is demanded twice.</p>
+
+<!-- ============ STRUCTURAL FLAGS ============ -->
+<h2>Structural issues to fix before signing any "final" ledger</h2>
+<ul class="tight">
+  <li><b>Identity check — there is no "Manish".</b> The saved WhatsApp contact "Mg Mani Cultsport" = <b>Mani Gandan</b>, Cultsport sales manager (mani.gandan@cultsport.com) — the "Mani" and "Manish" you mean are the <b>same one person</b>. <b>Srinu Yenugu is your own accountant</b> (the "…Bch.vcf" you added to the accounts group) — he prepared this xlsx. So the ₹54L error is in <b>your</b> file, not the brand's.</li>
+  <li><b>Entity migration not documented.</b> Payee changed <b>Cultgear → Cultsport</b> (your 27-Feb-2026 ₹3L went to "CULTSPORT" via ICICI) and reporting moved onto the <b>Curefit</b> system. There is no chat record of the opening-balance carry-over / GST-number reconciliation across the rename — <b>get the Cultgear-era closing confirmed as the Cultsport opening.</b></li>
+  <li><b>Second related account exists — "Bharath Cycle Centre (BCC)".</b> An older Cultsport AR report for BCC shows a closing of <b>₹16,01,590</b>, separate from Bharat Cycle Hub. The chat even mentions sharing "the bcc and bch updated ledger." <b>Confirm whether BCC is live, and keep the two accounts cleanly separated</b> — don't let one entity's balance bleed into the other.</li>
+  <li><b>Your reconciliation anchor:</b> you told Mani (25-Feb-2026) the account was <b>"zero as on 21-Aug-2024."</b> He replied only "will check." <b>Get that zero-point confirmed in writing</b> — if agreed, everything before 21-Aug-2024 drops out and the reconciliation shrinks dramatically.</li>
+  <li><b>No signed final ledger ever achieved</b> in ~2 years; the Jan-2025 accounts Google-Meet (auditor to join) was scheduled and abandoned. <b>Complete that meeting and lock a mutually-signed statement.</b></li>
+  <li><b>Almost nothing is in writing.</b> CD %, FOC %, liquidation price, marketing — all verbal; the ₹50K marketing claim died for lack of documents. <b>From now, every scheme/CD/FOC rate on email before acting.</b></li>
+  <li><b>Channel conflict:</b> parallel sellers (Shree Cycling / Flying Wheels) offloading Cult + Fit-Kit ~50 m from your store. Raise formally with Nikunj.</li>
+</ul>
+
+<!-- ============ RECOMMENDATION ============ -->
+<h2>What to do with the current ledger</h2>
+<ol class="tight">
+  <li><b>Bin the ₹54,08,576 figure.</b> Fix Srinu's summary box to equal the rows (₹25,71,988) so no one pays off the wrong number.</li>
+  <li><b>Adopt ₹25.7–27.0 lakh as the working payable</b> and reconcile the ~₹1.1–1.3 lakh gap against the brand line-by-line — it is the CD/CN you have booked but they have not yet passed.</li>
+  <li><b>Pass the open claims above</b> (CD-pending, GST CN, liquidation correction) <b>before</b> the next lump-sum payment; net them off what you owe.</li>
+  <li><b>Confirm the 21-Aug-2024 zero anchor and the Cultgear→Cultsport carry-over in writing,</b> then have both sides sign one statement.</li>
+</ol>
+
+<div class="foot">
+  Prepared 01-Jul-2026 · Bharath Cycle Hub internal working paper. Figures from CULTSPORT_ final.xlsx (rows re-totalled), Curefit Customer Statement Reports (25-May-2026 closing ₹27,03,388), and the Mg-Mani-Cultsport WhatsApp export. "Manish" = Mani Gandan (one person). Srinu Yenugu = BCH accountant who prepared the source sheet. Verify all "VERIFY/OPEN" items against the latest brand statement before settlement.
+</div>
+
+</div>
+</body>
+</html>

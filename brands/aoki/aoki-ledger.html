@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AOKI Mobility — Consolidated Ledger · Bharath Cycle Hub</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background:#fff; color:#111; margin:0; font-size:13.5px; line-height:1.45; }
+  .page { max-width: 1150px; margin: 0 auto; padding: 36px 28px 70px; }
+
+  .head { text-align:center; margin-bottom: 6px; }
+  .head .co { font-size:18px; font-weight:700; letter-spacing:.02em; }
+  .head .sub { font-size:12.5px; color:#333; }
+  .head .dealer { font-size:15px; font-weight:700; margin-top:10px; }
+  .head .acct { font-size:13px; margin-top:2px; }
+  .head .period { font-size:12.5px; margin-top:2px; }
+  .head .src { font-size:11.5px; color:#666; margin-top:4px; font-style:italic; }
+  .rule { border-top:1.5px solid #111; margin:14px 0 0; }
+
+  table.ledger { width:100%; border-collapse:collapse; margin-top:0; }
+  table.ledger th { border-bottom:1.5px solid #111; border-top:1px solid #111; padding:7px 8px; font-size:12px; text-transform:uppercase; letter-spacing:.03em; text-align:left; background:#fff; }
+  table.ledger td { padding:6px 8px; border-bottom:1px solid #e4e4e4; vertical-align:top; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  td.date { white-space:nowrap; }
+  td.part { font-weight:600; white-space:nowrap; }
+  td.narr { color:#444; }
+  tr.memo td { background:#fafaf4; color:#555; font-style:italic; }
+  tr.cn td { background:#f2f9f4; }
+  tr.totals td { border-top:1.5px solid #111; border-bottom:1px solid #111; font-weight:700; background:#fff; }
+  tr.closing td { font-weight:700; font-size:14.5px; border-bottom:3px double #111; }
+  .dr { color:#8a1f1f; } .cr { color:#0a6b41; }
+
+  h2 { font-size:15px; margin:34px 0 8px; text-transform:uppercase; letter-spacing:.04em; border-bottom:1.5px solid #111; padding-bottom:4px; }
+  .note { font-size:12.5px; color:#444; margin:6px 0 12px; }
+
+  table.simple { width:100%; border-collapse:collapse; }
+  table.simple th { border-bottom:1px solid #111; padding:6px 8px; font-size:12px; text-align:left; }
+  table.simple td { padding:6px 8px; border-bottom:1px solid #e4e4e4; vertical-align:top; }
+
+  .calcbox { border:1.5px solid #111; max-width:680px; }
+  .calcbox .r { display:flex; justify-content:space-between; padding:8px 14px; border-bottom:1px solid #e4e4e4; }
+  .calcbox .r:last-child { border-bottom:none; }
+  .calcbox .r small { display:block; color:#666; font-weight:400; }
+  .calcbox .amt { font-variant-numeric:tabular-nums; font-weight:600; white-space:nowrap; }
+  .calcbox .total { background:#f2f9f4; font-weight:700; font-size:15px; border-top:1.5px solid #111; }
+  .foot { margin-top:30px; font-size:11.5px; color:#666; border-top:1px solid #ccc; padding-top:10px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="head">
+  <div class="co">AOKI MOBILITY PVT LTD</div>
+  <div class="sub">Coordinator: Prashant Pratyush, National Sales Head · Prashant.p@aoki.co.in · +91 98262 00845<br>Payments to: ICICI Bank A/c XXXXXXXX2354</div>
+  <div class="dealer">BHARATH CYCLE HUB — BENGALURU</div>
+  <div class="acct">Consolidated Ledger Account (with discounts &amp; credit notes)</div>
+  <div class="period">31-Oct-25 to 29-Jun-26</div>
+  <div class="src">Reconstructed from: AOKI dealer ledger + interim ledger snapshots of 29-Dec/05-Jan/05-Feb/30-Mar/07-Apr/24-Apr/22-May (WhatsApp) + payment receipts with txn IDs + CN approvals of 05/14-May-26 + price-list image of 21-Jan-26 + owner's confirmation of CN rates (12-Jun-26)</div>
+  <div class="rule"></div>
+</div>
+
+<table class="ledger">
+  <thead>
+    <tr><th>Date</th><th>Particulars</th><th>Narration</th><th class="num">Debit (₹)</th><th class="num">Credit (₹)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td class="date">31-Oct-25</td><td class="part cr">Payment — ICICI</td><td class="narr">Advance before first dispatch. Txn 2154348902, "aoki creditor payment". AOKI's own snapshot logs it as 23-Oct — receipt says 31-Oct; align via bank statement.</td><td class="num"></td><td class="num">76,020</td></tr>
+    <tr><td class="date">25-Nov-25</td><td class="part dr">Purchase — Sherpa series</td><td class="narr">Sherpa M1 ×1 @37,275 + Sherpa Z1 ×2 @34,965 — first invoice, billed at the OLD Z1 price. Basis of the Sherpa CN below.</td><td class="num">1,07,205</td><td class="num"></td></tr>
+    <tr><td class="date">24-Nov-25</td><td class="part cr">Payment</td><td class="narr">Settles the Sherpa invoice in full (paid on proforma, a day before invoice date). Date per AOKI's 05-Feb snapshot.</td><td class="num"></td><td class="num">1,07,205</td></tr>
+    <tr><td class="date">02-Dec-25</td><td class="part cr">Payment</td><td class="narr">Settles the Flex GO billing (paid on proforma). Date per AOKI's 05-Feb snapshot.</td><td class="num"></td><td class="num">1,00,800</td></tr>
+    <tr><td class="date">04-Dec-25</td><td class="part dr">Purchase — Flex CR ×2</td><td class="narr">@ ₹38,010 dealer price. (AOKI's snapshot shows the first Flex CR pair actually dispatched 07-Nov — the order that arrived 11+ days late.)</td><td class="num">76,020</td><td class="num"></td></tr>
+    <tr><td class="date">08-Dec-25</td><td class="part dr">Purchase — Flex GO ×2</td><td class="narr">@ ₹50,400 dealer price. Flex GO discount CN approved later — see credit of 14-May.</td><td class="num">1,00,800</td><td class="num"></td></tr>
+    <tr><td class="date">08-Dec-25</td><td class="part cr">Payment</td><td class="narr">Settles a Flex CR invoice. Date per AOKI's 05-Feb snapshot.</td><td class="num"></td><td class="num">76,020</td></tr>
+    <tr><td class="date">09-Dec-25</td><td class="part dr">Purchase — Flex CR ×2</td><td class="narr">Red &amp; Grey — the pair pre-paid by the 31-Oct advance.</td><td class="num">76,020</td><td class="num"></td></tr>
+    <tr><td class="date">09-Dec-25</td><td class="part dr">Purchase — Flex CR ×2</td><td class="narr">Second Flex CR invoice of the same day.</td><td class="num">76,020</td><td class="num"></td></tr>
+    <tr><td class="date">13-Dec-25</td><td class="part dr">Purchase — Street Mamba ×3</td><td class="narr">@ ₹50,925. Completed the Step Up Slab-4 target of 12 bikes.</td><td class="num">1,52,775</td><td class="num"></td></tr>
+    <tr><td class="date">13-Dec-25</td><td class="part cr">Payment</td><td class="narr">Same-day settlement of the Mamba invoice. Date per AOKI's 05-Feb snapshot.</td><td class="num"></td><td class="num">1,52,775</td></tr>
+    <tr class="memo"><td class="date">18-Dec-25</td><td class="part">Memo — incentive received</td><td class="narr">AOKI paid ₹14,400 Step Up Slab-4 incentive (12 bikes × ₹1,200) by NEFT into BCH HDFC a/c (ref IN42535254368383). Cash receipt — no ledger impact, but counts against the ₹1,200/bike promise.</td><td class="num"></td><td class="num"></td></tr>
+    <tr><td class="date">19-Dec-25</td><td class="part dr">Purchase — mixed, 6 bikes</td><td class="narr">Street Mamba ×2, Sherpa Z1 ×2 (now @29,925 — new price already applied), Sherpa M1 ×1, Flex CR ×1.</td><td class="num">2,36,985</td><td class="num"></td></tr>
+    <tr><td class="date">26-Dec-25</td><td class="part dr">Purchase — Street Mamba ×4</td><td class="narr">Season restock.</td><td class="num">2,03,700</td><td class="num"></td></tr>
+    <tr><td class="date">27-Dec-25</td><td class="part dr">Purchase — Street Mamba ×4</td><td class="narr">Two invoices raised the same day.</td><td class="num">2,03,700</td><td class="num"></td></tr>
+    <tr><td class="date">27-Dec-25</td><td class="part dr">Purchase — Street Mamba ×2</td><td class="narr">—</td><td class="num">1,01,850</td><td class="num"></td></tr>
+    <tr><td class="date">27-Dec-25</td><td class="part cr">Payment</td><td class="narr">"Will do more payment by Monday" — sent same Saturday. Date per AOKI's 05-Feb snapshot.</td><td class="num"></td><td class="num">2,00,000</td></tr>
+    <tr><td class="date">30-Dec-25</td><td class="part cr">Payment — ICICI</td><td class="narr">Txn 2222644549, 8:36 PM, on Prashant's "Once done, plz confirm — little urgent".</td><td class="num"></td><td class="num">2,50,000</td></tr>
+    <tr><td class="date">05-Jan-26</td><td class="part dr">Purchase — Street Mamba ×9</td><td class="narr">Largest single invoice ("Dispatch 10 mamba" order of 04-Jan). These units later hit battery/damage problems — basis of the ₹18,000 Mamba discount.</td><td class="num">4,58,325</td><td class="num"></td></tr>
+    <tr><td class="date">10-Jan-26</td><td class="part cr">Payment — ICICI</td><td class="narr">Txn 2237385931, confirmed to Prashant same day.</td><td class="num"></td><td class="num">3,00,000</td></tr>
+    <tr><td class="date">23-Jan-26</td><td class="part dr">Purchase — Street Mamba ×2</td><td class="narr">Last Mamba purchase.</td><td class="num">1,01,850</td><td class="num"></td></tr>
+    <tr><td class="date">27-Jan-26</td><td class="part dr">Purchase — Sherpa M1 ×2</td><td class="narr">—</td><td class="num">74,550</td><td class="num"></td></tr>
+    <tr><td class="date">28-Jan-26</td><td class="part dr">Purchase — Sherpa M1 ×2</td><td class="narr">—</td><td class="num">74,550</td><td class="num"></td></tr>
+    <tr><td class="date">30-Jan-26</td><td class="part dr">Purchase — Cadence ×2</td><td class="narr">New launch, taken on AOKI's request ("Put on display only after launch"). Cadence CN — see credit of 12-Jun.</td><td class="num">1,02,900</td><td class="num"></td></tr>
+    <tr><td class="date">02-Feb-26</td><td class="part dr">Purchase — Sherpa Z1 ×1</td><td class="narr">@ ₹29,925 revised dealer price.</td><td class="num">29,925</td><td class="num"></td></tr>
+    <tr class="memo"><td class="date">19-Feb-26</td><td class="part">Memo — salesman incentive claim</td><td class="narr">Sales Champions claim submitted (Z1 ₹300 / Flex CR ₹400 / M1 ₹400 / Flex GO ₹500 / Mamba ₹500 per sale): Iqbal ₹3,000, Mujahied ₹900, Sravan ₹500, Suma ₹5,500 — stated ₹10,300 (rows add to ₹9,900 — reconcile). UPI QR shared; transfer to staff pending. Paid direct to salesmen — no ledger impact.</td><td class="num"></td><td class="num"></td></tr>
+    <tr><td class="date">22-Feb-26</td><td class="part dr">Purchase — Sherpa M1 ×1</td><td class="narr">—</td><td class="num">37,275</td><td class="num"></td></tr>
+    <tr><td class="date">24-Feb-26</td><td class="part dr">Purchase — Sherpa M1 ×4</td><td class="narr">—</td><td class="num">1,49,100</td><td class="num"></td></tr>
+    <tr><td class="date">26-Feb-26</td><td class="part cr">Payment — ICICI</td><td class="narr">Txn 2290223742, after AOKI's 30-day-overdue reminder the same afternoon.</td><td class="num"></td><td class="num">2,00,000</td></tr>
+    <tr><td class="date">28-Feb-26</td><td class="part dr">Purchase — Ghost / Lynx, 3 bikes</td><td class="narr">Street Ghost ×1 + Lynx ×2 — Ghost/Lynx season begins.</td><td class="num">1,50,360</td><td class="num"></td></tr>
+    <tr><td class="date">Feb/Mar-26 *</td><td class="part cr">Payment</td><td class="narr">Falls between AOKI's 05-Feb snapshot (₹12,62,820 received) and 30-Mar snapshot (₹19,12,820). Exact date pending bank statement.</td><td class="num"></td><td class="num">2,00,000</td></tr>
+    <tr><td class="date">Feb/Mar-26 *</td><td class="part cr">Payment</td><td class="narr">Same window as above. Exact date pending bank statement.</td><td class="num"></td><td class="num">2,50,000</td></tr>
+    <tr><td class="date">02-Mar-26</td><td class="part dr">Purchase — Street Ghost ×2</td><td class="narr">Dispatched 28-Feb with Lynx HT.</td><td class="num">1,07,100</td><td class="num"></td></tr>
+    <tr><td class="date">21-Mar-26</td><td class="part dr">Purchase — Lynx HT ×4</td><td class="narr">@ ₹46,100 ex-GST / ₹55,999 retail. Sold out fast ("need 3+3").</td><td class="num">2,05,800</td><td class="num"></td></tr>
+    <tr><td class="date">27-Mar-26</td><td class="part dr">Purchase — Street Ghost ×2</td><td class="narr">—</td><td class="num">1,07,100</td><td class="num"></td></tr>
+    <tr><td class="date">30-Mar-26</td><td class="part dr">Purchase — Ghost-2 ×2</td><td class="narr">—</td><td class="num">1,07,100</td><td class="num"></td></tr>
+    <tr><td class="date">31-Mar-26</td><td class="part cr">Payment — ICICI</td><td class="narr">Txn 2331456351, 10:42 PM — AOKI's FY-closing push ("funds very very urgent with regard to closing").</td><td class="num"></td><td class="num">3,00,000</td></tr>
+    <tr><td class="date">06-Apr-26</td><td class="part dr">Purchase — Street Ghost ×2</td><td class="narr">—</td><td class="num">1,07,100</td><td class="num"></td></tr>
+    <tr><td class="date">11-Apr-26</td><td class="part cr">Payment — ICICI</td><td class="narr">Txn 2345648221, against Prashant's ₹3L request of 10-Apr.</td><td class="num"></td><td class="num">3,00,000</td></tr>
+    <tr><td class="date">17-Apr-26</td><td class="part dr">Purchase — Sherpa M1-2 ×2</td><td class="narr">—</td><td class="num">74,550</td><td class="num"></td></tr>
+    <tr><td class="date">22-Apr-26</td><td class="part dr">Purchase — Lynx-2 ×2</td><td class="narr">—</td><td class="num">1,02,900</td><td class="num"></td></tr>
+    <tr><td class="date">25-Apr-26</td><td class="part cr">Payment — ICICI</td><td class="narr">Txn 2360384424. Day before: "issue the CN and tell me the final payable, will clear everything one shot" — Prashant: "Spoken to Accounts to settle the Credit Notes".</td><td class="num"></td><td class="num">3,00,000</td></tr>
+    <tr><td class="date">29-Apr-26</td><td class="part dr">Purchase — Street Ghost ×2</td><td class="narr">DC-26-00093.</td><td class="num">1,07,100</td><td class="num"></td></tr>
+    <tr><td class="date">30-Apr-26</td><td class="part dr">Purchase — Lynx-2 ×2</td><td class="narr">—</td><td class="num">1,02,900</td><td class="num"></td></tr>
+    <tr><td class="date">02-May-26</td><td class="part dr">Purchase — Ghost-1 ×1</td><td class="narr">—</td><td class="num">53,550</td><td class="num"></td></tr>
+    <tr class="cn"><td class="date">05-May-26</td><td class="part cr">Credit note — Mamba discount</td><td class="narr">APPROVED by Prashant: "Mamba discount (18000)… Approved". Compensation for damaged/battery-issue Mamba stock. CN document awaited.</td><td class="num"></td><td class="num">18,000</td></tr>
+    <tr class="cn"><td class="date">05-May-26</td><td class="part cr">Credit note — billing incentive (balance)</td><td class="narr">APPROVED: "Billing Incentive (Rs. 1200 per Bike)". 82 bikes × ₹1,200 = ₹98,400 less ₹14,400 received 18-Dec → ₹84,000. CN/transfer awaited.</td><td class="num"></td><td class="num">84,000</td></tr>
+    <tr class="cn"><td class="date">14-May-26</td><td class="part cr">Credit note — Sherpa price difference</td><td class="narr">APPROVED 05/14-May ("CN on Sherpa already approved"). Per Prashant's price-list image of 21-Jan: Sherpa Z1 revised to ₹29,925, but the 25-Nov invoice billed Z1 ×2 @ ₹34,965 → 2 × ₹5,040 = ₹10,080. Confirm exact figure on the CN document.</td><td class="num"></td><td class="num">10,080</td></tr>
+    <tr class="cn"><td class="date">14-May-26</td><td class="part cr">Credit note — Flex GO discount</td><td class="narr">APPROVED ("CN on… Flex Go is already approved"). ₹2,000/unit × 2 units billed 08-Dec, rate as conveyed by Prashant. CN document awaited.</td><td class="num"></td><td class="num">4,000</td></tr>
+    <tr><td class="date">20-May-26</td><td class="part dr">Purchase — Flex CR-1 + Ghost-1</td><td class="narr">Flex CR sent without battery on request (EWB 491727255822).</td><td class="num">91,560</td><td class="num"></td></tr>
+    <tr><td class="date">22-May-26</td><td class="part cr">Payment — ICICI</td><td class="narr">Txn 2392600893, against "Plz arrange funds, atleast 2 Lac". Same day Prashant put the balance at "with all your CN — 6 Lac".</td><td class="num"></td><td class="num">2,00,000</td></tr>
+    <tr><td class="date">25-May-26</td><td class="part dr">Purchase — Flex CR-1 ×1</td><td class="narr">DC-26-00210.</td><td class="num">38,010</td><td class="num"></td></tr>
+    <tr><td class="date">08-Jun-26</td><td class="part dr">Purchase — Ghost-2 ×2</td><td class="narr">Most recent invoice (EWB 411735198205, 10-Jun).</td><td class="num">1,07,100</td><td class="num"></td></tr>
+    <tr class="cn"><td class="date">12-Jun-26</td><td class="part cr">Credit note — Cadence model</td><td class="narr">₹2,000/unit × 2 units billed 30-Jan, rate as conveyed by Prashant to owner. Approval was never given in the chat — get this one in writing first.</td><td class="num"></td><td class="num">4,000</td></tr>
+    <tr class="cn"><td class="date">12-Jun-26</td><td class="part cr">Marketing support payout</td><td class="narr">Promised ₹1.5 lakh per month (agency plan); per owner's instruction only ₹1,50,000 total considered for now. Not yet acknowledged by AOKI in the chat — needs written confirmation.</td><td class="num"></td><td class="num">1,50,000</td></tr>
+    <tr class="cn"><td class="date">29-Jun-26</td><td class="part cr">Reimbursement claim — product-failure return</td><td class="narr">BCH-borne expense on a twin product failure: Electronic City customer (~45 km). Bike delivered 18-Jun had a burning smell, auto-activating throttle &amp; display error; the brand-new replacement (delivered 27-Jun) had a slow rear-tube puncture. Customer refused all alternatives and demanded a full refund of both units; BCH refunded the entire credit-card amount without deducting freight/processing and absorbed the to-and-fro logistics, CC processing &amp; handling to retrieve both bikes — ₹6,000. Reimbursement requested from AOKI by email to Prashant, 29-Jun. <strong>Not yet approved by AOKI — chase.</strong></td><td class="num"></td><td class="num">6,000</td></tr>
+    <tr class="totals"><td></td><td>Total</td><td class="narr" style="font-style:normal">32 invoices, 82 bikes · 15 payments · 7 discount/support credits</td><td class="num">38,25,780</td><td class="num">32,88,900</td></tr>
+    <tr class="closing"><td></td><td>Closing Balance — payable to AOKI</td><td class="narr" style="font-style:normal">If every promised credit above is honoured</td><td class="num"></td><td class="num">5,36,880</td></tr>
+  </tbody>
+</table>
+<div class="note">* Two payments (₹2,00,000 + ₹2,50,000) are bracketed between AOKI's interim snapshots of 05-Feb and 30-Mar but lack receipts in the chat — exact dates from your bank statement. All 15 payments total ₹30,12,820, matching AOKI's own ledger to the rupee.</div>
+
+<h2>Credit summary — what AOKI owes in discounts</h2>
+<table class="simple">
+  <thead><tr><th>Credit</th><th class="num" style="text-align:right">Amount (₹)</th><th>Basis</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>Mamba discount</td><td class="num">18,000</td><td>Approved on WhatsApp 05-May-26</td><td>CN document awaited</td></tr>
+    <tr><td>Billing incentive balance</td><td class="num">84,000</td><td>₹1,200 × 82 bikes = 98,400, less 14,400 paid 18-Dec-25</td><td>CN/transfer awaited; confirm 82-bike base</td></tr>
+    <tr><td>Sherpa CN</td><td class="num">10,080</td><td>Z1 ×2 billed @34,965 (25-Nov) vs revised ₹29,925 per Prashant's 21-Jan price-list image</td><td>Approved; confirm exact CN figure</td></tr>
+    <tr><td>Flex GO CN</td><td class="num">4,000</td><td>₹2,000/unit × 2 (08-Dec billing), rate per Prashant</td><td>Approved 14-May; CN document awaited</td></tr>
+    <tr><td>Cadence CN</td><td class="num">4,000</td><td>₹2,000/unit × 2 (30-Jan billing), rate per Prashant</td><td><strong>Not yet approved in writing</strong> — chase</td></tr>
+    <tr><td>Marketing support payout</td><td class="num">1,50,000</td><td>₹1.5L/month promised; 1.5L total considered for now</td><td><strong>Not yet acknowledged by AOKI</strong> — chase</td></tr>
+    <tr><td>Product-failure reimbursement</td><td class="num">6,000</td><td>Logistics + CC-processing + handling on full refund of 2 failed bikes (delivered 18-Jun, replaced 27-Jun); claim emailed to Prashant 29-Jun</td><td><strong>Not yet approved by AOKI</strong> — chase</td></tr>
+    <tr><td><strong>Total credits pending</strong></td><td class="num"><strong>2,76,080</strong></td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+<h2>Still open (non-ledger)</h2>
+<table class="simple">
+  <thead><tr><th>Item</th><th>Status</th><th>What to chase</th></tr></thead>
+  <tbody>
+    <tr><td>Salesman incentive transfer</td><td>Approved 05-May; ₹10,300 claimed 19-Feb</td><td>Transfer to staff UPI. Claim rows add to ₹9,900 vs ₹10,300 stated — reconcile first.</td></tr>
+    <tr><td>Damaged Mamba recall</td><td>"Will recall all" — 28-Mar</td><td>Pickup of ~9 units + CN; plus CN for 3 Mamba sent to Gautam (only 1 acknowledged).</td></tr>
+    <tr><td>Digital display at store</td><td>"Under process" — 14-May</td><td>Installation date.</td></tr>
+    <tr><td>Bajaj Finance tie-up</td><td>"Under process" — 14-May</td><td>Go-live; 12 Ghost enquiries were waiting on EMI back in March.</td></tr>
+    <tr><td>Annual support plan (600 bikes to Mar-27)</td><td>Stated 05-May; "shared by mail" 14-May</td><td>Verify the mail arrived; get the support plan in writing.</td></tr>
+    <tr><td>Stock refill (60 units wanted)</td><td>Prashant: full refill by 20-Jun; Ghost &amp; CR by 15-Jun</td><td>Hold him to the dates before releasing the next lump sum.</td></tr>
+  </tbody>
+</table>
+
+<h2>The calculation</h2>
+<div class="calcbox">
+  <div class="r"><div>Total purchases (32 invoices, 82 bikes)<small>31-Oct-25 to 08-Jun-26</small></div><div class="amt">₹38,25,780</div></div>
+  <div class="r"><div>Less: payments made (15)<small>13 dated (8 receipts + 5 from AOKI's snapshots), 2 pending bank statement</small></div><div class="amt">− ₹30,12,820</div></div>
+  <div class="r"><div><strong>Due as per AOKI's ledger</strong><small>Arithmetic verified ✓ (matches their 10-Jun statement)</small></div><div class="amt">₹8,12,960</div></div>
+  <div class="r"><div>Less: Mamba discount</div><div class="amt">− ₹18,000</div></div>
+  <div class="r"><div>Less: billing incentive balance</div><div class="amt">− ₹84,000</div></div>
+  <div class="r"><div>Less: Sherpa CN (price difference)</div><div class="amt">− ₹10,080</div></div>
+  <div class="r"><div>Less: Flex GO CN (2,000 × 2)</div><div class="amt">− ₹4,000</div></div>
+  <div class="r"><div>Less: Cadence CN (2,000 × 2)</div><div class="amt">− ₹4,000</div></div>
+  <div class="r"><div>Less: marketing support payout<small>1.5L total considered (of 1.5L/month promised)</small></div><div class="amt">− ₹1,50,000</div></div>
+  <div class="r"><div>Less: product-failure reimbursement<small>claim raised 29-Jun, not yet approved</small></div><div class="amt">− ₹6,000</div></div>
+  <div class="r total"><div>Net payable to AOKI</div><div class="amt">₹5,36,880</div></div>
+</div>
+<div class="note" style="margin-top:10px; max-width:760px;"><strong>Cross-check:</strong> on 22-May-26 Prashant put the balance at "with all your CN — 6 Lac" when the pre-CN due stood at ₹6,67,850. His "6 Lac" is consistent with the CN-only deductions (₹1,16,080 of hard CNs → ₹5.5L) — it almost certainly does NOT include the ₹1.5L marketing payout. Treat ₹5,36,880 as the negotiating figure and ₹6,86,880 (without marketing) as the fallback; get the CN documents, the ₹6,000 reimbursement, and the marketing payout in writing before the next lump-sum payment.</div>
+
+<div class="foot">
+  Prepared 12-Jun-2026 · Updated 29-Jun-2026 (added ₹6,000 product-failure reimbursement claim, per sent email to Prashant) · Sources: AOKI dealer ledger (10-Jun) · WhatsApp export "Prashant Aoki" — payment receipts w/ txn IDs, interim ledger snapshots (29-Dec, 05-Jan, 05-Feb w/ payment dates, 30-Mar, 07-Apr, 24-Apr, 22-May), CN approvals 05/14-May-26, price list 21-Jan-26, Step Up circular 03-Dec-25, Sales Champions scheme · CN rates for Flex GO/Cadence &amp; marketing figure per owner, 12-Jun-26 · Working files: ledger.csv, payments.csv, discounts.md, reconciliation.md
+</div>
+
+</div>
+</body>
+</html>

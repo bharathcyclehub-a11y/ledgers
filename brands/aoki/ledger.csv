@@ -1,0 +1,33 @@
+invoice_date,dealership,town,quantity,model,invoice_value
+2025-11-25,Bharath Cycle Hub,Bangalore,3,"M1-1, Z1-2",107205
+2025-12-04,Bharath Cycle Hub,Bangalore,2,Flex CR,76020
+2025-12-08,Bharath Cycle Hub,Bangalore,2,Flex GO,100800
+2025-12-09,Bharath Cycle Hub,Bangalore,2,Flex CR (Red & Grey),76020
+2025-12-09,Bharath Cycle Hub,Bangalore,2,Flex CR,76020
+2025-12-13,Bharath Cycle Hub,Bangalore,3,Mamba,152775
+2025-12-19,Bharath Cycle Hub,Bangalore,6,"Mamba-2, Z1-2, M1-1, CR-1",236985
+2025-12-26,Bharath Cycle Hub,Bangalore,4,Mamba,203700
+2025-12-27,Bharath Cycle Hub,Bangalore,4,Mamba,203700
+2025-12-27,Bharath Cycle Hub,Bangalore,2,Mamba,101850
+2026-01-05,Bharath Cycle Hub,Bangalore,9,Mamba-9,458325
+2026-01-23,Bharath Cycle Hub,Bangalore,2,Mamba-2,101850
+2026-01-27,Bharath Cycle Hub,Bangalore,2,M1-2,74550
+2026-01-28,Bharath Cycle Hub,Bangalore,2,M1-2,74550
+2026-01-30,Bharath Cycle Hub,Bangalore,2,Cadence,102900
+2026-02-02,Bharath Cycle Hub,Bangalore,1,Z1,29925
+2026-02-22,Bharath Cycle Hub,Bangalore,1,M1,37275
+2026-02-24,Bharath Cycle Hub,Bangalore,4,M1,149100
+2026-02-28,Bharath Cycle Hub,Bangalore,3,"Ghost-1, Lynx-2",150360
+2026-03-02,Bharath Cycle Hub,Bangalore,2,Ghost,107100
+2026-03-21,Bharath Cycle Hub,Bangalore,4,Lynx HT,205800
+2026-03-27,Bharath Cycle Hub,Bangalore,2,Ghost,107100
+2026-03-30,Bharath Cycle Hub,Bangalore,2,Ghost-2,107100
+2026-04-06,Bharath Cycle Hub,Bangalore,2,Ghost,107100
+2026-04-17,Bharath Cycle Hub,Bangalore,2,M1-2,74550
+2026-04-22,Bharath Cycle Hub,Bangalore,2,Lynx-2,102900
+2026-04-29,Bharath Cycle Hub,Bangalore,2,Ghost,107100
+2026-04-30,Bharath Cycle Hub,Bangalore,2,Lynx-2,102900
+2026-05-02,Bharath Cycle Hub,Bangalore,1,Ghost-1,53550
+2026-05-20,Bharath Cycle Hub,Bangalore,2,"Flex CR-1, Ghost-1",91560
+2026-05-25,Bharath Cycle Hub,Bangalore,1,Flex CR-1,38010
+2026-06-08,Bharath Cycle Hub,Bangalore,2,Ghost-2,107100

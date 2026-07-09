@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMotorad — Pending-Issues Ledger · Bharath Cycle Hub</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background:#fff; color:#111; margin:0; font-size:13.5px; line-height:1.45; }
+  .page { max-width: 1150px; margin: 0 auto; padding: 36px 28px 70px; }
+  .head { text-align:center; margin-bottom: 6px; }
+  .head .co { font-size:18px; font-weight:700; letter-spacing:.02em; }
+  .head .sub { font-size:12.5px; color:#333; }
+  .head .dealer { font-size:15px; font-weight:700; margin-top:10px; }
+  .head .acct { font-size:13px; margin-top:2px; }
+  .head .period { font-size:12.5px; margin-top:2px; }
+  .head .src { font-size:11.5px; color:#666; margin-top:4px; font-style:italic; }
+  .rule { border-top:1.5px solid #111; margin:14px 0 0; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:12px; margin:22px 0 8px; }
+  .card { border:1px solid #ddd; border-radius:9px; padding:13px 15px; }
+  .card .l { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:#777; }
+  .card .v { font-size:21px; font-weight:700; margin-top:3px; }
+  .card .n { font-size:11.5px; color:#777; margin-top:3px; }
+  .card.due .v { color:#8a1f1f; } .card.net .v { color:#0a6b41; } .card.gap .v { color:#92600a; }
+  table { width:100%; border-collapse:collapse; }
+  table.ledger th { border-bottom:1.5px solid #111; border-top:1px solid #111; padding:7px 8px; font-size:12px; text-transform:uppercase; letter-spacing:.03em; text-align:left; }
+  table.ledger td { padding:6px 8px; border-bottom:1px solid #e7e7e7; vertical-align:top; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  td.date, td.id { white-space:nowrap; } td.part { font-weight:600; }
+  td.narr { color:#444; }
+  tr.open td { background:#fdecea; } tr.partial td { background:#fdf3df; } tr.closed td { background:#f2f9f4; }
+  tr.totals td { border-top:1.5px solid #111; border-bottom:1px solid #111; font-weight:700; }
+  .dr { color:#8a1f1f; } .cr { color:#0a6b41; }
+  .st { font-weight:700; font-size:11.5px; white-space:nowrap; }
+  .st.o { color:#b3261e; } .st.p { color:#92600a; } .st.c { color:#0a6b41; } .st.u { color:#555; }
+  h2 { font-size:15px; margin:34px 0 8px; text-transform:uppercase; letter-spacing:.04em; border-bottom:1.5px solid #111; padding-bottom:4px; }
+  .note { font-size:12.5px; color:#444; margin:6px 0 12px; max-width:980px; }
+  .ok { color:#0a6b41; font-weight:600; } .warn { color:#8a1f1f; font-weight:600; }
+  .calcbox { border:1.5px solid #111; max-width:680px; }
+  .calcbox .r { display:flex; justify-content:space-between; padding:8px 14px; border-bottom:1px solid #e7e7e7; }
+  .calcbox .r:last-child { border-bottom:none; }
+  .calcbox .r small { display:block; color:#666; font-weight:400; }
+  .calcbox .amt { font-variant-numeric:tabular-nums; font-weight:600; white-space:nowrap; }
+  .calcbox .total { background:#f2f9f4; font-weight:700; font-size:15px; border-top:1.5px solid #111; }
+  .calcbox .tbd .amt { color:#92600a; }
+  .callout { border-left:4px solid #92600a; background:#fdf3df; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; max-width:980px; }
+  .callout.red { border-left-color:#b3261e; background:#fdecea; }
+  .callout strong { display:block; margin-bottom:2px; }
+  .legend { font-size:12px; color:#555; margin:8px 0 0; }
+  .legend b.o{color:#b3261e;} .legend b.p{color:#92600a;} .legend b.c{color:#0a6b41;} .legend b.u{color:#555;}
+  .foot { margin-top:30px; font-size:11.5px; color:#666; border-top:1px solid #ccc; padding-top:10px; }
+  .chk { font-weight:700; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="head">
+  <div class="co">EMOTORAD (INKODOP TECHNOLOGIES PVT LTD)</div>
+  <div class="sub">Pune, Maharashtra · National Sales Head: Sandeep Sir · RSM South: Jayachandra V · Ex-POC: Darshan P (now TVS)</div>
+  <div class="dealer">BHARATH CYCLE HUB / CENTRE — BENGALURU</div>
+  <div class="acct">Pending-Issues Ledger &amp; Reconciliation — BCH's #1 brand (~50–60% of revenue)</div>
+  <div class="period">Coverage: 12-Oct-2022 → 17-Jun-2026 · Built from 3 WhatsApp exports (Darshan 9,343 · Sandeep 2,333 · Jaya 701 msgs) + 17 CN PDFs + Service Review deck</div>
+  <div class="src">Compiled 17-Jun-2026. Tick the ☐ as you confirm each item closed with EMotorad.</div>
+</div>
+<div class="rule"></div>
+
+<div class="cards">
+  <div class="card gap"><div class="l">Open / unresolved items</div><div class="v">28</div><div class="n">across service, CN, ledger, supply</div></div>
+  <div class="card due"><div class="l">Service issues (28 mo)</div><div class="v">711</div><div class="n">chase msgs · 280+ tickets · 6 open now</div></div>
+  <div class="card net"><div class="l">CN received (evidence)</div><div class="v">₹13.4 L</div><div class="n">17 CN PDFs in hand</div></div>
+  <div class="card gap"><div class="l">CN / CD disputed</div><div class="v">TBD</div><div class="n">Trex-Pro, Sravan, Thailand, CD gaps</div></div>
+  <div class="card due"><div class="l">Live customer escalations</div><div class="v">3</div><div class="n">Rajita (CEO+LinkedIn), Bhargav, #109192</div></div>
+</div>
+
+<p class="legend">Legend: <b class="o">OPEN</b> — no resolution found · <b class="p">PARTIAL/VERIFY</b> · <b class="c">CLOSED</b> (evidence in hand) · <b class="u">UNCLEAR</b></p>
+
+<div class="callout red">
+  <strong>Structural root cause — read first</strong>
+  EM bills BCH under TWO folios — <b>"Bharath Cycle Hub"</b> and <b>"Bharath Cycle Centre"</b> (different GSTs). Payments &amp; CNs from one are posted to the other (e.g. 23-Dec-24: Hub +₹1.04 Cr, Centre −₹27 L). <b>No money item below can be finally settled until both folios are pulled on ONE statement and reconciled together.</b>
+</div>
+
+<!-- ===================== SERVICE ===================== -->
+<h2>1 · Service / Warranty / Quality — still open</h2>
+<p class="note">Source: <b>BCH_x_EMotorad_Service_Review.pptx</b> (8,820 msgs · 711 chases · 1,020 photos · 24-Feb-24→12-Jun-26). Avg resolution <b>8 days vs 48-hr promise</b>; root cause = EM's Zoho comments set "private", hidden from BCH ~2 yrs. Full detail in <b>service-issues.md</b>.</p>
+<table class="ledger">
+<thead><tr><th>☐</th><th class="id">Ref</th><th>Issue</th><th>Latest position</th><th>Status</th></tr></thead>
+<tbody>
+<tr class="open"><td class="chk">☐</td><td class="id">#109192</td><td class="part">Mechanical-brake systemic defect</td><td class="narr">Pads dead at 527 km; wrong resin pads sent (EM ordered calipers not pads). Same fault on X1 (total brake failure May-26) &amp; Viper. Root-cause fix requested 1-Jun.</td><td><span class="st o">OPEN — pads/calipers not dispatched</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">Bhargav</td><td class="part">Viper display lost in courier</td><td class="narr">"Sending display" 22-May → docket held a MOTOR → admitted lost in courier 20+ days (11-Jun). New TrackOn 500618219426 shared 11-Jun eve.</td><td><span class="st o">OPEN — unconfirmed</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">Rajita Nair<br>96639&nbsp;11228</td><td class="part">Viper — manufacturing defect, public escalation</td><td class="narr">Oil leak, brakes fail; EM sent wrong product, 10 days no reply. Customer emailed CEO Kunal + posted on LinkedIn (16-Jun-26).</td><td><span class="st o">OPEN — reputational</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">#93089</td><td class="part">Sep-25 complaint, silent 6+ months</td><td class="narr">Customer waiting 6+ months; EM "Not applicable."</td><td><span class="st u">UNCLEAR</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">#99827 / #100251</td><td class="part">Closed "no response" despite evidence</td><td class="narr">Premature closures while photos were posted.</td><td><span class="st o">REOPEN</span></td></tr>
+<tr class="partial"><td class="chk">☐</td><td class="id">X1 colour</td><td class="part">Replacement blocked on invoice colour field</td><td class="narr">Phantom Grey vs Beige Desert Hawk mismatch held it 4 days.</td><td><span class="st p">VERIFY delivered</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">Systemic</td><td class="part">Recurring quality (root-cause pending)</td><td class="narr">Brake system (Ranger/X1/Viper); X1 controller 30-35/mo; disc-to-motor screw loosening; Trex Air/Legend E06 display; harness loose at production; T-Rex+ lot missing headset spacers (unsellable); battery "sticker" denials; G1 billing stopped for quality.</td><td><span class="st o">OPEN</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">Aug-24</td><td class="part">Regional spare stock (Bangalore/Hyd depot)</td><td class="narr">EM committed "stocking spares at Bangalore soon" on 9-Aug-2024.</td><td><span class="st o">STILL PENDING</span></td></tr>
+</tbody>
+</table>
+
+<!-- ===================== CREDIT NOTES OPEN ===================== -->
+<h2>2 · Credit notes &amp; cash discount — disputed / pending</h2>
+<p class="note">Official CD policy (1-Apr-26): 3% advance / 1.5% within 30 days; 2%/mo debit note beyond 60 days. Detail in <b>credit-notes-and-discounts.md</b>.</p>
+<table class="ledger">
+<thead><tr><th>☐</th><th class="id">ID</th><th>Item</th><th>Amount / basis</th><th>Status</th></tr></thead>
+<tbody>
+<tr class="open"><td class="chk">☐</td><td class="id">B1</td><td class="part">Trex Pro discount-CN (largest)</td><td class="narr">₹4,500/₹4,000 per-bike + ₹5K delta via CN; ASP fell ₹45k, 26 units liquidated. Sandeep "no positive response" 2-Dec-25.</td><td><span class="st o">OPEN</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">B2</td><td class="part">Sravan salary support CN</td><td class="narr">₹25,000/mo × 6 mo approved 25-Aug-25 (confidential). Confirm all 6 credited.</td><td><span class="st o">OPEN</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">B3</td><td class="part">Thailand-trip CN / benefit</td><td class="narr">In lieu of declined trip; "no CN" per Sandeep vs "alag benefit" per Darshan. 50% on ticket approved 6-Apr-26 — confirm finance processed.</td><td><span class="st o">OPEN</span></td></tr>
+<tr class="partial"><td class="chk">☐</td><td class="id">B4/B5</td><td class="part">Trex Plus/Pro old-stock &amp; Toy/Formula-Fun CN</td><td class="narr">Sold below ₹45k on verbal "CN on current stock" (28-Sep-25); slow-moving toy stock CN.</td><td><span class="st p">VERIFY</span></td></tr>
+<tr class="partial"><td class="chk">☐</td><td class="id">B7</td><td class="part">3% CD on ₹15L payment (30-Oct-25)</td><td class="narr">~₹45,000 — no CN PDF tied to it.</td><td><span class="st p">VERIFY</span></td></tr>
+<tr class="partial"><td class="chk">☐</td><td class="id">B8</td><td class="part">4% CD on ₹35L (Mar-26)</td><td class="narr">CN ₹75k+₹30k=₹1.05L vs 4%×35L=₹1.40L → possible ₹35,000 short.</td><td><span class="st p">VERIFY ₹35k</span></td></tr>
+<tr class="partial"><td class="chk">☐</td><td class="id">B9</td><td class="part">"125K" CN vs actual ₹51,242</td><td class="narr">Cleared via MHCN2526-02200; reconcile amount gap.</td><td><span class="st p">VERIFY</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">B6</td><td class="part">JFM scheme (Jan–Mar)</td><td class="narr">Syed claims 250 units; Jaya "JFM not through" (6-Apr-26).</td><td><span class="st u">LIKELY DENIED</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">B10</td><td class="part">ATOD (annual terms)</td><td class="narr">Chased Apr–May 2025; never closed.</td><td><span class="st u">UNCLEAR</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">B11</td><td class="part">FY22-23 early credits</td><td class="narr">₹78,778 + bills SP/394 &amp; SP/395; Gaurav giveaway CN; Paytail ₹5,000 short; Lil-E damage.</td><td><span class="st o">OLD / OPEN</span></td></tr>
+<tr class="partial"><td class="chk">☐</td><td class="id">B12</td><td class="part">Online price-protection CN (festive)</td><td class="narr">GOAT/Freedom/Diwali windows — reconcile units sold × per-unit CN.</td><td><span class="st p">RECONCILE</span></td></tr>
+</tbody>
+</table>
+
+<!-- ===================== CREDIT NOTES RECEIVED ===================== -->
+<h2>3 · Credit notes RECEIVED — evidence in hand (closed)</h2>
+<table class="ledger">
+<thead><tr><th class="id">CN No.</th><th class="date">Date</th><th class="num">Amount ₹</th><th>Reason</th></tr></thead>
+<tbody>
+<tr class="closed"><td class="id">MHCN2425-00759</td><td class="date">18-Dec-24</td><td class="num">2,67,000</td><td class="narr">CD / scheme</td></tr>
+<tr class="closed"><td class="id">MHCN2526-00337</td><td class="date">02-Jun-25</td><td class="num">80,000</td><td class="narr">CD</td></tr>
+<tr class="closed"><td class="id">MHCN2526-00555</td><td class="date">21-Jun-25</td><td class="num">55,000</td><td class="narr">Trex V3</td></tr>
+<tr class="closed"><td class="id">MHCN2526-00574</td><td class="date">21-Jun-25</td><td class="num">15,000</td><td class="narr">—</td></tr>
+<tr class="closed"><td class="id">MHCN2526-00725</td><td class="date">01-Jul-25</td><td class="num">12,000</td><td class="narr">online-offer</td></tr>
+<tr class="closed"><td class="id">MHCN2526-00739</td><td class="date">05-Jul-25</td><td class="num">18,000</td><td class="narr">online-offer</td></tr>
+<tr class="closed"><td class="id">MHCN2526-00741</td><td class="date">05-Jul-25</td><td class="num">15,000</td><td class="narr">online-offer</td></tr>
+<tr class="closed"><td class="id">MHCN2526-00743</td><td class="date">05-Jul-25</td><td class="num">12,000</td><td class="narr">online-offer</td></tr>
+<tr class="closed"><td class="id">MHCN2526-00748</td><td class="date">05-Jul-25</td><td class="num">9,000</td><td class="narr">online-offer</td></tr>
+<tr class="closed"><td class="id">MHCN2526-00867</td><td class="date">Jul-25</td><td class="num">59,998</td><td class="narr">2× Trex Air Metallic Red 29" (return)</td></tr>
+<tr class="closed"><td class="id">MHCN2526-01164</td><td class="date">02-Aug-25</td><td class="num">30,000</td><td class="narr">Freedom Sale</td></tr>
+<tr class="closed"><td class="id">MHCN2526-01468</td><td class="date">18-Aug-25</td><td class="num">10,000</td><td class="narr">Presidency School event (~1 yr late)</td></tr>
+<tr class="closed"><td class="id">MHCN2526-02009</td><td class="date">13-Oct-25</td><td class="num">6,60,000</td><td class="narr">CN in bulk (Diwali/CD)</td></tr>
+<tr class="closed"><td class="id">MHCN2526-02200</td><td class="date">03-Nov-25</td><td class="num">1,10,998</td><td class="narr">T-Pro ₹9,249/bike on advance</td></tr>
+<tr class="closed"><td class="id">MHCN2627-00176</td><td class="date">30-Apr-26</td><td class="num">75,000</td><td class="narr">CD payment</td></tr>
+<tr class="closed"><td class="id">MHCN2627-00177</td><td class="date">04-May-26</td><td class="num">30,000</td><td class="narr">CD payment</td></tr>
+<tr class="closed"><td class="id">MHCN2627-00639</td><td class="date">08-Jun-26</td><td class="num">80,000</td><td class="narr">2% CD on ₹40L June payment</td></tr>
+<tr class="totals"><td colspan="2">TOTAL CN evidenced received</td><td class="num">≈ 13,38,994</td><td>Verify each lands on EM ledger (both folios)</td></tr>
+</tbody>
+</table>
+
+<!-- ===================== CIN / APP / ONLINE ===================== -->
+<h2>4 · CIN / warranty-registration / app / online</h2>
+<table class="ledger">
+<thead><tr><th>☐</th><th class="id">ID</th><th>Item</th><th>Detail</th><th>Status</th></tr></thead>
+<tbody>
+<tr class="open"><td class="chk">☐</td><td class="id">D2</td><td class="part">Warranty registered under Syed's own mobile</td><td class="narr">Done at app launch (Pranav's advice) to match inventory. Must be re-assigned to real customers or CN-eligibility/data is wrong.</td><td><span class="st o">OPEN</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">D3</td><td class="part">EM Dealer App / EM BIZ balance ≠ actual</td><td class="narr">Disputed 03-Feb-25 &amp; 16-Apr-25.</td><td><span class="st o">OPEN</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">D4</td><td class="part">ShopSe / Paytm / Bajaj not reflecting</td><td class="narr">ShopSe txns not on app (28-Nov-25); Paytail ₹5,000 short never closed; ShopSe EMI ₹1,298.</td><td><span class="st o">OPEN</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">D5</td><td class="part">Online (Amazon/Flipkart) undercutting store</td><td class="narr">EM's own listings at/below dealer landing; Flipkart-only SKUs withheld. "Damaging the trust."</td><td><span class="st o">CHRONIC</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">D6</td><td class="part">Lead-generation system</td><td class="narr">Phase-1 program (Feb-26) + Samrat's app — promised, never working.</td><td><span class="st o">OPEN</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">D1</td><td class="part">Warranty-registration backlog</td><td class="narr">Precondition for every price-protection CN — keep 100% current.</td><td><span class="st p">ONGOING</span></td></tr>
+</tbody>
+</table>
+
+<!-- ===================== ORDERS / SUPPLY ===================== -->
+<h2>5 · Orders / dispatch / stock</h2>
+<table class="ledger">
+<thead><tr><th>☐</th><th class="id">ID</th><th>Item</th><th>Detail</th><th>Status</th></tr></thead>
+<tbody>
+<tr class="open"><td class="chk">☐</td><td class="id">E1</td><td class="part">Viper supply vs pre-bookings</td><td class="narr">38+ pre-booked; EM can't supply till end-Jul-26 (container/"war"). Refund exposure mounting.</td><td><span class="st o">OPEN</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">E2</td><td class="part">"X1 black with X2 display"</td><td class="narr">10-unit order pending "since long"; production "tough."</td><td><span class="st o">OPEN</span></td></tr>
+<tr class="partial"><td class="chk">☐</td><td class="id">E3</td><td class="part">Wrong/partial dispatch (01-May-26)</td><td class="narr">Of 46 bikes, 23 NOT ordered; Viper/Ranger missing → 40% fill, client refunds.</td><td><span class="st p">VERIFY return/CN</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">E5</td><td class="part">EM-owed invoices / PODs</td><td class="narr">For received stock — on GST portal but physical copies missing (to Nov-25). GST input-credit risk.</td><td><span class="st o">OPEN</span></td></tr>
+<tr class="partial"><td class="chk">☐</td><td class="id">E6</td><td class="part">Surya Roshni promo X1</td><td class="narr">10 received, 6 issued, 4 unaccounted.</td><td><span class="st p">VERIFY</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">E4</td><td class="part">Ladakh order (2024)</td><td class="narr">44-day non-delivery, wrong LR, refund.</td><td><span class="st u">LIKELY LOST</span></td></tr>
+</tbody>
+</table>
+
+<!-- ===================== SUPPORT ===================== -->
+<h2>6 · Support commitments (non-CN)</h2>
+<table class="ledger">
+<thead><tr><th>☐</th><th class="id">ID</th><th>Item</th><th>Status</th></tr></thead>
+<tbody>
+<tr class="open"><td class="chk">☐</td><td class="id">F2</td><td class="part">Marketing / influencer budget + content direction</td><td><span class="st o">OPEN (collapsed after Sumedh/Darshan left)</span></td></tr>
+<tr class="open"><td class="chk">☐</td><td class="id">F3</td><td class="part">EM Trailblazers Club scheme for BCH</td><td><span class="st o">UNDEFINED</span></td></tr>
+<tr class="partial"><td class="chk">☐</td><td class="id">F4</td><td class="part">Secondary-sales incentive on all models</td><td><span class="st p">PROMISED</span></td></tr>
+</tbody>
+</table>
+
+<!-- ===================== NET PAYABLE ===================== -->
+<h2>7 · Net-payable computation (to finalise)</h2>
+<div class="calcbox">
+  <div class="r"><div>EM ledger due — <b>Bharath Cycle Hub</b> folio<small>need current statement</small></div><div class="amt tbd">TBD</div></div>
+  <div class="r"><div>EM ledger due — <b>Bharath Cycle Centre</b> folio<small>BCC ~₹3.48 L to clear (Nov-25); confirm now</small></div><div class="amt tbd">TBD</div></div>
+  <div class="r"><div>less: BCH payments not recorded<small>incl. ₹10 L direct payment + ShopSe/Bajaj</small></div><div class="amt tbd">(TBD)</div></div>
+  <div class="r"><div>less: CN promised but not credited<small>B1 Trex-Pro, B2 Sravan ₹1.5L, B3 Thailand, B7/B8 CD gaps</small></div><div class="amt tbd">(TBD)</div></div>
+  <div class="r total"><div>NET PAYABLE TO EMOTORAD</div><div class="amt tbd">TBD</div></div>
+</div>
+<div class="callout">
+  <strong>To close the money side</strong>
+  Get from EMotorad: current <b>statement of account for BOTH folios (Hub + Centre)</b> as of one date. Get from BCH: <b>CREDIT NOTES.xlsx</b> + bank statement. Then fill the four TBD lines above. Reference files <b>00004683</b> (BCC ledger) &amp; <b>00004684</b> (BCH ledger) already in the Darshan chat.
+</div>
+
+<div class="foot">
+  Bharath Cycle Hub · EMotorad pending-issues ledger · compiled 17-Jun-2026 from WhatsApp exports of Darshan P, Sandeep Sir &amp; Jayachandra V, 17 credit-note PDFs, and the BCH×EMotorad Service Review deck.
+  Companion docs: findings.md · service-issues.md · credit-notes-and-discounts.md · darshan-chat-extraction.md. Statuses reflect the chat record only — tick each ☐ as you confirm with EM.
+</div>
+
+</div>
+</body>
+</html>

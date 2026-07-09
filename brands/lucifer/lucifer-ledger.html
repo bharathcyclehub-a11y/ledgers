@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucifer / Lucifire Bikes — Consolidated Ledger · Bharat Cycle Hub</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background:#fff; color:#111; margin:0; font-size:13.5px; line-height:1.45; }
+  .page { max-width: 1150px; margin: 0 auto; padding: 36px 28px 70px; }
+  .head { text-align:center; margin-bottom: 6px; }
+  .head .co { font-size:18px; font-weight:700; letter-spacing:.02em; }
+  .head .sub { font-size:12.5px; color:#333; }
+  .head .dealer { font-size:15px; font-weight:700; margin-top:10px; }
+  .head .acct { font-size:13px; margin-top:2px; }
+  .head .period { font-size:12.5px; margin-top:2px; }
+  .head .src { font-size:11.5px; color:#666; margin-top:4px; font-style:italic; }
+  .rule { border-top:1.5px solid #111; margin:14px 0 0; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; margin:22px 0 8px; }
+  .card { border:1px solid #ddd; border-radius:9px; padding:13px 15px; }
+  .card .l { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:#777; }
+  .card .v { font-size:21px; font-weight:700; margin-top:3px; }
+  .card .n { font-size:11.5px; color:#777; margin-top:3px; }
+  .card.due .v { color:#8a1f1f; } .card.net .v { color:#0a6b41; } .card.gap .v { color:#92600a; }
+  table { width:100%; border-collapse:collapse; }
+  table.ledger th { border-bottom:1.5px solid #111; border-top:1px solid #111; padding:7px 8px; font-size:12px; text-transform:uppercase; letter-spacing:.03em; text-align:left; }
+  table.ledger td { padding:6px 8px; border-bottom:1px solid #e7e7e7; vertical-align:top; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  td.date { white-space:nowrap; } td.part { font-weight:600; }
+  td.narr { color:#555; }
+  tr.pay td { background:#f2f9f4; } tr.disc td { background:#eef5fc; } tr.flag td { background:#fdf3df; } tr.rev td { background:#fdecea; }
+  tr.totals td { border-top:1.5px solid #111; border-bottom:1px solid #111; font-weight:700; }
+  tr.closing td { font-weight:700; font-size:14px; border-bottom:3px double #111; }
+  .dr { color:#8a1f1f; } .cr { color:#0a6b41; }
+  h2 { font-size:15px; margin:34px 0 8px; text-transform:uppercase; letter-spacing:.04em; border-bottom:1.5px solid #111; padding-bottom:4px; }
+  .note { font-size:12.5px; color:#444; margin:6px 0 12px; max-width:900px; }
+  table.simple th { border-bottom:1px solid #111; padding:6px 8px; font-size:12px; text-align:left; }
+  table.simple td { padding:6px 8px; border-bottom:1px solid #e7e7e7; vertical-align:top; }
+  .ok { color:#0a6b41; font-weight:600; } .warn { color:#8a1f1f; font-weight:600; }
+  .calcbox { border:1.5px solid #111; max-width:660px; }
+  .calcbox .r { display:flex; justify-content:space-between; padding:8px 14px; border-bottom:1px solid #e7e7e7; }
+  .calcbox .r:last-child { border-bottom:none; }
+  .calcbox .r small { display:block; color:#666; font-weight:400; }
+  .calcbox .amt { font-variant-numeric:tabular-nums; font-weight:600; white-space:nowrap; }
+  .calcbox .total { background:#f2f9f4; font-weight:700; font-size:15px; border-top:1.5px solid #111; }
+  .calcbox .tbd .amt { color:#92600a; }
+  .callout { border-left:4px solid #92600a; background:#fdf3df; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; max-width:900px; }
+  .callout.red { border-left-color:#b3261e; background:#fdecea; }
+  .callout strong { display:block; margin-bottom:2px; }
+  .foot { margin-top:30px; font-size:11.5px; color:#666; border-top:1px solid #ccc; padding-top:10px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="head">
+  <div class="co">LUCIFER BIKES PVT LTD (LUCIFIRE)</div>
+  <div class="sub">Rohtak, Haryana · GSTIN 06AAECL6390H1ZC · Rep: Prashant (ASM Telangana/Karnataka) · Payments to HDFC A/c …7722</div>
+  <div class="dealer">BHARAT CYCLE HUB — BENGALURU (GSTIN 29AMVPI3949R1ZQ)</div>
+  <div class="acct">Consolidated Ledger Account &amp; Reconciliation</div>
+  <div class="period">01-Apr-2025 to 11-Jun-2026</div>
+  <div class="src">Our ledger (LUCIFER LEDGER.xlsx) reconciled against Lucifer's Tally statements (12 versions), 16 invoices, CN-48, 10 payment screenshots + 2 bank-SMS</div>
+  <div class="rule"></div>
+</div>
+
+<div class="cards">
+  <div class="card due"><div class="l">Due per Lucifer (31-May)</div><div class="v">₹15,89,893</div><div class="n">Their latest statement</div></div>
+  <div class="card gap"><div class="l">Our ledger vs theirs</div><div class="v">₹1,03,867</div><div class="n">Discounts they showed then deleted</div></div>
+  <div class="card"><div class="l">Pending CD / claims</div><div class="v">₹3,99,268</div><div class="n">Missed + withdrawn discounts</div></div>
+  <div class="card net"><div class="l">Net payable (after claims + 11-Jun ₹5L)</div><div class="v">≈ ₹6,90,625</div><div class="n">vs ₹15.9L Lucifer shows</div></div>
+</div>
+
+<h2>1 · Our ledger vs their ledger — the ₹1,03,867 mismatch</h2>
+<table class="ledger" style="max-width:760px">
+  <tbody>
+    <tr><td>Our ledger (LUCIFER LEDGER.xlsx) closing 31-May-26</td><td class="num">₹14,86,026 Dr</td></tr>
+    <tr><td>Lucifer's ledger (00000729) closing 31-May-26</td><td class="num">₹15,89,893 Dr</td></tr>
+    <tr class="totals"><td>Mismatch</td><td class="num">₹1,03,867</td></tr>
+  </tbody>
+</table>
+<p class="note">Both ledgers agree on every purchase and payment to the rupee. The <strong>entire gap is discount</strong>: our books still carry the two 12-Mar-2026 discount entries (₹80,647 + ₹23,220, tagged "PENDING") that Lucifer showed on its 12-Mar statement and then <span class="warn">deleted</span> from every later statement.</p>
+<div class="callout"><strong>Caveat — fix our own Tally first.</strong> Our ledger books BOTH the 12-Mar ₹80,647 AND DIS-304 ₹72,895 for the <em>same</em> invoice LB/0600 — a ₹72,895 double-count. Correcting it: our true position is ₹15,58,921 (not ₹14,86,026). Of the ₹1,03,867 gap, ₹72,895 is our bookkeeping error to fix, and <strong>₹30,972 is a genuine discount Lucifer withdrew</strong> — that's the real claim from this reversal.</div>
+
+<h2>2 · ⚠ Discrepancies — discounts allotted then NOT given</h2>
+<table class="ledger">
+  <thead><tr><th>Date</th><th>What was shown</th><th>What happened</th><th class="num">Withheld (₹)</th></tr></thead>
+  <tbody>
+    <tr class="rev"><td class="date">12-Mar-26</td><td>₹80,647 (18% CD on LB/0600) + ₹23,220 (18% CD on LB/0689) = ₹1,03,867, on statement 00000553</td><td><strong>Both deleted</strong> from later statements; replaced by DIS-304 ₹72,895 only (and that's ₹7,752 short of LB/0600's own 18%; LB/0689 got nothing)</td><td class="num">30,972</td></tr>
+    <tr class="rev"><td class="date">29-Sep-25</td><td>DIS-90 shown as ₹1,42,941 (exact 18% on LB/0156+0175) on the Sep ledger screenshot (00000229)</td><td>Journalled at only ₹1,42,402</td><td class="num">539</td></tr>
+    <tr class="rev"><td class="date">30-Dec-25</td><td>DIS-210 due ₹2,19,163 (18% on LB/0364 + ₹19,500 transport)</td><td>Credited ₹2,18,113</td><td class="num">1,050</td></tr>
+  </tbody>
+</table>
+
+<h2>3 · CD rate timeline (your question: 20% → 17%)</h2>
+<table class="simple">
+  <thead><tr><th>Period</th><th>CD rate (on taxable, before GST)</th><th>Evidence</th></tr></thead>
+  <tbody>
+    <tr><td>Start (FY24-25) → 21-May-2025</td><td><strong>20%</strong></td><td>FY24-25 DIS-140 (Nov-24) = 20% on inv 274; DIS-22 (21-May-25) = 20% on opening lot.</td></tr>
+    <tr><td>~Jun/Jul-2025 → Mar-2026</td><td><strong>18%</strong></td><td>BDP revised mid-May ("company revised the bdp", 12-May); order-confirmation emails: "18% discount CN on payment within 60 days"; DIS-90/110/210/304 all at 18%.</td></tr>
+    <tr><td>FY26-27 (Apr-2026 →)</td><td><strong>17%</strong> (per owner)</td><td>Apr-2026 price revision. No 17% journal yet — FY26-27 invoices uncredited. <span class="warn">Confirm 17% with Prashant.</span></td></tr>
+  </tbody>
+</table>
+<p class="note">Standing terms: <strong>₹150/cycle</strong> transport discount on 100+ bike orders · <strong>kids steel bikes = zero discount</strong> · CD must be claimed within 60 days of billing · GST cut 12%→5% from the 14-Oct-25 invoice (LB/0364).</p>
+
+<h2>4 · Missed CD — invoices never given their discount</h2>
+<table class="simple">
+  <thead><tr><th>Invoice</th><th>Date</th><th class="num">Taxable (₹)</th><th>Rate</th><th class="num">CD due</th><th class="num">Credited</th><th class="num">Pending (₹)</th></tr></thead>
+  <tbody>
+    <tr><td>LB/0468</td><td>22-Nov-25</td><td class="num">10,800</td><td>18%</td><td class="num">1,944</td><td class="num">0</td><td class="num">1,944</td></tr>
+    <tr><td>LB/0600</td><td>31-Dec-25</td><td class="num">4,48,040</td><td>18%</td><td class="num">80,647</td><td class="num">72,895</td><td class="num">7,752</td></tr>
+    <tr><td>LB/0689</td><td>31-Jan-26</td><td class="num">1,29,002</td><td>18%</td><td class="num">23,220</td><td class="num">0</td><td class="num">23,220</td></tr>
+    <tr><td>LB/814</td><td>14-Mar-26</td><td class="num">86,499</td><td>18%</td><td class="num">15,570</td><td class="num">0</td><td class="num">15,570</td></tr>
+    <tr><td>LB/849</td><td>28-Mar-26</td><td class="num">1,40,998</td><td>18%</td><td class="num">25,380</td><td class="num">0</td><td class="num">25,380</td></tr>
+    <tr><td>LB/26-27/041</td><td>24-Apr-26</td><td class="num">8,18,413</td><td>17%</td><td class="num">1,39,130</td><td class="num">0</td><td class="num">1,39,130</td></tr>
+    <tr><td>LB/26-27/0272</td><td>31-May-26</td><td class="num">9,76,075</td><td>17%</td><td class="num">1,65,933</td><td class="num">0</td><td class="num">1,65,933</td></tr>
+    <tr><td>Transport — LB/0272 (125 bikes)</td><td>31-May-26</td><td class="num">—</td><td>₹150×125</td><td class="num">18,750</td><td class="num">0</td><td class="num">18,750</td></tr>
+    <tr><td>DIS-90 + DIS-210 shortfalls (§2)</td><td>—</td><td class="num">—</td><td>—</td><td class="num">1,589</td><td class="num">0</td><td class="num">1,589</td></tr>
+    <tr class="totals"><td colspan="6">Total pending CD / claims</td><td class="num">3,99,268</td></tr>
+  </tbody>
+</table>
+<p class="note">Plus <strong>₹1,875 unloading</strong> paid by BCH on LB/0364 (handwritten on the invoice) — a reimbursement claim, not CD. The two FY26-27 invoices (₹3.05L of CD) dominate and hinge on confirming the 17% rate.</p>
+
+<h2>5 · Payment recovery — is every payment recorded?</h2>
+<p class="note"><span class="ok">11 of 12 proven payments are credited to the rupee.</span> Two flags below.</p>
+<table class="ledger">
+  <thead><tr><th>Date</th><th class="num">Amount (₹)</th><th>Proof</th><th>Lucifer receipt</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td class="date">20-May-25</td><td class="num">10,59,380</td><td>Screenshot · RTGS 1973347168</td><td>Rcpt 175</td><td class="ok">Matched ✓</td></tr>
+    <tr><td class="date">31-Jul-25</td><td class="num">3,00,000</td><td>Screenshot · IMPS 2050166545</td><td>Rcpt 395</td><td class="ok">Matched ✓</td></tr>
+    <tr><td class="date">02-Sep-25</td><td class="num">2,00,000</td><td>Screenshot · IMPS 2085196605</td><td>Rcpt 492</td><td class="ok">Matched ✓</td></tr>
+    <tr><td class="date">17-Sep-25</td><td class="num">5,00,000</td><td>Screenshot · IMPS 2104099729</td><td>Rcpt 539</td><td class="ok">Matched ✓</td></tr>
+    <tr><td class="date">15-Oct-25</td><td class="num">3,19,860</td><td>Screenshot · IMPS 2137042070</td><td>Rcpt 625</td><td class="ok">Matched ✓</td></tr>
+    <tr><td class="date">17-Dec-25</td><td class="num">2,00,000</td><td>Screenshot · IMPS 2209573196</td><td>Rcpt 979</td><td class="ok">Matched ✓</td></tr>
+    <tr><td class="date">25-Dec-25</td><td class="num">4,00,000</td><td>Screenshot · IMPS 2217399987</td><td>Rcpt 1005</td><td class="ok">Matched ✓</td></tr>
+    <tr><td class="date">29-Dec-25</td><td class="num">3,72,077</td><td>Screenshot · IMPS 2221381611</td><td>Rcpt 1026</td><td class="ok">Matched ✓</td></tr>
+    <tr class="flag"><td class="date">17-Feb-26</td><td class="num">3,00,000</td><td><span class="warn">No proof in chat</span></td><td>Rcpt 1203</td><td class="warn">Credited — verify in bank</td></tr>
+    <tr><td class="date">20-Mar-26</td><td class="num">1,50,000</td><td>Chat SMS · ICICI INFT 0437</td><td>Rcpt 1356</td><td class="ok">Matched ✓</td></tr>
+    <tr><td class="date">23-Apr-26</td><td class="num">3,00,000</td><td>Screenshot · IMPS 2358467985</td><td>Rcpt 128</td><td class="ok">Matched ✓</td></tr>
+    <tr><td class="date">22-May-26</td><td class="num">4,00,000</td><td>Screenshot · IMPS 2392595686</td><td>Rcpt 273</td><td class="ok">Matched ✓</td></tr>
+    <tr class="flag"><td class="date">11-Jun-26</td><td class="num">5,00,000</td><td>Chat SMS · IMPS 616220748924</td><td><span class="warn">NOT in ledger</span></td><td class="warn">Paid — not yet posted</td></tr>
+  </tbody>
+</table>
+
+<h2>6 · The credit note (CN-48) — delivery shortage</h2>
+<div class="callout"><strong>CN-48 · 27-Feb-2026 · ₹45,218 — delivery mismatch / shortage on LB/0364.</strong>
+The big festive lot LB/0364 (14-Oct-25, 123 bikes) arrived <strong>5 boxes short</strong> — handwritten on the invoice: "5 box shortage, total received = 125 box" and "mistake 5 units, paid ₹1,875 unloading". After ~3.5 months of follow-up, Lucifer issued CN-48 crediting the 5 missing bikes: 3× Alloy 24" Elante Junior (₹8,923), 1× Steel 26" Robber Blue (₹7,391), 1× Alloy 26" Invalid matte Black (₹8,905) = ₹43,065 + 5% IGST = <strong>₹45,218</strong>. This is the "₹50,000 CN" — it settles the short-delivery, not a discount. (The ₹1,875 unloading you paid is still to be reimbursed.)</div>
+
+<h2>7 · The account in order</h2>
+<table class="ledger">
+  <thead><tr><th>Date</th><th>Particulars</th><th>Narration</th><th class="num">Debit (₹)</th><th class="num">Credit (₹)</th></tr></thead>
+  <tbody>
+    <tr><td class="date">01-Apr-25</td><td class="part">Opening balance</td><td class="narr">Carried from FY24-25.</td><td class="num">2,53,142</td><td class="num"></td></tr>
+    <tr><td class="date">05-Apr-25</td><td class="part dr">Purchase — LB/03</td><td class="narr">12 bikes.</td><td class="num">1,45,693</td><td class="num"></td></tr>
+    <tr><td class="date">17-Apr-25</td><td class="part dr">Purchase — LB/041</td><td class="narr">92 bikes — opening lot.</td><td class="num">8,90,771</td><td class="num"></td></tr>
+    <tr class="pay"><td class="date">20-May-25</td><td class="part cr">Payment — Rcpt 175</td><td class="narr">RTGS ₹10,59,380 (net of 20% CN on opening lot).</td><td class="num"></td><td class="num">10,59,380</td></tr>
+    <tr class="disc"><td class="date">21-May-25</td><td class="part cr">Discount — DIS-22</td><td class="narr"><strong>20%</strong> on opening lot.</td><td class="num"></td><td class="num">2,30,226</td></tr>
+    <tr><td class="date">21-Jun-25</td><td class="part dr">Purchase — LB/0156</td><td class="narr">3 bikes air-shipped.</td><td class="num">29,958</td><td class="num"></td></tr>
+    <tr><td class="date">30-Jun-25</td><td class="part dr">Purchase — LB/0175</td><td class="narr">82 bikes.</td><td class="num">8,59,456</td><td class="num"></td></tr>
+    <tr><td class="date">17-Jul-25</td><td class="part dr">Purchase — LB/0208</td><td class="narr">32 bikes.</td><td class="num">3,54,381</td><td class="num"></td></tr>
+    <tr class="pay"><td class="date">31-Jul-25</td><td class="part cr">Payment — Rcpt 395</td><td class="narr">IMPS ₹3,00,000.</td><td class="num"></td><td class="num">3,00,000</td></tr>
+    <tr><td class="date">07-Aug-25</td><td class="part dr">Purchase — LB/0237</td><td class="narr">30 bikes.</td><td class="num">3,28,161</td><td class="num"></td></tr>
+    <tr class="pay"><td class="date">02-Sep-25</td><td class="part cr">Payment — Rcpt 492</td><td class="narr">IMPS ₹2,00,000.</td><td class="num"></td><td class="num">2,00,000</td></tr>
+    <tr class="pay"><td class="date">17-Sep-25</td><td class="part cr">Payment — Rcpt 539</td><td class="narr">IMPS ₹5,00,000.</td><td class="num"></td><td class="num">5,00,000</td></tr>
+    <tr class="disc"><td class="date">29-Sep-25</td><td class="part cr">Discount — DIS-90</td><td class="narr"><strong>18%</strong> on LB/0156 + 0175 (₹539 short of the ₹1,42,941 shown).</td><td class="num"></td><td class="num">1,42,402</td></tr>
+    <tr><td class="date">14-Oct-25</td><td class="part dr">Purchase — LB/0364</td><td class="narr">123 bikes (festive). <strong>5-box shortage</strong> → CN-48. GST now 5%.</td><td class="num">11,64,702</td><td class="num"></td></tr>
+    <tr><td class="date">14-Oct-25</td><td class="part dr">Purchase — LB/0365</td><td class="narr">Kids bill (zero discount).</td><td class="num">26,539</td><td class="num"></td></tr>
+    <tr class="pay"><td class="date">15-Oct-25</td><td class="part cr">Payment — Rcpt 625</td><td class="narr">IMPS ₹3,19,860.</td><td class="num"></td><td class="num">3,19,860</td></tr>
+    <tr class="disc"><td class="date">15-Oct-25</td><td class="part cr">Discount — DIS-110</td><td class="narr"><strong>18%</strong> on LB/0208 + 0237.</td><td class="num"></td><td class="num">1,09,694</td></tr>
+    <tr><td class="date">22-Nov-25</td><td class="part dr">Purchase — LB/0468</td><td class="narr">1 bike. <span class="warn">CD not given (₹1,944).</span></td><td class="num">11,340</td><td class="num"></td></tr>
+    <tr class="pay"><td class="date">17-Dec-25</td><td class="part cr">Payment — Rcpt 979</td><td class="narr">IMPS ₹2,00,000.</td><td class="num"></td><td class="num">2,00,000</td></tr>
+    <tr class="pay"><td class="date">25-Dec-25</td><td class="part cr">Payment — Rcpt 1005</td><td class="narr">IMPS ₹4,00,000.</td><td class="num"></td><td class="num">4,00,000</td></tr>
+    <tr class="pay"><td class="date">29-Dec-25</td><td class="part cr">Payment — Rcpt 1026</td><td class="narr">IMPS ₹3,72,077.</td><td class="num"></td><td class="num">3,72,077</td></tr>
+    <tr class="disc"><td class="date">30-Dec-25</td><td class="part cr">Discount — DIS-210</td><td class="narr"><strong>18% + ₹150/cycle</strong> on LB/0364 (₹1,050 short of ₹2,19,163 due).</td><td class="num"></td><td class="num">2,18,113</td></tr>
+    <tr><td class="date">31-Dec-25</td><td class="part dr">Purchase — LB/0600</td><td class="narr">Lot. <span class="warn">18% CD only partly given (see DIS-304).</span></td><td class="num">4,70,442</td><td class="num"></td></tr>
+    <tr><td class="date">31-Jan-26</td><td class="part dr">Purchase — LB/0689</td><td class="narr">11 bikes. <span class="warn">18% CD ₹23,220 shown 12-Mar then withdrawn.</span></td><td class="num">1,35,452</td><td class="num"></td></tr>
+    <tr><td class="date">31-Jan-26</td><td class="part dr">Purchase — LB/0690</td><td class="narr">16 kids bikes (zero discount).</td><td class="num">88,813</td><td class="num"></td></tr>
+    <tr class="flag"><td class="date">17-Feb-26</td><td class="part cr">Payment — Rcpt 1203</td><td class="narr">₹3,00,000 — credited, no proof in chat; verify in bank.</td><td class="num"></td><td class="num">3,00,000</td></tr>
+    <tr class="disc"><td class="date">27-Feb-26</td><td class="part cr">Credit note — CN-48</td><td class="narr">Delivery shortage: 5 short-delivered bikes on LB/0364.</td><td class="num"></td><td class="num">45,218</td></tr>
+    <tr class="rev"><td class="date">12-Mar-26</td><td class="part">Discounts shown then WITHDRAWN</td><td class="narr">₹80,647 (LB/0600 18%) + ₹23,220 (LB/0689 18%) on statement 00000553 — both deleted in later versions. Memo only.</td><td class="num"></td><td class="num">(1,03,867)</td></tr>
+    <tr><td class="date">14-Mar-26</td><td class="part dr">Purchase — LB/814 + 815</td><td class="narr">11 bikes + 6 kids. <span class="warn">LB/814 CD ₹15,570 not given.</span></td><td class="num">1,18,647</td><td class="num"></td></tr>
+    <tr class="pay"><td class="date">20-Mar-26</td><td class="part cr">Payment — Rcpt 1356</td><td class="narr">₹1,50,000 (ICICI).</td><td class="num"></td><td class="num">1,50,000</td></tr>
+    <tr class="disc"><td class="date">24-Mar-26</td><td class="part cr">Discount — DIS-304</td><td class="narr"><strong>Partial re-grant</strong> for LB/0600 — ₹7,752 short of its 18%; LB/0689 got nothing.</td><td class="num"></td><td class="num">72,895</td></tr>
+    <tr><td class="date">28-Mar-26</td><td class="part dr">Purchase — LB/849</td><td class="narr">Steel lot. <span class="warn">18% CD ₹25,380 not given.</span></td><td class="num">1,48,048</td><td class="num"></td></tr>
+    <tr class="pay"><td class="date">23-Apr-26</td><td class="part cr">Payment — Rcpt 128</td><td class="narr">IMPS ₹3,00,000.</td><td class="num"></td><td class="num">3,00,000</td></tr>
+    <tr><td class="date">24-Apr-26</td><td class="part dr">Purchase — LB/26-27/041</td><td class="narr">87 bikes. <span class="warn">17% CD ₹1,39,130 not given.</span></td><td class="num">8,59,334</td><td class="num"></td></tr>
+    <tr class="pay"><td class="date">22-May-26</td><td class="part cr">Payment — Rcpt 273</td><td class="narr">IMPS ₹4,00,000.</td><td class="num"></td><td class="num">4,00,000</td></tr>
+    <tr><td class="date">31-May-26</td><td class="part dr">Purchase — LB/26-27/0272</td><td class="narr">125 bikes. <span class="warn">17% CD ₹1,65,933 + ₹18,750 transport not given.</span></td><td class="num">10,24,879</td><td class="num"></td></tr>
+    <tr class="closing"><td></td><td>Closing — due per Lucifer (31-May-26)</td><td class="narr" style="font-style:normal">Verified ✓ (matches their statement)</td><td class="num"></td><td class="num">15,89,893 Dr</td></tr>
+    <tr class="pay"><td class="date">11-Jun-26</td><td class="part cr">Payment — IMPS 616220748924</td><td class="narr">₹5,00,000 — paid, NOT yet on their ledger.</td><td class="num"></td><td class="num">5,00,000</td></tr>
+  </tbody>
+</table>
+
+<h2>8 · The calculation — what we actually owe</h2>
+<div class="calcbox">
+  <div class="r"><div><strong>Due per Lucifer's latest ledger (31-May-26)</strong><small>Internally verified ✓</small></div><div class="amt">₹15,89,893</div></div>
+  <div class="r"><div>Less: 11-Jun payment (paid, not yet posted)</div><div class="amt">− ₹5,00,000</div></div>
+  <div class="r total"><div>Real balance today</div><div class="amt">₹10,89,893</div></div>
+  <div class="r tbd"><div>Less: total pending CD / claims (§4)<small>incl ₹30,972 withdrawn + missed CD + FY26-27 @17% + transport</small></div><div class="amt">− ₹3,99,268</div></div>
+  <div class="r total"><div>Net payable (after all legitimate claims)</div><div class="amt">≈ ₹6,90,625</div></div>
+  <div class="r tbd"><div>Less: ₹1,875 unloading reimbursement</div><div class="amt">− ₹1,875</div></div>
+</div>
+<div class="note" style="margin-top:10px"><strong>Bottom line:</strong> Lucifer shows ₹15,89,893 due, but that is before your 11-Jun ₹5L payment and before any of the ₹3.99L of discounts they owe you (₹30,972 they showed then withdrew + ₹3.68L never passed, mostly the two un-discounted FY26-27 invoices). Get the 17% rate confirmed and these journals passed, and the real figure is around <strong>₹6.9 lakh</strong>. Separately, fix our own Tally's ₹72,895 double-count on LB/0600.</div>
+
+<div class="foot">
+  Prepared 13-Jun-2026 · Sources: our LUCIFER LEDGER.xlsx + WhatsApp export "Prashant Lucifire Bike P" (88 images, 56 PDFs scanned in full) + Lucifer Tally statements incl 04-Jun-26 · Working files: payments.csv, discounts.md, our-vs-their-ledger.md, findings.md
+</div>
+
+</div>
+</body>
+</html>
