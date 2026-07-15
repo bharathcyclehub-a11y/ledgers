@@ -744,10 +744,17 @@ function GapShots({ brand, n }) {
       <span className="gd-lbl">Screenshots ({shots.length})</span>
       <div className="shots">
         {shots.map((s, i) => (
-          <figure key={i} className="shot" onClick={(e) => { e.stopPropagation(); setZoom(s) }}>
-            <img src={`/evidence/${brand.id}/${s.file}`} alt={s.note} loading="lazy" />
-            <figcaption><b>{s.date}</b> · {s.source}<span>{s.note}</span></figcaption>
-          </figure>
+          s.doc ? (
+            <a key={i} className="shot doc" href={`/evidence/${brand.id}/${s.file}`} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
+              <div className="docicon">📄 PDF</div>
+              <figcaption><b>{s.date}</b> · {s.source}<span>{s.note}</span></figcaption>
+            </a>
+          ) : (
+            <figure key={i} className="shot" onClick={(e) => { e.stopPropagation(); setZoom(s) }}>
+              <img src={`/evidence/${brand.id}/${s.file}`} alt={s.note} loading="lazy" />
+              <figcaption><b>{s.date}</b> · {s.source}<span>{s.note}</span></figcaption>
+            </figure>
+          )
         ))}
       </div>
       {zoom && (

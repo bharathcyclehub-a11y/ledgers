@@ -371,3 +371,8 @@ body {
   #root { max-width: 1320px; }
   .brandgrid { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* PDF/document evidence tile */
+.shot.doc { display: block; text-decoration: none; color: inherit; }
+.docicon { height: 100px; display: flex; align-items: center; justify-content: center; background: #fef2f2; color: var(--red); font-weight: 800; font-size: 15px; letter-spacing: 0.03em; }
+@media (min-width: 1000px) { .docicon { height: 132px; } }

@@ -16,5 +16,8 @@ export const EVIDENCE = {
     13: [
       { file: '00001891-PHOTO-2026-02-25-20-38-18.jpg', date: '2024-08-21', source: 'Mani WhatsApp chat (shared 25-Feb-2026)', note: '₹3,33,366 paid to cultsport (Axis ·2785) on 21-Aug-2024 → Syed "Paid. 0 balance" — the zero-anchor for the account.' },
     ],
+    6: [
+      { file: 'CN-73701-Cycle-Rent.pdf', doc: true, date: '2025-12-30', source: 'Cultsport tax document (CN 73701)', note: 'Brand-issued Credit Memo 73701 — "CN for Cycle Rent", −150 units × ₹1,500 = −₹2,25,000 (HSN 910992). Proves the ₹2.25L credit; ₹1,34,990 balance still open.' },
+    ],
   },
 }
