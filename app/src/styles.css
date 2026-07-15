@@ -322,3 +322,8 @@ body {
 .ev-q { color: #b45309; font-style: italic; }
 .ev-ref { font-weight: 700; color: var(--blue); background: #eff6ff; padding: 0 3px; border-radius: 3px; font-size: 11px; }
 .ev-date { font-weight: 700; color: #15803d; white-space: nowrap; }
+
+/* ---- stable gap IDs (e.g. CULT-3) ---- */
+.gapid { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.02em; color: var(--blue); background: #eff6ff; border: 1px solid #dbeafe; padding: 2px 7px; border-radius: 6px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.gap .top .gapid { margin-right: 2px; }
+.mg-row .gapid { font-size: 10px; }

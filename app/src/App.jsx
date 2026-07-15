@@ -12,6 +12,10 @@ const REVIEW_CADENCE_DAYS = 15
 
 const statusColor = { open: 'red', promised: 'amber', verify: 'blue', resolved: 'green', rejected: '' }
 
+// Stable, human-referenceable gap IDs — brand code + gap number (e.g. CULT-3, EMOT-12).
+const BRAND_CODE = { cultsport: 'CULT', lucifer: 'LUCI', emotorad: 'EMOT', aoki: 'AOKI', raleigh: 'RALE', hornback: 'HORN', trinity: 'TRIN' }
+const gapId = (brandId, n) => `${BRAND_CODE[brandId] || String(brandId).slice(0, 4).toUpperCase()}-${n}`
+
 function useHashRoute() {
   const [hash, setHash] = useState(window.location.hash || '#/')
   useEffect(() => {
@@ -317,7 +321,7 @@ function GapsTab({ brand, update, focusGap, clearFocus }) {
         {gaps.map((g) => (
           <div key={g.n} id={'gap-' + g.n} className={'gap' + (g.status === 'resolved' || g.status === 'rejected' ? ' done' : '') + (expanded === g.n ? ' focus' : '')}>
             <div className="top" onClick={() => setExpanded(expanded === g.n ? null : g.n)}>
-              <span className="num">{g.n}</span>
+              <span className="gapid">{gapId(brand.id, g.n)}</span>
               <span className="title">{g.title}</span>
               <span className="amt">{gapAmount(g)}</span>
             </div>
@@ -377,6 +381,7 @@ function GapsTab({ brand, update, focusGap, clearFocus }) {
       {(adding || editing) && (
         <GapForm
           initial={editing}
+          brandId={brand.id}
           onCancel={() => { setAdding(false); setEditing(null) }}
           onSave={(vals) => {
             update((s) => {
@@ -412,7 +417,7 @@ function ProgressNote({ onAdd }) {
   )
 }
 
-function GapForm({ initial, onSave, onCancel }) {
+function GapForm({ initial, onSave, onCancel, brandId }) {
   const [v, setV] = useState(() => ({
     title: initial?.title || '',
     type: initial?.type || GAP_TYPES[0],
@@ -425,7 +430,7 @@ function GapForm({ initial, onSave, onCancel }) {
   const set = (k) => (e) => setV({ ...v, [k]: e.target.value })
   return (
     <div className="card form">
-      <h3>{initial ? `Edit gap #${initial.n}` : 'New gap'}</h3>
+      <h3>{initial ? `Edit ${gapId(brandId, initial.n)}` : 'New gap'}</h3>
       <div><label>Title</label><textarea value={v.title} onChange={set('title')} /></div>
       <div className="row">
         <div><label>Type</label>
@@ -615,7 +620,7 @@ function LedgerTab({ brand, update, onOpenGap }) {
           {unlinkedOpenGaps.map((g) => (
             <div key={g.n} className="minigap" onClick={() => setExpanded(expanded === 'gap' + g.n ? null : 'gap' + g.n)}>
               <div className="mg-row">
-                <span className="num">#{g.n}</span>
+                <span className="gapid">{gapId(brand.id, g.n)}</span>
                 <span className="mg-title">{g.title}</span>
                 <span className={'chip ' + (statusColor[g.status] || '')}>{g.status}</span>
                 <span className="mg-amt">{gapAmount(g)}</span>
@@ -680,7 +685,7 @@ function EntryExplain({ e, brand, onOpenGap }) {
       {e.audit && <div className={'auditline a-' + e.audit.s}>{e.audit.t}</div>}
       {gap && (
         <div className="gapinline" onClick={(ev) => { if (onOpenGap) { ev.stopPropagation(); onOpenGap(gap.n) } }} style={onOpenGap ? { cursor: 'pointer' } : undefined}>
-          <b>GAP #{gap.n}</b> <span className={'chip ' + (statusColor[gap.status] || '')}>{gap.status}</span> {gapAmount(gap)}
+          <b>{gapId(brand.id, gap.n)}</b> <span className={'chip ' + (statusColor[gap.status] || '')}>{gap.status}</span> {gapAmount(gap)}
           <div>{gap.title}</div>
           {gap.action && <div className="bx-action">→ {gap.action}</div>}
           {onOpenGap && <div className="bx-action" style={{ color: 'var(--blue)' }}>Open full gap →</div>}
@@ -978,7 +983,7 @@ function TableTab({ brand, onOpenGap }) {
     }
     const gapRows = openGaps(brand)
       .filter((g) => g.amt)
-      .map((g) => ({ kind: 'gap', n: g.n, g, date: anchorFor(g), ref: `GAP #${g.n}`, label: g.title, gap: g.amt, status: g.status, tier: g.tier || 'firm' }))
+      .map((g) => ({ kind: 'gap', n: g.n, g, date: anchorFor(g), ref: gapId(brand.id, g.n), label: g.title, gap: g.amt, status: g.status, tier: g.tier || 'firm' }))
     const all = [...entryRows, ...gapRows].sort((a, b) => b.date.localeCompare(a.date) || (a.kind === 'gap' ? -1 : 1))
     const tierSum = (t) => gapRows.filter((r) => r.tier === t).reduce((s, r) => s + (r.gap || 0), 0)
     const t = {
@@ -1064,7 +1069,7 @@ function TableTab({ brand, onOpenGap }) {
                     <td colSpan={7}>
                       <div className="gapdetail">
                         <div className="gd-head">
-                          <b>GAP #{g.n}</b>
+                          <b>{gapId(brand.id, g.n)}</b>
                           <span className={'chip ' + (statusColor[g.status] || '')}>{g.status}</span>
                           <span className="chip">{g.type}</span>
                           <span className="gd-amt">{gapAmount(g)}</span>
