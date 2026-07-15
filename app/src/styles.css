@@ -314,3 +314,11 @@ body {
 .lb-cap { color: #fff; font-size: 13px; margin-top: 12px; max-width: 680px; text-align: center; line-height: 1.5; }
 .lb-cap b { color: #fde68a; }
 .lb-close { color: rgba(255,255,255,0.5); font-size: 11px; margin-top: 8px; }
+
+/* ---- structured evidence (chat proof) ---- */
+.evblocks { margin-top: 2px; }
+.evline { margin: 4px 0; line-height: 1.5; }
+.ev-tag { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 1px 6px; border-radius: 4px; margin-right: 6px; background: #eef2ff; color: var(--blue); vertical-align: middle; }
+.ev-q { color: #b45309; font-style: italic; }
+.ev-ref { font-weight: 700; color: var(--blue); background: #eff6ff; padding: 0 3px; border-radius: 3px; font-size: 11px; }
+.ev-date { font-weight: 700; color: #15803d; white-space: nowrap; }

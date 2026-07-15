@@ -327,7 +327,7 @@ function GapsTab({ brand, update, focusGap, clearFocus }) {
             </div>
             {expanded === g.n && (
               <div className="detail">
-                {g.evidence && <><div className="lbl">Evidence</div><div>{g.evidence}</div></>}
+                {g.evidence && <><div className="lbl">Evidence · reference & chat proof</div><Evidence text={g.evidence} /></>}
                 {g.action && <><div className="lbl">Action</div><div>{g.action}</div></>}
                 <GapShots brand={brand} n={g.n} />
                 {(g.progress || []).map((p, i) => (
@@ -690,6 +690,43 @@ function EntryExplain({ e, brand, onOpenGap }) {
   )
 }
 
+// Render a curated evidence string with its chat dates, L-line refs and "quotes" highlighted,
+// split into labelled source blocks (CHAT / ACCOUNTS-GROUP / OWNER / REVERSE-CALC).
+function Evidence({ text }) {
+  if (!text) return null
+  const parts = text.split(/(?=\bCHAT:|\bACCOUNTS-GROUP:|\bOWNER\b|\bREVERSE-CALC:)/g).map((s) => s.trim()).filter(Boolean)
+  const blocks = parts.length ? parts : [text]
+  const hl = (s, ki) => {
+    // highlight "quotes", L<line> refs, and dates (DD-Mon-YY / DD/MM/YY)
+    const re = /("[^"]*"|'[^']*'|L\d+(?:\s*[→\-/,]\s*\d+)*|\b\d{1,2}[-/](?:[A-Za-z]{3,}|\d{1,2})[-/]\d{2,4}\b)/g
+    const out = []; let last = 0; let m; let idx = 0
+    while ((m = re.exec(s))) {
+      if (m.index > last) out.push(s.slice(last, m.index))
+      const tok = m[0]
+      const cls = tok[0] === '"' || tok[0] === "'" ? 'ev-q' : /^L\d/.test(tok) ? 'ev-ref' : 'ev-date'
+      out.push(<span key={`${ki}-${idx++}`} className={cls}>{tok}</span>)
+      last = m.index + tok.length
+    }
+    if (last < s.length) out.push(s.slice(last))
+    return out
+  }
+  return (
+    <div className="evblocks">
+      {blocks.map((b, i) => {
+        const mk = b.match(/^(CHAT:|ACCOUNTS-GROUP:|REVERSE-CALC:|OWNER[^:]{0,18}:?)/)
+        const label = mk ? mk[1].replace(/:$/, '') : null
+        const body = mk ? b.slice(mk[1].length).trim() : b
+        return (
+          <div key={i} className="evline">
+            {label && <span className="ev-tag">{label}</span>}
+            <span>{hl(body, i)}</span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 // Screenshot evidence for a gap: thumbnails with date + source + what-it-proves, tap to zoom.
 function GapShots({ brand, n }) {
   const [zoom, setZoom] = useState(null)
@@ -864,11 +901,11 @@ function MonthlyTab({ brand }) {
               const els = [
                 <tr key={m.ym} className="clickable" onClick={() => setOpenMonth(isOpen ? null : m.ym)}>
                   <td className="td-ref"><span className="gapcaret">{isOpen ? '▾' : '▸'}</span>{monthLabel(m.ym)}<div className="td-sub2">{m.entries.length} entries</div></td>
-                  <td className="num">{fmtLakh(m.open)}</td>
-                  <td className="num red">{m.purchase ? fmtLakh(m.purchase) : ''}</td>
-                  <td className="num green">{m.payment ? fmtLakh(m.payment) : ''}</td>
-                  <td className="num green">{m.credit ? fmtLakh(m.credit) : ''}</td>
-                  <td className="num"><b>{fmtLakh(m.close)}</b></td>
+                  <td className="num">{fmtINR(m.open)}</td>
+                  <td className="num red">{m.purchase ? fmtINR(m.purchase) : ''}</td>
+                  <td className="num green">{m.payment ? fmtINR(m.payment) : ''}</td>
+                  <td className="num green">{m.credit ? fmtINR(m.credit) : ''}</td>
+                  <td className="num"><b>{fmtINR(m.close)}</b></td>
                 </tr>,
               ]
               if (isOpen) {
@@ -901,11 +938,11 @@ function MonthlyTab({ brand }) {
           <tfoot>
             <tr>
               <td className="td-ref">TOTAL</td>
-              <td className="num">{fmtLakh(opening)}</td>
-              <td className="num red">{fmtLakh(months.reduce((s, m) => s + m.purchase, 0))}</td>
-              <td className="num green">{fmtLakh(months.reduce((s, m) => s + m.payment, 0))}</td>
-              <td className="num green">{fmtLakh(months.reduce((s, m) => s + m.credit, 0))}</td>
-              <td className="num">{fmtLakh(closing)}</td>
+              <td className="num">{fmtINR(opening)}</td>
+              <td className="num red">{fmtINR(months.reduce((s, m) => s + m.purchase, 0))}</td>
+              <td className="num green">{fmtINR(months.reduce((s, m) => s + m.payment, 0))}</td>
+              <td className="num green">{fmtINR(months.reduce((s, m) => s + m.credit, 0))}</td>
+              <td className="num">{fmtINR(closing)}</td>
             </tr>
           </tfoot>
         </table>
@@ -1017,7 +1054,7 @@ function TableTab({ brand, onOpenGap }) {
                   <td className="num green">{r.payment ? fmtINR(r.payment) : ''}</td>
                   <td className="num green">{r.discount ? fmtINR(r.discount) : ''}</td>
                   <td className="num amber">{r.gap ? fmtINR(r.gap) : ''}</td>
-                  <td className="num">{r.kind === 'entry' ? fmtLakh(r.balance) : ''}</td>
+                  <td className="num">{r.kind === 'entry' ? fmtINR(r.balance) : ''}</td>
                 </tr>,
               ]
               if (isOpen && isGap) {
@@ -1033,13 +1070,13 @@ function TableTab({ brand, onOpenGap }) {
                           <span className="gd-amt">{gapAmount(g)}</span>
                         </div>
                         <div className="gd-title">{g.title}</div>
-                        {g.evidence && <div className="gd-sec"><span className="gd-lbl">Evidence</span>{g.evidence}</div>}
+                        {g.evidence && <div className="gd-sec"><span className="gd-lbl">Evidence · reference & chat proof</span><Evidence text={g.evidence} /></div>}
                         {g.action && <div className="gd-sec"><span className="gd-lbl">Action</span>{g.action}</div>}
                         <GapShots brand={brand} n={g.n} />
                         {(g.progress || []).length > 0 && (
                           <div className="gd-sec">
-                            <span className="gd-lbl">Progress</span>
-                            {(g.progress || []).map((p, j) => <div key={j} className="gd-note">{p.date}: {p.text}</div>)}
+                            <span className="gd-lbl">History ({(g.progress || []).length})</span>
+                            {(g.progress || []).map((p, j) => <div key={j} className="gd-note"><b>{p.date}</b> — {p.text}</div>)}
                           </div>
                         )}
                         {onOpenGap && (
@@ -1073,15 +1110,15 @@ function TableTab({ brand, onOpenGap }) {
           <tfoot>
             <tr>
               <td /><td className="td-ref">TOTALS</td>
-              <td className="num red">{fmtLakh(totals.purchase)}</td>
-              <td className="num green">{fmtLakh(totals.payment)}</td>
-              <td className="num green">{fmtLakh(totals.discount)}</td>
-              <td className="num amber">{fmtLakh(totals.gap)}</td>
-              <td className="num">{fmtLakh(totals.closing)}</td>
+              <td className="num red">{fmtINR(totals.purchase)}</td>
+              <td className="num green">{fmtINR(totals.payment)}</td>
+              <td className="num green">{fmtINR(totals.discount)}</td>
+              <td className="num amber">{fmtINR(totals.gap)}</td>
+              <td className="num">{fmtINR(totals.closing)}</td>
             </tr>
             <tr className="truerow">
-              <td colSpan={6} className="td-ref" style={{ textAlign: 'right' }}>− Firm gaps ({fmtLakh(totals.gapFirm)}) = SETTLE AT</td>
-              <td className="num" style={{ color: 'var(--green)', fontWeight: 700 }}>{fmtLakh(settleTarget)}</td>
+              <td colSpan={6} className="td-ref" style={{ textAlign: 'right' }}>− Firm gaps ({fmtINR(totals.gapFirm)}) = SETTLE AT</td>
+              <td className="num" style={{ color: 'var(--green)', fontWeight: 700 }}>{fmtINR(settleTarget)}</td>
             </tr>
           </tfoot>
         </table>
