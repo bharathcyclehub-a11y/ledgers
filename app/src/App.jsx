@@ -6,6 +6,7 @@ import {
   entryDir, entrySide, computeThread,
 } from './store'
 import { subscribeSync, initialSync, pullCloud, pushCloud, schedulePush, getSyncKey, setSyncKey, verifyPin } from './sync'
+import { EVIDENCE } from './evidence.gen'
 
 const REVIEW_CADENCE_DAYS = 15
 
@@ -328,6 +329,7 @@ function GapsTab({ brand, update, focusGap, clearFocus }) {
               <div className="detail">
                 {g.evidence && <><div className="lbl">Evidence</div><div>{g.evidence}</div></>}
                 {g.action && <><div className="lbl">Action</div><div>{g.action}</div></>}
+                <GapShots brand={brand} n={g.n} />
                 {(g.progress || []).map((p, i) => (
                   <div key={i} className="note">{p.date}: {p.text}</div>
                 ))}
@@ -661,7 +663,7 @@ function LedgerTab({ brand, update, onOpenGap }) {
 }
 
 // Tap-to-explain: what this entry is + its audit verdict + the linked gap card
-function EntryExplain({ e, brand }) {
+function EntryExplain({ e, brand, onOpenGap }) {
   const TYPE_EXPLAIN = {
     invoice: `${brand.name} billed BCH — increases what BCH owes`,
     payment: `BCH paid ${brand.name} — reduces the balance`,
@@ -677,10 +679,38 @@ function EntryExplain({ e, brand }) {
       <div className="bx-type">{TYPE_EXPLAIN[e.type] || e.type}</div>
       {e.audit && <div className={'auditline a-' + e.audit.s}>{e.audit.t}</div>}
       {gap && (
-        <div className="gapinline">
+        <div className="gapinline" onClick={(ev) => { if (onOpenGap) { ev.stopPropagation(); onOpenGap(gap.n) } }} style={onOpenGap ? { cursor: 'pointer' } : undefined}>
           <b>GAP #{gap.n}</b> <span className={'chip ' + (statusColor[gap.status] || '')}>{gap.status}</span> {gapAmount(gap)}
           <div>{gap.title}</div>
           {gap.action && <div className="bx-action">→ {gap.action}</div>}
+          {onOpenGap && <div className="bx-action" style={{ color: 'var(--blue)' }}>Open full gap →</div>}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// Screenshot evidence for a gap: thumbnails with date + source + what-it-proves, tap to zoom.
+function GapShots({ brand, n }) {
+  const [zoom, setZoom] = useState(null)
+  const shots = EVIDENCE[brand.id]?.[n]
+  if (!shots || !shots.length) return null
+  return (
+    <div className="gd-sec">
+      <span className="gd-lbl">Screenshots ({shots.length})</span>
+      <div className="shots">
+        {shots.map((s, i) => (
+          <figure key={i} className="shot" onClick={(e) => { e.stopPropagation(); setZoom(s) }}>
+            <img src={`/evidence/${brand.id}/${s.file}`} alt={s.note} loading="lazy" />
+            <figcaption><b>{s.date}</b> · {s.source}<span>{s.note}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+      {zoom && (
+        <div className="lightbox" onClick={(e) => { e.stopPropagation(); setZoom(null) }}>
+          <img src={`/evidence/${brand.id}/${zoom.file}`} alt={zoom.note} />
+          <div className="lb-cap"><b>{zoom.date}</b> · {zoom.source} — {zoom.note}</div>
+          <div className="lb-close">tap anywhere to close</div>
         </div>
       )}
     </div>
@@ -891,7 +921,7 @@ function MonthlyTab({ brand }) {
    Objective: drive every Gap → 0 by getting it recorded (it then moves to Discount). */
 
 function TableTab({ brand, onOpenGap }) {
-  const [openGap, setOpenGap] = useState(null)
+  const [open, setOpen] = useState(null) // 'g<n>' for a gap row, 'e<id>' for an entry row
   const { rows, totals } = useMemo(() => {
     const col = (e) => (e.type === 'invoice' || e.type === 'debit-note' ? 'purchase' : e.type === 'payment' ? 'payment' : e.type === 'note' ? null : 'discount')
     // ascending entries with running their-books balance
@@ -902,7 +932,7 @@ function TableTab({ brand, onOpenGap }) {
       const c = col(e)
       if (!c) continue
       bal += (e.dir ?? entryDir(e.type)) * (e.amount || 0)
-      entryRows.push({ kind: 'entry', date: e.date, ref: e.ref, label: e.note, [c]: e.amount, balance: bal, audit: e.audit })
+      entryRows.push({ kind: 'entry', eid: e.id, e, date: e.date, ref: e.ref, label: e.note, [c]: e.amount, balance: bal, audit: e.audit })
     }
     // gap rows: anchor to linked invoice date (via audit) else brand.updated
     const anchorFor = (g) => {
@@ -968,20 +998,20 @@ function TableTab({ brand, onOpenGap }) {
           <tbody>
             {rows.flatMap((r, i) => {
               const isGap = r.kind === 'gap'
-              const isOpen = isGap && openGap === r.n
+              const key = isGap ? 'g' + r.n : 'e' + r.eid
+              const isOpen = open === key
               const els = [
                 <tr
                   key={i}
-                  className={(isGap ? 'gaprow tier-' + r.tier : '') + (isGap ? ' clickable' : '')}
-                  title={isGap ? 'Tap for full details' : (r.label || '')}
-                  onClick={isGap ? () => setOpenGap(isOpen ? null : r.n) : undefined}
+                  className={(isGap ? 'gaprow tier-' + r.tier + ' ' : '') + 'clickable' + (isOpen ? ' rowopen' : '')}
+                  onClick={() => setOpen(isOpen ? null : key)}
                 >
-                  <td className="td-date">{r.date}</td>
+                  <td className="td-date"><span className="gapcaret">{isOpen ? '▾' : '▸'}</span>{r.date}</td>
                   <td className="td-ref">
-                    {isGap && <span className="gapcaret">{isOpen ? '▾' : '▸'}</span>}
-                    {r.ref}
+                    {r.ref || <span className="td-plain">{(r.label || r.e?.type || '').slice(0, 40)}</span>}
                     {isGap && <span className="tiertag">{r.tier}</span>}
                     {isGap && <div className="td-sub">{(r.label || '').slice(0, 55)}</div>}
+                    {!isGap && r.ref && r.label && <div className="td-sub2">{(r.label || '').slice(0, 55)}</div>}
                   </td>
                   <td className="num red">{r.purchase ? fmtINR(r.purchase) : ''}</td>
                   <td className="num green">{r.payment ? fmtINR(r.payment) : ''}</td>
@@ -990,7 +1020,7 @@ function TableTab({ brand, onOpenGap }) {
                   <td className="num">{r.kind === 'entry' ? fmtLakh(r.balance) : ''}</td>
                 </tr>,
               ]
-              if (isOpen) {
+              if (isOpen && isGap) {
                 const g = r.g
                 els.push(
                   <tr key={i + '-d'} className="gapdetailrow">
@@ -1005,6 +1035,7 @@ function TableTab({ brand, onOpenGap }) {
                         <div className="gd-title">{g.title}</div>
                         {g.evidence && <div className="gd-sec"><span className="gd-lbl">Evidence</span>{g.evidence}</div>}
                         {g.action && <div className="gd-sec"><span className="gd-lbl">Action</span>{g.action}</div>}
+                        <GapShots brand={brand} n={g.n} />
                         {(g.progress || []).length > 0 && (
                           <div className="gd-sec">
                             <span className="gd-lbl">Progress</span>
@@ -1016,6 +1047,18 @@ function TableTab({ brand, onOpenGap }) {
                             Open full gap (edit / history) →
                           </button>
                         )}
+                      </div>
+                    </td>
+                  </tr>
+                )
+              }
+              if (isOpen && !isGap) {
+                els.push(
+                  <tr key={i + '-d'} className="gapdetailrow">
+                    <td colSpan={7}>
+                      <div className="entrydetail">
+                        <EntryExplain e={r.e} brand={brand} onOpenGap={onOpenGap} />
+                        <div className="ed-foot">Posted {r.date} · running balance {fmtINR(r.balance)}</div>
                       </div>
                     </td>
                   </tr>
