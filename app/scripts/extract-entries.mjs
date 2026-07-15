@@ -75,45 +75,131 @@ const sideFor = (type) => (type === 'payment' || (type === 'debit-note') ? 'bch'
 const out = {}
 const report = []
 
-/* ---- Lucifer: LUCIFER LEDGER.xlsx (BCH-built, both sides) ---- */
+/* ---- Lucifer: canonical timeline from Lucifer's own ledger PDFs (transcribed 13-Jul-26) ----
+   A3 = FY23-24 · B8 = FY24-25 · B6 = FY25-26 (to 31-Mar-26) · B3 = FY26-27 (to 13-Jul-26)
+   Chain verified: opening 0 (Apr-23) -> closing 18,48,717 (13-Jul-26), ties Lucifer's stated closing exactly. */
 {
-  const rows = sheetRows('LUCIFER LEDGER.xlsx')
-  const entries = []
-  let opening = null
-  for (const r of rows.slice(5)) {
-    if (!r || r.length < 4) continue
-    const date = parseDate(r[0])
-    if (!date) continue
-    const details = r[2] || ''
-    const debit = num(r[3]), credit = num(r[4])
-    if (/opening/i.test(details)) { opening = { date, amount: debit ?? 0 }; continue }
-    if (debit === null && credit === null) continue
-    const dir = debit !== null ? +1 : -1
-    const type = typeFromLabel(details + ' ' + (r[1] || ''), dir)
-    entries.push({ id: mkid('lu'), date, type, ref: r[1] || '', amount: debit ?? credit, dir, side: sideFor(type), note: details !== 'PURCHASE' && details !== 'PAYMENT' ? String(details).trim() : '' })
+  const dir = 'brands/lucifer/ledger-versions/'
+  const parseCsv = (name) => {
+    const text = readFileSync(ROOT + dir + name, 'utf8')
+    const rows = []
+    let row = [], f = '', q = false
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i]
+      if (q) { if (c === '"') { if (text[i + 1] === '"') { f += '"'; i++ } else q = false } else f += c }
+      else if (c === '"') q = true
+      else if (c === ',') { row.push(f); f = '' }
+      else if (c === '\n') { row.push(f); rows.push(row); row = []; f = '' }
+      else if (c !== '\r') f += c
+    }
+    if (f || row.length) { row.push(f); rows.push(row) }
+    const h = rows[0]
+    return rows.slice(1).filter((r) => r.length > 5).map((r) => Object.fromEntries(h.map((k, i) => [k, r[i] ?? ''])))
   }
-  out.lucifer = { opening, entries }
+  const canon = [
+    ...parseCsv('ledgerA3.csv').filter((r) => r.row_date >= '2023-04-01' && r.row_date <= '2024-03-31'),
+    ...parseCsv('ledgerB8.csv'),
+    ...parseCsv('ledgerB6.csv').filter((r) => r.row_date <= '2026-03-31'),
+    ...parseCsv('ledgerB3.csv'),
+  ].filter((r) => r.vch_type !== 'OPENING' && r.vch_type !== 'CLOSING')
+  const entries = []
+  for (const r of canon) {
+    const debit = num(r.debit), credit = num(r.credit)
+    if (!debit && !credit) continue
+    const d = debit ? +1 : -1
+    let type
+    if (/sale/i.test(r.vch_type) && d > 0) type = 'invoice'
+    else if (/rcpt|receipt/i.test(r.vch_type)) type = 'payment'
+    else if (/slrt|crnt|sirt/i.test(r.vch_type) || /^cn/i.test(r.vch_no || '')) type = 'credit-note'
+    else if (d < 0 && /dis|rebate/i.test((r.particulars || '') + (r.vch_no || ''))) type = 'discount'
+    else type = d < 0 ? 'adjustment' : 'debit-note'
+    const note = [r.narration, r.particulars && !/sales|discount & rebate|hdfc|icici/i.test(r.particulars) ? r.particulars : ''].filter(Boolean).join(' · ').slice(0, 90)
+    entries.push({ id: mkid('lu'), date: r.row_date, type, ref: r.vch_no || '', amount: d > 0 ? debit : credit, dir: d, side: sideFor(type), note })
+  }
+
+  // Per-invoice discount audit (13-Jul-26 consolidation). s: ok|short|missing|kids|era20|info · g: linked gap #
+  const AUDIT_18 = {
+    156: { s: 'short', t: '18% via DIS-90 (grouped with 0175): given ₹1,42,402 vs ₹1,42,942 due — group short ₹539', g: 10 },
+    175: { s: 'short', t: '18% via DIS-90 (grouped with 0156): group short ₹539', g: 10 },
+    208: { s: 'ok', t: '18% exact via DIS-110 (₹1,09,694 with 0237) ✓' },
+    237: { s: 'ok', t: '18% exact via DIS-110 (with 0208) ✓' },
+    364: { s: 'short', t: 'DIS-210 (18% + ₹150/cycle + ₹19,500 transport) — ₹1,050 short', g: 9 },
+    365: { s: 'kids', t: 'Kids bill — zero discount per Prashant 01-Jun-25 (claim only if contested)', g: 4 },
+    468: { s: 'missing', t: 'NO discount ever passed — ₹1,822 due @18%', g: 5 },
+    600: { s: 'short', t: '12-Mar print granted ₹80,647 → withdrawn → DIS-304 ₹72,895 vs ₹75,607 due — ₹2,712 short', g: 7 },
+    689: { s: 'missing', t: 'Discount granted on 12-Mar-26 print (₹23,220) then WITHDRAWN in every later print — ₹21,769 due', g: 2 },
+    690: { s: 'kids', t: 'Kids bill — zero discount per policy (claim only if contested)', g: 3 },
+    814: { s: 'ok', t: '18% exact via DIS-99 (÷1.05, with 815/849) ✓' },
+    815: { s: 'ok', t: '18% exact via DIS-99 ✓' },
+    849: { s: 'ok', t: '18% exact via DIS-99 ✓' },
+    41: { s: 'short', t: 'Discounted @17% via DIS-100 — Ankush ruling 18% → part of ₹19,415 top-up', g: 6 },
+    272: { s: 'short', t: 'Discounted @17% via DIS-100 — 18% top-up due (part of ₹19,415)', g: 6 },
+    281: { s: 'short', t: 'Discounted @17% via DIS-100 — 18% top-up due (part of ₹19,415)', g: 6 },
+    363: { s: 'missing', t: 'NO discount — ₹3,05,613 due @18% (₹17,82,742 ÷1.05 × 18%, Ankush ruling)', g: 1 },
+  }
+  const ERA20 = { s: 'era20', t: '20%-era bill — discounts were lump-sum journals (DIS-01→DIS-22), not per-bill; era aggregate short ₹5,22,059 max', g: 26 }
+  const DISC_NOTES = {
+    'DIS-22': 'Zeroed the account at 20%-era end — equals Prashant\'s three 20-May-25 20% calcs exactly (₹2,30,226)',
+    'DIS-90': 'Covers 0156 + 0175 @18% — ₹539 short (gap #10)',
+    'DIS-110': 'Covers 0208 + 0237 @18% — exact ✓',
+    'DIS 210': 'Covers 0364: 18% + ₹150/cycle + ₹19,500 transport — ₹1,050 short (gap #9)',
+    'DIS-304': 'LB/0600 re-grant after the 12-Mar withdrawal — ₹2,712 short (gap #7)',
+    'DIS-99': 'Covers 814/815/849 @18% ÷1.05 — exact ✓',
+    'DIS-100': '17% on 041/272/281 — Ankush ruling 18% → ₹19,415 top-up due (gap #6)',
+    'DIS-01': '20%-era lump-sum', 'DIS-29': '20%-era lump-sum (the chased Jun-24 voucher — found & posted)', 'DIS-98': '20%-era lump-sum',
+    'DIS-140': '20%-era lump-sum (narration: Inv 274)', 'DIS-153': '20%-era lump-sum — narration only explains ₹25,681 of ₹1,24,147 (gap #27)', 'DIS-165': '20%-era lump-sum (narration: Inv 534)',
+  }
+  for (const e of entries) {
+    if (e.type === 'invoice') {
+      const tail = parseInt((e.ref.match(/(\d+)\s*$/) || [])[1] || '', 10)
+      if (e.date >= '2025-06-21' && AUDIT_18[tail]) e.audit = AUDIT_18[tail]
+      else if (e.date <= '2025-05-21') e.audit = ERA20
+    } else if (e.type === 'discount' && DISC_NOTES[e.ref]) {
+      e.audit = { s: 'info', t: DISC_NOTES[e.ref] }
+    }
+  }
+  out.lucifer = { opening: { date: '2023-04-01', amount: 0 }, entries }
 }
 
-/* ---- Cultsport: Srinu source xlsx (BCH-built line items, both sides, from 2023) ---- */
+/* ---- Cultsport: brand's FINAL Curefit Customer Statement (01-Jul-2020 → 15-Jul-2026, from ₹0) ---- */
 {
-  const rows = sheetRows('brands/cultsport/CULTSPORT_final (Srinu - source).xlsx')
-  const entries = []
-  let opening = null
-  for (const r of rows.slice(8)) {
-    if (!r || r.length < 4) continue
-    const date = parseDate(r[0])
-    if (!date) continue
-    const details = r[2] || ''
-    if (/opening/i.test(details)) { opening = { date, amount: num(r[3]) ?? 0 }; continue }
-    const debit = num(r[3]), credit = num(r[4])
-    if (debit === null && credit === null) continue
-    const dir = debit !== null && debit !== 0 ? +1 : -1
-    const type = typeFromLabel(details, dir)
-    const src = r[6] ? String(r[6]).trim() : ''
-    entries.push({ id: mkid('cu'), date, type, ref: r[1] || '', amount: dir > 0 ? debit : credit, dir, side: sideFor(type), note: src })
+  const rows = sheetRows('brands/cultsport/Curefit_Statement_FINAL_15-Jul-2026.xlsx')
+  // Curefit cols: 0 TxnNo | 1 Type | 2 AcctDate | 3 DelivDate | 4 Desc | 5 AdjAgainst | 6 Base | 7 GST | 8 Debit | 9 Credit | 10 Balance
+  const TYPE = { 'Invoice': 'invoice', 'Receipt': 'payment', 'Credit Memo': 'credit-note', 'Debit Memo': 'debit-note' }
+  // Resolved / credited memos → link to their gap so the ledger shows the gap as done inline
+  const CN_GAP = {
+    '78278': { g: 5, t: '✓ RESOLVED gap #5 — GST 7% tax discount CN (part of ₹1,13,028)' },
+    '78279': { g: 5, t: '✓ RESOLVED gap #5 — tax-rate discount CN' },
+    '78280': { g: 5, t: '✓ RESOLVED gap #5 — tax-rate discount CN' },
+    '78281': { g: 5, t: '✓ RESOLVED gap #5 — tax-rate discount CN' },
+    '79057': { g: 29, t: '✓ RESOLVED gap #29 — 3 phones (secondary sales) ₹64,534' },
+    '79058': { g: 25, t: '✓ RESOLVED gap #25 — foot massagers (10-cycle scheme) ₹33,600' },
+    '25092': { g: 28, t: '✓ RESOLVED gap #28 — Vortex price diff ₹4,989' },
+    '73701': { g: 6, t: '◑ PARTIAL gap #6 — Power/Brave "Cycle Rent" CN ₹2,25,000 (₹1,34,990 balance still open)' },
   }
-  out.cultsport = { opening: opening || { date: '2023-01-01', amount: 0 }, entries }
+  const isCD = (d) => /\bCD\b/i.test(d || '')
+  const entries = []
+  let opening = { date: '2020-07-01', amount: 0 }
+  let lastDate = '2020-07-01'
+  for (const r of rows) {
+    if (!r) continue
+    if (/opening balance/i.test(String(r[0] || ''))) { opening = { date: '2020-07-01', amount: num(r[1]) ?? 0 }; continue }
+    const type = TYPE[r[1]]
+    if (!type) continue // skips header + "Closing Balance" summary row
+    const date = parseDate(r[2]) || parseDate(r[3]) || lastDate // some rows have a blank accounting date
+    lastDate = date
+    const dir = (type === 'invoice' || type === 'debit-note') ? +1 : -1
+    const amount = dir > 0 ? num(r[8]) : num(r[9])
+    if (!amount) continue
+    const desc = String(r[4] || '').trim()
+    const adj = String(r[5] || '').trim()
+    const ref = String(r[0] || '').trim()
+    const e = { id: mkid('cu'), date, type, ref, amount, dir, side: sideFor(type), note: desc || (adj && !/knockoff/i.test(adj) ? adj : '') }
+    if (CN_GAP[ref]) e.audit = { s: 'info', t: CN_GAP[ref].t, g: CN_GAP[ref].g }
+    else if (type === 'credit-note' && isCD(desc)) e.audit = { s: 'info', t: '8% CD credited — counts toward gap #34 (₹2,27,610 total, 15-Oct-25 batch)', g: 34 }
+    entries.push(e)
+  }
+  out.cultsport = { opening, entries }
 }
 
 /* ---- EMotorad: official Hub ledger (descending; compute implied opening) ---- */
@@ -197,14 +283,46 @@ const report = []
   out.hornback = { opening: null, entries }
 }
 
-/* ---- Trinity: single reviewed invoice ---- */
+/* ---- Bank-sourced payments (ledgers/bank-statements/normalized.json via scripts/bank.mjs index) ---- */
+let bankTx = []
+try { bankTx = JSON.parse(readFileSync(ROOT + 'bank-statements/normalized.json', 'utf8')) } catch { console.error('!! bank normalized.json missing — run: node scripts/bank.mjs index') }
+const bankPays = (re) => bankTx.filter((t) => t.out > 0 && re.test(t.narration)).map((t) => ({ date: t.date, amount: t.out, note: t.narration.slice(0, 70), bank: t.bank }))
+
+/* ---- Trinity: 1 reviewed invoice + ALL bank payments (vendor invoice side still to obtain) ---- */
 {
-  out.trinity = {
-    opening: null,
-    entries: [
-      { id: mkid('tr'), date: '2026-06-15', type: 'invoice', ref: 'TCI/P/26-27/1551', amount: 1021064, dir: +1, side: 'vendor', note: 'Pargaon, 120 cycles — taxable value; verify final invoice total. 1% CD if paid by 15-Jul-26' },
-    ],
+  const entries = [
+    { id: mkid('tr'), date: '2026-06-15', type: 'invoice', ref: 'TCI/P/26-27/1551', amount: 1021064, dir: +1, side: 'vendor', note: 'Pargaon, 120 cycles — taxable value; verify final invoice total' },
+  ]
+  for (const p of bankPays(/trinity/i)) {
+    entries.push({ id: mkid('tr'), date: p.date, type: 'payment', ref: `[${p.bank}]`, amount: p.amount, dir: -1, side: 'bch', note: 'bank: ' + p.note })
   }
+  out.trinity = { opening: null, entries }
+}
+
+/* ---- Aoki: append bank debits with no matching thread payment; date-fix provisional rows ---- */
+{
+  const entries = out.aoki.entries
+  const pays = entries.filter((e) => e.type === 'payment')
+  const DAY = 86400000
+  for (const b of bankPays(/aoki/i)) {
+    // nearest-date unconsumed thread payment with same amount
+    let best = null
+    for (const p of pays) {
+      if (p._consumed || p.amount !== b.amount) continue
+      const dd = Math.abs(new Date(p.date) - new Date(b.date)) / DAY
+      if (!best || dd < best.dd) best = { p, dd }
+    }
+    if (best) {
+      best.p._consumed = true
+      if (/TBC/.test(best.p.note || '')) { // provisional Feb/Mar-26 rows — fix from bank
+        best.p.note = `date fixed from bank (${b.bank}): ` + b.note
+        best.p.date = b.date
+      }
+    } else {
+      entries.push({ id: mkid('ao'), date: b.date, type: 'payment', ref: `[${b.bank}]`, amount: b.amount, dir: -1, side: 'bch', note: 'bank (not yet on AOKI books): ' + b.note })
+    }
+  }
+  pays.forEach((p) => delete p._consumed)
 }
 
 /* ---- sort, report, write ---- */
