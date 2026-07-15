@@ -167,7 +167,9 @@ function Dashboard({ state }) {
       ))}
 
       <div className="sectiontitle">Brands</div>
-      {brands.map((b) => <BrandCard key={b.id} b={b} />)}
+      <div className="brandgrid">
+        {brands.map((b) => <BrandCard key={b.id} b={b} />)}
+      </div>
     </>
   )
 }

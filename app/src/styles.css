@@ -327,3 +327,47 @@ body {
 .gapid { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.02em; color: var(--blue); background: #eff6ff; border: 1px solid #dbeafe; padding: 2px 7px; border-radius: 6px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .gap .top .gapid { margin-right: 2px; }
 .mg-row .gapid { font-size: 10px; }
+
+/* ============ DESKTOP: use the full screen, wider & clearer ============ */
+@media (min-width: 1000px) {
+  #root { max-width: 1200px; padding: 0 32px calc(40px + env(safe-area-inset-bottom)); }
+  body { font-size: 15.5px; }
+
+  .hdr h1 { font-size: 22px; }
+  .sectiontitle { font-size: 13px; }
+
+  /* Dashboard: brand cards in a responsive grid, summary bigger */
+  .summary .cell .v { font-size: 22px; }
+  .summary .cell .l { font-size: 12px; }
+  .brandgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .brandgrid .brandcard { margin-bottom: 0; }
+
+  /* Brand header card: balances read larger */
+  .balgrid .b .v { font-size: 24px; }
+  .balgrid .b .l { font-size: 13px; }
+  .matchbar .b .v { font-size: 22px; }
+
+  /* Tabs a touch larger, left-aligned (not stretched full width) */
+  .tabs button { flex: 0 1 auto; padding: 9px 18px; font-size: 14px; }
+
+  /* Tables fill the width now — no horizontal scroll needed */
+  .ltable { min-width: 0; font-size: 13.5px; }
+  .ltable td, .ltable th { padding: 9px 12px; }
+  .ltable .td-ref { max-width: none; }
+
+  /* Ledger chat thread: keep bubbles readable, don't stretch across the whole width */
+  .thread { max-width: 860px; }
+
+  /* Gaps + evidence: comfortable reading measure, screenshots larger */
+  .gap .top .title, .gd-title { font-size: 15px; }
+  .shot { width: 200px; }
+  .shot img { height: 132px; }
+
+  /* Ladder / reconciliation panels breathe */
+  .matchbar, .card { padding: 16px 18px; }
+}
+
+@media (min-width: 1400px) {
+  #root { max-width: 1320px; }
+  .brandgrid { grid-template-columns: repeat(3, 1fr); }
+}
