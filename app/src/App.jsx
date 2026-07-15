@@ -333,6 +333,7 @@ function GapsTab({ brand, update, focusGap, clearFocus }) {
             </div>
             {expanded === g.n && (
               <div className="detail">
+                {g.result && <div className="result"><span className="result-lbl">✓ Result</span> {g.result}</div>}
                 {g.evidence && <><div className="lbl">Evidence · reference & chat proof</div><Evidence text={g.evidence} /></>}
                 {g.action && <><div className="lbl">Action</div><div>{g.action}</div></>}
                 <GapShots brand={brand} n={g.n} />
@@ -1084,6 +1085,7 @@ function TableTab({ brand, onOpenGap }) {
                           <span className="gd-amt">{gapAmount(g)}</span>
                         </div>
                         <div className="gd-title">{g.title}</div>
+                        {g.result && <div className="result"><span className="result-lbl">✓ Result</span> {g.result}</div>}
                         {g.evidence && <div className="gd-sec"><span className="gd-lbl">Evidence · reference & chat proof</span><Evidence text={g.evidence} /></div>}
                         {g.action && <div className="gd-sec"><span className="gd-lbl">Action</span>{g.action}</div>}
                         <GapShots brand={brand} n={g.n} />

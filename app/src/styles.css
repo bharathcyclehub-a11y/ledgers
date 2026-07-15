@@ -327,6 +327,8 @@ body {
 .gapid { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.02em; color: var(--blue); background: #eff6ff; border: 1px solid #dbeafe; padding: 2px 7px; border-radius: 6px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .gap .top .gapid { margin-right: 2px; }
 .mg-row .gapid { font-size: 10px; }
+.result { margin: 6px 0; padding: 8px 10px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; color: #065f46; font-size: 13px; line-height: 1.45; }
+.result-lbl { display: inline-block; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; margin-right: 6px; }
 
 /* ============ DESKTOP: use the full screen, wider & clearer ============ */
 @media (min-width: 1000px) {
