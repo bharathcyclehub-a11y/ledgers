@@ -23,15 +23,26 @@ export function setSyncKey(k) {
 
 async function call(method, body) {
   const key = getSyncKey()
-  if (!key) throw Object.assign(new Error('No sync key set'), { nokey: true })
+  if (!key) throw Object.assign(new Error('No PIN set'), { nokey: true })
   const res = await fetch('/api/state', {
     method,
     headers: { 'x-sync-key': key, ...(body ? { 'content-type': 'application/json' } : {}) },
     body: body ? JSON.stringify(body) : undefined,
   })
+  if (res.status === 401) {
+    // PIN changed server-side — clear it so the lock screen reappears
+    setSyncKey('')
+    throw Object.assign(new Error('PIN no longer valid'), { nokey: true })
+  }
   if (res.status === 404) return null
   if (!res.ok) throw new Error(`sync ${method} failed: ${res.status} ${(await res.text()).slice(0, 120)}`)
   return res.json()
+}
+
+// Validate a candidate PIN against the server. true = valid (even if cloud empty).
+export async function verifyPin(pin) {
+  const res = await fetch('/api/state', { headers: { 'x-sync-key': pin } })
+  return res.status !== 401
 }
 
 export async function pullCloud() {
