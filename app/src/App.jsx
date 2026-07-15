@@ -5,7 +5,7 @@ import {
   GAP_STATUSES, GAP_TYPES, ENTRY_TYPES, openGaps, downloadCSV, brandSummaryText,
   entryDir, entrySide, computeThread,
 } from './store'
-import { subscribeSync, initialSync, pullCloud, pushCloud, schedulePush, getSyncKey, setSyncKey } from './sync'
+import { subscribeSync, initialSync, pullCloud, pushCloud, schedulePush, getSyncKey, setSyncKey, verifyPin } from './sync'
 
 const REVIEW_CADENCE_DAYS = 15
 
@@ -23,14 +23,19 @@ function useHashRoute() {
 
 export default function App() {
   const [state, setState] = useState(loadState)
+  const [locked, setLocked] = useState(() => !getSyncKey())
   const hash = useHashRoute()
 
-  // pull cloud on launch; adopt if newer than local
+  // re-lock if the PIN is invalidated (changed server-side)
+  useEffect(() => subscribeSync((s) => { if (s.state === 'nokey' && !getSyncKey()) setLocked(true) }), [])
+
+  // pull cloud after unlock; adopt if newer than local
   useEffect(() => {
+    if (locked) return
     initialSync(loadState()).then((cloud) => {
       if (cloud) setState(saveState(migrate(cloud)))
     })
-  }, [])
+  }, [locked])
 
   const update = (fn) => {
     setState((prev) => {
@@ -42,6 +47,8 @@ export default function App() {
     })
   }
 
+  if (locked) return <PinGate onUnlock={() => setLocked(false)} />
+
   const m = hash.match(/^#\/brand\/([^/]+)/)
   if (m) {
     const brand = state.brands.find((b) => b.id === m[1])
@@ -49,6 +56,56 @@ export default function App() {
   }
   if (hash.startsWith('#/data')) return <DataPage state={state} setState={setState} />
   return <Dashboard state={state} update={update} />
+}
+
+/* ---------- PIN gate ---------- */
+
+function PinGate({ onUnlock }) {
+  const [pin, setPin] = useState('')
+  const [err, setErr] = useState('')
+  const [busy, setBusy] = useState(false)
+
+  const submit = async () => {
+    if (!pin.trim()) return
+    setBusy(true); setErr('')
+    try {
+      if (await verifyPin(pin.trim())) {
+        setSyncKey(pin.trim())
+        onUnlock()
+      } else {
+        setErr('Wrong PIN — try again')
+        setPin('')
+      }
+    } catch {
+      setErr('Network error — connect to the internet for first unlock')
+    }
+    setBusy(false)
+  }
+
+  return (
+    <div className="pingate">
+      <div className="pinbox">
+        <div className="pinlogo">₹</div>
+        <h2>BCH Ledgers</h2>
+        <p className="smallmuted">Enter your PIN to unlock</p>
+        <input
+          type="password"
+          inputMode="numeric"
+          autoComplete="one-time-code"
+          autoFocus
+          maxLength={8}
+          value={pin}
+          onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
+          onKeyDown={(e) => e.key === 'Enter' && submit()}
+          placeholder="• • • • • •"
+        />
+        {err && <p className="pinerr">{err}</p>}
+        <button className="iconbtn primary" disabled={busy || !pin} onClick={submit}>
+          {busy ? 'Checking…' : 'Unlock'}
+        </button>
+      </div>
+    </div>
+  )
 }
 
 /* ---------- Sync status dot ---------- */
@@ -136,6 +193,8 @@ function BrandCard({ b }) {
 
 function BrandPage({ brand, update }) {
   const [tab, setTab] = useState('ledger')
+  const [focusGap, setFocusGap] = useState(null)
+  const openGapInTab = (n) => { setFocusGap(n); setTab('gaps') }
   const ds = daysSince(brand.lastReviewed)
   const due = ds !== null && ds >= REVIEW_CADENCE_DAYS
 
@@ -178,12 +237,16 @@ function BrandPage({ brand, update }) {
 
       <div className="tabs">
         <button className={tab === 'ledger' ? 'on' : ''} onClick={() => setTab('ledger')}>Ledger ({brand.entries.length})</button>
+        <button className={tab === 'monthly' ? 'on' : ''} onClick={() => setTab('monthly')}>Monthly</button>
+        <button className={tab === 'table' ? 'on' : ''} onClick={() => setTab('table')}>Table</button>
         <button className={tab === 'gaps' ? 'on' : ''} onClick={() => setTab('gaps')}>Gaps ({openGaps(brand).length})</button>
         <button className={tab === 'share' ? 'on' : ''} onClick={() => setTab('share')}>Share</button>
       </div>
 
-      {tab === 'gaps' && <GapsTab brand={brand} update={update} />}
-      {tab === 'ledger' && <LedgerTab brand={brand} update={update} />}
+      {tab === 'gaps' && <GapsTab brand={brand} update={update} focusGap={focusGap} clearFocus={() => setFocusGap(null)} />}
+      {tab === 'ledger' && <LedgerTab brand={brand} update={update} onOpenGap={openGapInTab} />}
+      {tab === 'monthly' && <MonthlyTab brand={brand} />}
+      {tab === 'table' && <TableTab brand={brand} onOpenGap={openGapInTab} />}
       {tab === 'share' && <ShareTab brand={brand} />}
     </>
   )
@@ -203,11 +266,24 @@ function Collapsible({ label, children }) {
 
 /* ---------- Gaps ---------- */
 
-function GapsTab({ brand, update }) {
+function GapsTab({ brand, update, focusGap, clearFocus }) {
   const [filter, setFilter] = useState('active')
   const [expanded, setExpanded] = useState(null)
   const [adding, setAdding] = useState(false)
   const [editing, setEditing] = useState(null)
+
+  // deep-link from Table/Ledger: jump to a specific gap, expand it, scroll into view
+  useEffect(() => {
+    if (focusGap == null) return
+    setFilter('all')
+    setExpanded(focusGap)
+    const t = setTimeout(() => {
+      const el = document.getElementById('gap-' + focusGap)
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }, 60)
+    clearFocus?.()
+    return () => clearTimeout(t)
+  }, [focusGap])
 
   const gaps = useMemo(() => {
     let g = [...brand.gaps]
@@ -238,7 +314,7 @@ function GapsTab({ brand, update }) {
       <div className="card list">
         {gaps.length === 0 && <div className="empty">No gaps in this view</div>}
         {gaps.map((g) => (
-          <div key={g.n} className={'gap' + (g.status === 'resolved' || g.status === 'rejected' ? ' done' : '')}>
+          <div key={g.n} id={'gap-' + g.n} className={'gap' + (g.status === 'resolved' || g.status === 'rejected' ? ' done' : '') + (expanded === g.n ? ' focus' : '')}>
             <div className="top" onClick={() => setExpanded(expanded === g.n ? null : g.n)}>
               <span className="num">{g.n}</span>
               <span className="title">{g.title}</span>
@@ -381,18 +457,40 @@ function GapForm({ initial, onSave, onCancel }) {
 
 const PAGE = 80
 
-function LedgerTab({ brand, update }) {
+const AUDIT_LABEL = { ok: '✓ disc ok', short: '⚠ short', missing: '✗ NO DISC', kids: 'kids · 0%', era20: '20% era', info: 'ℹ' }
+const AUDIT_CHIP = { ok: 'green', short: 'amber', missing: 'red', kids: '', era20: 'blue', info: 'blue' }
+
+function LedgerTab({ brand, update, onOpenGap }) {
   const [adding, setAdding] = useState(false)
   const [filter, setFilter] = useState('all')
   const [q, setQ] = useState('')
   const [showAll, setShowAll] = useState(false)
+  const [expanded, setExpanded] = useState(null)
 
   const { sorted, balances, closing } = useMemo(() => computeThread(brand), [brand])
+
+  // discount audit rollup (entries carry .audit from the consolidation)
+  const audit = useMemo(() => {
+    const inv = sorted.filter((e) => e.type === 'invoice' && e.audit)
+    const by = (s) => inv.filter((e) => e.audit.s === s)
+    const gapAmt = (list) => {
+      const ns = [...new Set(list.map((e) => e.audit.g).filter(Boolean))]
+      return ns.reduce((s, n) => s + (brand.gaps.find((g) => g.n === n)?.amt || 0), 0)
+    }
+    return inv.length
+      ? { total: inv.length, ok: by('ok').length, short: by('short').length, missing: by('missing').length,
+          kids: by('kids').length, era20: by('era20').length, missingAmt: gapAmt(by('missing')), shortAmt: gapAmt(by('short')) }
+      : null
+  }, [sorted, brand])
+
+  const linkedGapNs = useMemo(() => new Set(sorted.flatMap((e) => (e.audit?.g ? [e.audit.g] : []))), [sorted])
+  const unlinkedOpenGaps = openGaps(brand).filter((g) => !linkedGapNs.has(g.n))
 
   const filtered = useMemo(() => {
     let list = sorted
     if (filter === 'vendor') list = list.filter((e) => (e.side ?? entrySide(e.type)) === 'vendor')
     else if (filter === 'bch') list = list.filter((e) => (e.side ?? entrySide(e.type)) === 'bch')
+    else if (filter === 'nodisc') list = list.filter((e) => e.audit && (e.audit.s === 'missing' || e.audit.s === 'short'))
     if (q.trim()) {
       const needle = q.trim().toLowerCase()
       list = list.filter((e) => `${e.ref} ${e.note} ${e.type} ${e.amount}`.toLowerCase().includes(needle))
@@ -433,10 +531,23 @@ function LedgerTab({ brand, update }) {
         {brand.ledger?.coverage && <div className="covnote" style={{ marginTop: 2 }}>Coverage: {brand.ledger.coverage}</div>}
       </div>
 
+      {audit && (
+        <div className="card auditbar">
+          <b>Discount audit — {audit.total} invoices:</b>{' '}
+          <span className="chip green">✓ ok {audit.ok}</span>{' '}
+          <span className="chip amber">⚠ short {audit.short} ({fmtINR(audit.shortAmt)})</span>{' '}
+          <span className="chip red">✗ no disc {audit.missing} ({fmtINR(audit.missingAmt)})</span>{' '}
+          {audit.kids > 0 && <span className="chip">kids-0% {audit.kids}</span>}{' '}
+          {audit.era20 > 0 && <span className="chip blue">20%-era {audit.era20}</span>}
+          <div className="covnote">Tap any entry for its explanation; red/amber invoices carry their gap inline.</div>
+        </div>
+      )}
+
       <div className="filters">
         <button className={filter === 'all' ? 'on' : ''} onClick={() => setFilter('all')}>all</button>
         <button className={filter === 'vendor' ? 'on' : ''} onClick={() => setFilter('vendor')}>← {brand.name}</button>
         <button className={filter === 'bch' ? 'on' : ''} onClick={() => setFilter('bch')}>BCH →</button>
+        {audit && <button className={filter === 'nodisc' ? 'on' : ''} onClick={() => setFilter('nodisc')}>✗/⚠ discount gaps</button>}
         <input className="search" placeholder="Search ref / note…" value={q} onChange={(e) => setQ(e.target.value)} />
       </div>
 
@@ -462,15 +573,18 @@ function LedgerTab({ brand, update }) {
             <div key={e.id}>
               {newMonth && <div className="monthsep">{monthLabel(month)}</div>}
               <div className={'msg ' + side}>
-                <div className="bubble">
+                <div className={'bubble' + (e.audit?.s === 'missing' ? ' b-missing' : e.audit?.s === 'short' ? ' b-short' : '')}
+                  onClick={() => setExpanded(expanded === e.id ? null : e.id)}>
                   <div className="brow">
                     <span className={'chip ' + (dir > 0 ? 'red' : dir < 0 ? 'green' : '')}>{e.type}</span>
+                    {e.audit && e.audit.s !== 'info' && <span className={'chip ' + AUDIT_CHIP[e.audit.s]}>{AUDIT_LABEL[e.audit.s]}</span>}
                     <span className="bamt" style={{ color: dir > 0 ? 'var(--red)' : dir < 0 ? 'var(--green)' : 'var(--muted)' }}>
                       {dir !== 0 ? (dir > 0 ? '+' : '−') : ''}{fmtINR(e.amount)}
                     </span>
                     <button
                       className="del"
-                      onClick={() => {
+                      onClick={(ev) => {
+                        ev.stopPropagation()
                         if (confirm(`Delete ${e.type} ${e.ref || ''} of ${fmtINR(e.amount)}?`))
                           update((s) => {
                             const b = s.brands.find((x) => x.id === brand.id)
@@ -481,6 +595,7 @@ function LedgerTab({ brand, update }) {
                   </div>
                   {e.ref && <div className="bref">{e.ref}</div>}
                   {e.note && <div className="bnote">{e.note}</div>}
+                  {expanded === e.id && <EntryExplain e={e} brand={brand} />}
                   <div className="bfoot">
                     <span>{e.date}</span>
                     <span>bal {fmtLakh(balances.get(e.id))}</span>
@@ -491,6 +606,35 @@ function LedgerTab({ brand, update }) {
           )
         })}
       </div>
+
+      {unlinkedOpenGaps.length > 0 && (
+        <div className="card gapstrip">
+          <h3>Open gaps not tied to a single bill ({unlinkedOpenGaps.length})</h3>
+          {unlinkedOpenGaps.map((g) => (
+            <div key={g.n} className="minigap" onClick={() => setExpanded(expanded === 'gap' + g.n ? null : 'gap' + g.n)}>
+              <div className="mg-row">
+                <span className="num">#{g.n}</span>
+                <span className="mg-title">{g.title}</span>
+                <span className={'chip ' + (statusColor[g.status] || '')}>{g.status}</span>
+                <span className="mg-amt">{gapAmount(g)}</span>
+              </div>
+              {expanded === 'gap' + g.n && (
+                <div className="mg-detail">
+                  {g.evidence && <div><b>Evidence:</b> {g.evidence}</div>}
+                  {g.action && <div><b>Action:</b> {g.action}</div>}
+                  {(g.progress || []).map((p, j) => <div key={j} className="gd-note">{p.date}: {p.text}</div>)}
+                  {onOpenGap && (
+                    <button className="iconbtn primary gd-open" onClick={(ev) => { ev.stopPropagation(); onOpenGap(g.n) }}>
+                      Open full gap (edit / history) →
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
+          <div className="covnote">Full editing in the Gaps tab — this strip keeps them visible inside the ledger.</div>
+        </div>
+      )}
 
       {!adding && <button className="iconbtn primary reviewbtn" onClick={() => setAdding(true)}>+ Add entry</button>}
       {adding && (
@@ -513,6 +657,33 @@ function LedgerTab({ brand, update }) {
 
       <BalanceEditor brand={brand} update={update} />
     </>
+  )
+}
+
+// Tap-to-explain: what this entry is + its audit verdict + the linked gap card
+function EntryExplain({ e, brand }) {
+  const TYPE_EXPLAIN = {
+    invoice: `${brand.name} billed BCH — increases what BCH owes`,
+    payment: `BCH paid ${brand.name} — reduces the balance`,
+    'credit-note': `${brand.name} credited BCH (return/CN) — reduces the balance`,
+    discount: `Discount journal passed by ${brand.name} — reduces the balance`,
+    'debit-note': 'Debit raised — increases the balance',
+    adjustment: 'Journal adjustment — reduces the balance',
+    note: 'Informational note',
+  }
+  const gap = e.audit?.g ? brand.gaps.find((g) => g.n === e.audit.g) : null
+  return (
+    <div className="bexplain">
+      <div className="bx-type">{TYPE_EXPLAIN[e.type] || e.type}</div>
+      {e.audit && <div className={'auditline a-' + e.audit.s}>{e.audit.t}</div>}
+      {gap && (
+        <div className="gapinline">
+          <b>GAP #{gap.n}</b> <span className={'chip ' + (statusColor[gap.status] || '')}>{gap.status}</span> {gapAmount(gap)}
+          <div>{gap.title}</div>
+          {gap.action && <div className="bx-action">→ {gap.action}</div>}
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -597,6 +768,286 @@ function BalanceEditor({ brand, update }) {
   )
 }
 
+/* ---------- Monthly view: opening & closing balance per month ----------
+   Buckets every entry into its calendar month, carries the running balance
+   forward (prev month's close = next month's open) so each month can be
+   verified in isolation against the vendor's month-end figure. */
+
+function MonthlyTab({ brand }) {
+  const [openMonth, setOpenMonth] = useState(null)
+
+  const { months, opening, closing } = useMemo(() => {
+    const asc = [...brand.entries].sort((a, b) => a.date.localeCompare(b.date) || String(a.id).localeCompare(String(b.id)))
+    const opening = brand.ledger?.opening?.amount || 0
+    const map = new Map()
+    for (const e of asc) {
+      const ym = (e.date || '').slice(0, 7)
+      if (!ym) continue
+      const g = map.get(ym) || { ym, purchase: 0, payment: 0, credit: 0, entries: [] }
+      if (e.type === 'invoice' || e.type === 'debit-note') g.purchase += e.amount || 0
+      else if (e.type === 'payment') g.payment += e.amount || 0
+      else if (e.type !== 'note') g.credit += e.amount || 0
+      g.entries.push(e)
+      map.set(ym, g)
+    }
+    let bal = opening
+    const months = [...map.values()].sort((a, b) => a.ym.localeCompare(b.ym))
+    for (const m of months) {
+      m.open = bal
+      m.net = m.purchase - m.payment - m.credit
+      bal += m.net
+      m.close = bal
+    }
+    return { months, opening, closing: bal }
+  }, [brand])
+
+  const view = [...months].reverse() // newest month on top
+  const openDate = brand.ledger?.opening?.date
+
+  const exportCsv = () =>
+    downloadCSV(`${brand.id}-monthly-${today()}.csv`, [
+      ['Month', 'Opening', 'Purchases', 'Payments', 'Credits/Disc', 'Net', 'Closing', 'Entries'],
+      ...months.map((m) => [monthLabel(m.ym), Math.round(m.open), Math.round(m.purchase), Math.round(m.payment), Math.round(m.credit), Math.round(m.net), Math.round(m.close), m.entries.length]),
+    ])
+
+  if (months.length === 0)
+    return <div className="card"><div className="empty">No dated ledger entries to bucket by month yet.</div></div>
+
+  return (
+    <>
+      <div className="card matchbar">
+        <div className="mrow">
+          <div className="b"><div className="v">{fmtINR(opening)}</div><div className="l">Opening {openDate ? `· ${openDate}` : ''}</div></div>
+          <div className="b" style={{ textAlign: 'right' }}><div className="v">{fmtINR(closing)}</div><div className="l">Closing · {months.length} months</div></div>
+        </div>
+        <div className="covnote">Each month carries forward: previous month's closing = next month's opening. Tap a month to see its transactions and verify against the vendor's month-end figure.</div>
+      </div>
+
+      <div className="tablewrap card">
+        <table className="ltable">
+          <thead>
+            <tr><th>Month</th><th>Opening</th><th>Purchases</th><th>Payments</th><th>Credits</th><th>Closing</th></tr>
+          </thead>
+          <tbody>
+            {view.flatMap((m) => {
+              const isOpen = openMonth === m.ym
+              const els = [
+                <tr key={m.ym} className="clickable" onClick={() => setOpenMonth(isOpen ? null : m.ym)}>
+                  <td className="td-ref"><span className="gapcaret">{isOpen ? '▾' : '▸'}</span>{monthLabel(m.ym)}<div className="td-sub2">{m.entries.length} entries</div></td>
+                  <td className="num">{fmtLakh(m.open)}</td>
+                  <td className="num red">{m.purchase ? fmtLakh(m.purchase) : ''}</td>
+                  <td className="num green">{m.payment ? fmtLakh(m.payment) : ''}</td>
+                  <td className="num green">{m.credit ? fmtLakh(m.credit) : ''}</td>
+                  <td className="num"><b>{fmtLakh(m.close)}</b></td>
+                </tr>,
+              ]
+              if (isOpen) {
+                els.push(
+                  <tr key={m.ym + '-d'} className="gapdetailrow">
+                    <td colSpan={6}>
+                      <div className="monthdetail">
+                        <div className="md-bal"><span>Opening <b>{fmtINR(m.open)}</b></span><span>Closing <b>{fmtINR(m.close)}</b></span></div>
+                        {[...m.entries].sort((a, b) => b.date.localeCompare(a.date)).map((e) => {
+                          const dir = e.dir ?? entryDir(e.type)
+                          return (
+                            <div key={e.id} className="md-entry">
+                              <span className="md-date">{e.date}</span>
+                              <span className={'chip ' + (dir > 0 ? 'red' : dir < 0 ? 'green' : '')}>{e.type}</span>
+                              <span className="md-ref">{e.ref || e.note || ''}</span>
+                              <span className="md-amt" style={{ color: dir > 0 ? 'var(--red)' : dir < 0 ? 'var(--green)' : 'var(--muted)' }}>
+                                {dir !== 0 ? (dir > 0 ? '+' : '−') : ''}{fmtINR(e.amount)}
+                              </span>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    </td>
+                  </tr>
+                )
+              }
+              return els
+            })}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td className="td-ref">TOTAL</td>
+              <td className="num">{fmtLakh(opening)}</td>
+              <td className="num red">{fmtLakh(months.reduce((s, m) => s + m.purchase, 0))}</td>
+              <td className="num green">{fmtLakh(months.reduce((s, m) => s + m.payment, 0))}</td>
+              <td className="num green">{fmtLakh(months.reduce((s, m) => s + m.credit, 0))}</td>
+              <td className="num">{fmtLakh(closing)}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <button className="iconbtn reviewbtn" onClick={exportCsv}>Export monthly CSV</button>
+    </>
+  )
+}
+
+/* ---------- Table view: Purchase | Payment | Discount | Gap | Balance ----------
+   Formula: ΣPurchase − ΣPayment − ΣDiscount = their-books balance; − ΣGap = TRUE PAYABLE.
+   Recorded credits sit in Discount (their ledger); un-recorded claims sit in Gap (our ledger).
+   Objective: drive every Gap → 0 by getting it recorded (it then moves to Discount). */
+
+function TableTab({ brand, onOpenGap }) {
+  const [openGap, setOpenGap] = useState(null)
+  const { rows, totals } = useMemo(() => {
+    const col = (e) => (e.type === 'invoice' || e.type === 'debit-note' ? 'purchase' : e.type === 'payment' ? 'payment' : e.type === 'note' ? null : 'discount')
+    // ascending entries with running their-books balance
+    const asc = [...brand.entries].sort((a, b) => a.date.localeCompare(b.date) || String(a.id).localeCompare(String(b.id)))
+    let bal = brand.ledger?.opening?.amount || 0
+    const entryRows = []
+    for (const e of asc) {
+      const c = col(e)
+      if (!c) continue
+      bal += (e.dir ?? entryDir(e.type)) * (e.amount || 0)
+      entryRows.push({ kind: 'entry', date: e.date, ref: e.ref, label: e.note, [c]: e.amount, balance: bal, audit: e.audit })
+    }
+    // gap rows: anchor to linked invoice date (via audit) else brand.updated
+    const anchorFor = (g) => {
+      const linked = asc.find((e) => e.audit?.g === g.n)
+      return linked ? linked.date : brand.updated || '2026-07-13'
+    }
+    const gapRows = openGaps(brand)
+      .filter((g) => g.amt)
+      .map((g) => ({ kind: 'gap', n: g.n, g, date: anchorFor(g), ref: `GAP #${g.n}`, label: g.title, gap: g.amt, status: g.status, tier: g.tier || 'firm' }))
+    const all = [...entryRows, ...gapRows].sort((a, b) => b.date.localeCompare(a.date) || (a.kind === 'gap' ? -1 : 1))
+    const tierSum = (t) => gapRows.filter((r) => r.tier === t).reduce((s, r) => s + (r.gap || 0), 0)
+    const t = {
+      purchase: entryRows.reduce((s, r) => s + (r.purchase || 0), 0),
+      payment: entryRows.reduce((s, r) => s + (r.payment || 0), 0),
+      discount: entryRows.reduce((s, r) => s + (r.discount || 0), 0),
+      gap: gapRows.reduce((s, r) => s + (r.gap || 0), 0),
+      gapFirm: tierSum('firm'), gapCond: tierSum('conditional'), gapLev: tierSum('leverage'), gapVerify: tierSum('verify'),
+      opening: brand.ledger?.opening?.amount || 0,
+      closing: bal,
+    }
+    return { rows: all, totals: t }
+  }, [brand])
+
+  const settleTarget = totals.closing - totals.gapFirm     // realistic (verify NOT deducted)
+  const bestCase = settleTarget - totals.gapCond            // + conditional conceded to you
+  const floor = bestCase - totals.gapLev                    // + leverage won (long-shot)
+  const hasTiers = totals.gapCond > 0 || totals.gapLev > 0 || totals.gapVerify > 0
+
+  const exportCsv = () =>
+    downloadCSV(`${brand.id}-table-${today()}.csv`, [
+      ['Date', 'Ref', 'Purchase', 'Payment', 'Discount', 'Gap', 'Balance', 'Detail'],
+      ...rows.map((r) => [r.date, r.ref, r.purchase || '', r.payment || '', r.discount || '', r.gap || '', r.kind === 'entry' ? Math.round(r.balance) : '', r.label || '']),
+      [], ['TOTALS', '', Math.round(totals.purchase), Math.round(totals.payment), Math.round(totals.discount), Math.round(totals.gap), '', ''],
+      ['THEIR BOOKS BALANCE', '', '', '', '', '', Math.round(totals.closing), 'opening ' + totals.opening + ' + purchases − payments − discounts'],
+      ['SETTLE AT (− firm gaps)', '', '', '', '', '', Math.round(settleTarget), 'their books − firm gaps'],
+    ])
+
+  return (
+    <>
+      <div className="card matchbar">
+        <div className="ladder">
+          <div className="lrow"><span>Their books (Purchase − Payment − Discount)</span><b>{fmtINR(totals.closing)}</b></div>
+          <div className="lrow sub"><span>− Firm gaps (high-confidence claims)</span><b className="green">− {fmtINR(totals.gapFirm)}</b></div>
+          <div className="lrow target"><span>= SETTLE AT (realistic target)</span><b>{fmtINR(settleTarget)}</b></div>
+          {totals.gapCond > 0 && <div className="lrow sub"><span>− Conditional (kids bills, likely conceded)</span><b className="muted">− {fmtINR(totals.gapCond)}</b></div>}
+          {totals.gapCond > 0 && <div className="lrow"><span>= Best case</span><b>{fmtINR(bestCase)}</b></div>}
+          {totals.gapLev > 0 && <div className="lrow sub"><span>− Leverage upside (long-shot claims)</span><b className="muted">− {fmtINR(totals.gapLev)}</b></div>}
+          {totals.gapLev > 0 && <div className="lrow floor"><span>= Aggressive floor (only if you win everything)</span><b>{fmtINR(floor)}</b></div>}
+          {totals.gapVerify > 0 && <div className="lrow verify"><span>⚠ Separately: {fmtINR(totals.gapVerify)} in figures to INVESTIGATE (balances/errors — not deducted, not money you're owed)</span></div>}
+        </div>
+        <div className="covnote">
+          {hasTiers
+            ? 'Settle at the realistic target. Firm = what the vendor will actually post; conditional & leverage are negotiating room; verify = discrepancies to chase, not recoverables.'
+            : 'Purchase − Payment − Discount − Gaps. Every gap told → recorded → moves to Discount → Gap hits zero.'}
+        </div>
+      </div>
+
+      <div className="tablewrap card">
+        <table className="ltable">
+          <thead>
+            <tr><th>Date</th><th>Ref</th><th>Purchase</th><th>Payment</th><th>Discount</th><th>Gap</th><th>Balance</th></tr>
+          </thead>
+          <tbody>
+            {rows.flatMap((r, i) => {
+              const isGap = r.kind === 'gap'
+              const isOpen = isGap && openGap === r.n
+              const els = [
+                <tr
+                  key={i}
+                  className={(isGap ? 'gaprow tier-' + r.tier : '') + (isGap ? ' clickable' : '')}
+                  title={isGap ? 'Tap for full details' : (r.label || '')}
+                  onClick={isGap ? () => setOpenGap(isOpen ? null : r.n) : undefined}
+                >
+                  <td className="td-date">{r.date}</td>
+                  <td className="td-ref">
+                    {isGap && <span className="gapcaret">{isOpen ? '▾' : '▸'}</span>}
+                    {r.ref}
+                    {isGap && <span className="tiertag">{r.tier}</span>}
+                    {isGap && <div className="td-sub">{(r.label || '').slice(0, 55)}</div>}
+                  </td>
+                  <td className="num red">{r.purchase ? fmtINR(r.purchase) : ''}</td>
+                  <td className="num green">{r.payment ? fmtINR(r.payment) : ''}</td>
+                  <td className="num green">{r.discount ? fmtINR(r.discount) : ''}</td>
+                  <td className="num amber">{r.gap ? fmtINR(r.gap) : ''}</td>
+                  <td className="num">{r.kind === 'entry' ? fmtLakh(r.balance) : ''}</td>
+                </tr>,
+              ]
+              if (isOpen) {
+                const g = r.g
+                els.push(
+                  <tr key={i + '-d'} className="gapdetailrow">
+                    <td colSpan={7}>
+                      <div className="gapdetail">
+                        <div className="gd-head">
+                          <b>GAP #{g.n}</b>
+                          <span className={'chip ' + (statusColor[g.status] || '')}>{g.status}</span>
+                          <span className="chip">{g.type}</span>
+                          <span className="gd-amt">{gapAmount(g)}</span>
+                        </div>
+                        <div className="gd-title">{g.title}</div>
+                        {g.evidence && <div className="gd-sec"><span className="gd-lbl">Evidence</span>{g.evidence}</div>}
+                        {g.action && <div className="gd-sec"><span className="gd-lbl">Action</span>{g.action}</div>}
+                        {(g.progress || []).length > 0 && (
+                          <div className="gd-sec">
+                            <span className="gd-lbl">Progress</span>
+                            {(g.progress || []).map((p, j) => <div key={j} className="gd-note">{p.date}: {p.text}</div>)}
+                          </div>
+                        )}
+                        {onOpenGap && (
+                          <button className="iconbtn primary gd-open" onClick={(ev) => { ev.stopPropagation(); onOpenGap(g.n) }}>
+                            Open full gap (edit / history) →
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                )
+              }
+              return els
+            })}
+            {totals.opening > 0 && (
+              <tr className="openrow"><td className="td-date"></td><td className="td-ref">OPENING</td><td /><td /><td /><td /><td className="num">{fmtINR(totals.opening)}</td></tr>
+            )}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td /><td className="td-ref">TOTALS</td>
+              <td className="num red">{fmtLakh(totals.purchase)}</td>
+              <td className="num green">{fmtLakh(totals.payment)}</td>
+              <td className="num green">{fmtLakh(totals.discount)}</td>
+              <td className="num amber">{fmtLakh(totals.gap)}</td>
+              <td className="num">{fmtLakh(totals.closing)}</td>
+            </tr>
+            <tr className="truerow">
+              <td colSpan={6} className="td-ref" style={{ textAlign: 'right' }}>− Firm gaps ({fmtLakh(totals.gapFirm)}) = SETTLE AT</td>
+              <td className="num" style={{ color: 'var(--green)', fontWeight: 700 }}>{fmtLakh(settleTarget)}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <button className="iconbtn reviewbtn" onClick={exportCsv}>Export table CSV</button>
+    </>
+  )
+}
+
 /* ---------- Share ---------- */
 
 function ShareTab({ brand }) {
@@ -659,16 +1110,17 @@ function CloudSyncCard({ state, setState }) {
     <div className="card">
       <h3>Cloud sync</h3>
       <p className="smallmuted">
-        One shared cloud copy for all your devices. Enter the same sync key on each device — changes push automatically
-        (2s after every edit) and pull on launch. Newest save wins.
+        One shared cloud copy for all your devices, locked by your PIN (entered at the lock screen). Changes push
+        automatically (2s after every edit) and pull on launch. Newest save wins.
       </p>
       <div className="form">
         <div>
-          <label>Sync key</label>
+          <label>PIN</label>
           <input
             type="password"
+            inputMode="numeric"
             value={key}
-            placeholder="enter the sync key"
+            placeholder="enter the PIN"
             onChange={(e) => setKey(e.target.value)}
             onBlur={() => setSyncKey(key)}
           />
